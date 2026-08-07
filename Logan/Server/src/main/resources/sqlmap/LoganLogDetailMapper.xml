@@ -49,4 +49,11 @@
             #{id}
         </foreach>
     </select>
+
+    <delete id="deleteByTaskIds" parameterType="map">
+        DELETE FROM logan_log_detail WHERE task_id IN
+        <foreach collection="taskIds" item="taskId" index="index" open="(" close=")" separator=",">
+            #{taskId}
+        </foreach>
+    </delete>
 </mapper>

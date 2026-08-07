@@ -54,4 +54,16 @@
     <select id="queryLatest" parameterType="java.lang.Integer" resultMap="resultMap">
         SELECT * FROM logan_task ORDER BY id DESC LIMIT 0,#{limit}
     </select>
+
+    <delete id="deleteByAddTime" parameterType="map">
+        <![CDATA[
+        DELETE FROM logan_task WHERE add_time < #{addTime}
+        ]]>
+    </delete>
+
+    <select id="selectIdsByAddTime" parameterType="map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT id FROM logan_task WHERE add_time < #{addTime}
+        ]]>
+    </select>
 </mapper>

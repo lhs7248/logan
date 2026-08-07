@@ -17,4 +17,8 @@ public interface LoganTaskMapper {
     List<LoganTaskDTO> search(@Param("request") LoganTaskRequest request);
 
     List<LoganTaskDTO> queryLatest(@Param("limit") int limit);
+
+    void deleteByAddTime(@Param("addTime") long addTime);
+
+    List<Long> selectIdsByAddTime(@Param("addTime") long addTime);
 }

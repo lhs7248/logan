@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
         mbedtls.source_files = "Logan/mbedtls/**/*.{h,c}"
         mbedtls.header_dir = 'mbedtls'
         mbedtls.private_header_files = "Logan/mbedtls/**/*.h"
-        mbedtls.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Logan/Logan/**"}
+        mbedtls.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "\"${PODS_TARGET_SRCROOT}/Logan/mbedtls/include\""}
     end
 end

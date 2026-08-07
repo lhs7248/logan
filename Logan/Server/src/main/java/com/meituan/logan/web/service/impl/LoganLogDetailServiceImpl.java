@@ -11,10 +11,13 @@ import com.meituan.logan.web.mapper.LoganTaskMapper;
 import com.meituan.logan.web.model.LoganLogDetailModel;
 import com.meituan.logan.web.model.LoganLogItem;
 import com.meituan.logan.web.model.LoganLogSimpleModel;
+import com.meituan.logan.web.parser.LoganProtocol;
 import com.meituan.logan.web.service.HandlerDispatcher;
 import com.meituan.logan.web.service.LoganLogDetailService;
-import com.meituan.logan.web.util.FileUtil;
+import com.meituan.logan.web.util.OssUtil;
 import com.meituan.logan.web.util.OrderUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,21 +75,32 @@ public class LoganLogDetailServiceImpl extends AbstractBatchInsertService<LoganL
             String key = task.getLogFileName();
             synchronized (keyLocks.computeIfAbsent(key, k -> new Object())) {
                 if (TaskStatusEnum.NORMAL.getStatus() == task.getStatus()) {
-                    File file = FileUtil.getFile(task.getLogFileName());
-                    if (file == null || !file.exists()) {
-                        return;
-                    }
-                    try (InputStream in = new FileInputStream(file);
-                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-                        String str;
-                        while ((str = bufferedReader.readLine()) != null) {
-                            saveLogDetail(JSON.parseObject(str, LoganLogItem.class).transferToDetail(task.getId()));
+                    // 从 OSS 下载压缩的日志数据
+                    try (InputStream ossInputStream = OssUtil.downloadFile(task.getLogFileName())) {
+                        if (ossInputStream == null) {
+                            LOGGER.error("OSS file not found: " + task.getLogFileName());
+                            return;
+                        }
+                        // 读取压缩数据并解压为明文
+                        byte[] compressedBytes = IOUtils.toByteArray(ossInputStream);
+                        byte[] plainText = LoganProtocol.decompress(compressedBytes);
+                        String content = new String(plainText, StandardCharsets.UTF_8);
+
+                        // 逐行解析并写入数据库
+                        try (BufferedReader reader = new BufferedReader(new StringReader(content))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                if (StringUtils.isNotBlank(line)) {
+                                    saveLogDetail(JSON.parseObject(line, LoganLogItem.class)
+                                            .transferToDetail(task.getId()));
+                                }
+                            }
                         }
                         Thread.sleep(50);
                         task.setStatus(TaskStatusEnum.ANALYZED.getStatus());
                         analyzed(task);
                     } catch (Exception e) {
-                        LOGGER.error(e);
+                        LOGGER.error("tryAnalyze from OSS failed: " + task.getLogFileName(), e);
                     } finally {
                         keyLocks.remove(key);
                     }

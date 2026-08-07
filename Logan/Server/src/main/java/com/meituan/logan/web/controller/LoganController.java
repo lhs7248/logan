@@ -10,20 +10,16 @@ import com.meituan.logan.web.model.response.LoganResponse;
 import com.meituan.logan.web.service.LoganLogDetailService;
 import com.meituan.logan.web.service.LoganTaskService;
 import com.meituan.logan.web.util.FileUtil;
+import com.meituan.logan.web.util.OssUtil;
 import com.meituan.logan.web.util.TypeSafeUtil;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -136,17 +132,23 @@ public class LoganController {
     }
 
     /**
-     * 下载
+     * 下载日志文件 - 生成 OSS 签名 URL 并 302 重定向
+     * <p>
+     * 浏览器直接访问 OSS 下载文件，后端不参与文件传输，零内存占用。
+     * </p>
      */
     @GetMapping("/downing")
-    public ResponseEntity<byte[]> downloadFile(String name) throws IOException {
-        File file = FileUtil.getFile(name);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", name);
-        if (file != null && file.exists()) {
-            return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    public ResponseEntity<Void> downloadFile(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return ResponseEntity.badRequest().build();
         }
-        return new ResponseEntity<>("fileNotFound".getBytes(), headers, HttpStatus.CREATED);
+        String signedUrl = OssUtil.generatePresignedUrl(name);
+        if (signedUrl == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        // 302 重定向到 OSS 签名 URL，浏览器直接下载
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", signedUrl)
+                .build();
     }
 }

@@ -17,4 +17,6 @@ public interface LoganLogDetailMapper {
             @Param("types") List<Integer> types, @Param("keyword") String keyword);
 
     List<LoganLogDetailDTO> queryByIds(@Param("ids") List<Long> detailIds);
+
+    void deleteByTaskIds(@Param("taskIds") List<Long> taskIds);
 }
