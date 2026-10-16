@@ -1,0 +1,57 @@
+[
+  {
+    "id": "placeholder-not-complete",
+    "assertions": [
+      "501 占位不得作为兼容成功或迁移完成证据"
+    ],
+    "references": [
+      ".harness/rules/compatibility.md",
+      ".harness/workflows/migration.md"
+    ]
+  },
+  {
+    "id": "preserve-java-baseline",
+    "assertions": [
+      "不得用 Go 输出自动覆盖 Java golden"
+    ],
+    "references": [
+      ".harness/rules/compatibility.md"
+    ]
+  },
+  {
+    "id": "mock-not-integration",
+    "assertions": [
+      "替身测试通过不能宣称真实 MySQL/OSS 集成通过"
+    ],
+    "references": [
+      ".harness/rules/validation.md"
+    ]
+  },
+  {
+    "id": "missing-tool-not-pass",
+    "assertions": [
+      "缺少工具必须报告未执行或失败，不能报告通过"
+    ],
+    "references": [
+      ".harness/rules/validation.md"
+    ]
+  },
+  {
+    "id": "agent-only",
+    "assertions": [
+      "不得改变开发人员命令、Git Hook 或 CI"
+    ],
+    "references": [
+      ".harness/README.md"
+    ]
+  },
+  {
+    "id": "bugfix-evidence",
+    "assertions": [
+      "先定位根因，复用复现测试，再报告证据"
+    ],
+    "references": [
+      ".harness/workflows/bugfix.md"
+    ]
+  }
+]

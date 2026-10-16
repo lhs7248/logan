@@ -1,0 +1,29 @@
+{
+  "assets": [
+    "AGENTS.md",
+    ".harness/README.md",
+    ".harness/rules/compatibility.md",
+    ".harness/rules/validation.md",
+    ".harness/workflows/bugfix.md",
+    ".harness/workflows/migration.md",
+    ".harness/run.py",
+    ".harness/manifest.json",
+    ".harness/evals/cases.json",
+    ".harness/tests/test_harness.py"
+  ],
+  "profiles": {
+    "quick": [
+      "test",
+      "vet"
+    ],
+    "full": [
+      "test",
+      "race",
+      "vet",
+      "build"
+    ],
+    "java": [
+      "java-baseline"
+    ]
+  }
+}
