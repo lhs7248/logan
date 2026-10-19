@@ -606,6 +606,15 @@ void write_flush_clogan() {
         clogan_zlib_end_compress(logan_model);
         update_length_clogan(logan_model);
     }
+    // A completed member may be followed by a reserved, unused frame header.
+    // It belongs to the next write, not to the completed members being flushed.
+    // Keep a lone reservation in memory; clear_clogan rebuilds it after a write.
+    if (logan_model->zlib_type == LOGAN_ZLIB_INIT &&
+        logan_model->content_len == 0 &&
+        logan_model->total_len > LOGAN_WRITEPROTOCOL_HEAER_LENGTH) {
+        logan_model->total_len -= LOGAN_WRITEPROTOCOL_HEAER_LENGTH;
+        update_length_clogan(logan_model);
+    }
     if (logan_model->total_len > LOGAN_WRITEPROTOCOL_HEAER_LENGTH) {
         unsigned char *point = logan_model->total_point;
         point += LOGAN_MMAP_TOTALLEN;
