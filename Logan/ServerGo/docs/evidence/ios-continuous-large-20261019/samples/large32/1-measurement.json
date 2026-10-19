@@ -1,0 +1,21 @@
+{
+  "client": {
+    "wire_bytes": 25999985,
+    "expected_rows": 8192,
+    "batch": 1,
+    "upload_ack_unix": 1792402018.3022761,
+    "error": "",
+    "generation_start_unix": 1792402017.3415952,
+    "content_bytes_per_row": 4096,
+    "scenario": "large32",
+    "device_id": "phase25-ios-20261019-large32",
+    "response": "{\"code\":500,\"msg\":\"ERROR_DECRYPT\",\"data\":null}",
+    "upload_start_unix": 1792402018.112082,
+    "http_status": 200
+  },
+  "observed_ack_unix": 1792402018.31551,
+  "errors": [
+    "AssertionError({'code': 500, 'msg': 'ERROR_DECRYPT', 'data': None})"
+  ],
+  "status": "failed"
+}

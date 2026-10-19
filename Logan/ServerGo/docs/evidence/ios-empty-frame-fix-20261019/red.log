@@ -1,0 +1,12 @@
+--- FAIL: TestNativeSDKFlushHasNoEmptyFrame (1.37s)
+    --- FAIL: TestNativeSDKFlushHasNoEmptyFrame/rows3_flush0 (0.39s)
+        native_flush_test.go:53: incomplete SDK frame at 9666, remaining=0100000000
+    --- FAIL: TestNativeSDKFlushHasNoEmptyFrame/rows6_flush3 (0.01s)
+        native_flush_test.go:57: invalid SDK frame at 9666 length=0
+    --- FAIL: TestNativeSDKFlushHasNoEmptyFrame/rows64_flush3 (0.03s)
+        native_flush_test.go:57: invalid SDK frame at 9666 length=0
+    --- FAIL: TestNativeSDKFlushHasNoEmptyFrame/rows64_flush0 (0.03s)
+        native_flush_test.go:53: incomplete SDK frame at 203250, remaining=0100000000
+FAIL
+FAIL	logan/servergo/tests/sdk	1.906s
+FAIL

@@ -1,0 +1,48 @@
+[
+  {
+    "wire_bytes": 25999985,
+    "valid_prefix_frames": 4338,
+    "valid_prefix_wire_bytes": 25999980,
+    "trailing_bytes": "0100000000",
+    "legacy_padding_probe_rejections": [],
+    "valid_prefix_complete_expected_rows": 8193,
+    "gzip_members": 4338,
+    "plain_bytes": 34021450,
+    "note": "Diagnostic prefix extraction only; original unchanged file rejected. No trimmed file was uploaded.",
+    "json_plain_bytes": 34021450,
+    "wire_sha256": "29216ee33449fa497010c0674d24ccf59f91369aca6ead67dcca5bca4a8f4b5b",
+    "decoded_prefix_sha256": "67746e8469cdef2c2ba793caceddde230bd080efb09dbb76fab0245b823e04e2",
+    "scenario": "large32",
+    "chain_status": "failed"
+  },
+  {
+    "wire_bytes": 25999873,
+    "valid_prefix_frames": 4338,
+    "valid_prefix_wire_bytes": 25999868,
+    "trailing_bytes": "0100000000",
+    "legacy_padding_probe_rejections": [],
+    "valid_prefix_complete_expected_rows": 8193,
+    "gzip_members": 4338,
+    "json_plain_bytes": 34021450,
+    "wire_sha256": "2016a260211cf04303d80cdbb04b92007ae2019133ee8aeb1b0723fe92955d47",
+    "decoded_prefix_sha256": "65021af25f8a67fc68ee573838433b799cad62f99eeb7065030dde83c32da050",
+    "scenario": "large32-retry",
+    "chain_status": "failed",
+    "note": "Diagnostic prefix extraction only; original unchanged file rejected. No trimmed file was uploaded."
+  },
+  {
+    "wire_bytes": 25999953,
+    "valid_prefix_frames": 4338,
+    "valid_prefix_wire_bytes": 25999948,
+    "trailing_bytes": "0100000000",
+    "legacy_padding_probe_rejections": [],
+    "valid_prefix_complete_expected_rows": 8193,
+    "gzip_members": 4338,
+    "json_plain_bytes": 34021450,
+    "wire_sha256": "9ba7c6edb3a9fcdf909d79c14064b743bc53a56823eaca8ebed2614f98130ecb",
+    "decoded_prefix_sha256": "a4db68959f42bdb32750ca14b3afd375e76ec4e0aac5145c18a923bf0c6ab869",
+    "scenario": "large32-single",
+    "chain_status": "failed",
+    "note": "Diagnostic prefix extraction only; original unchanged file rejected. No trimmed file was uploaded."
+  }
+]

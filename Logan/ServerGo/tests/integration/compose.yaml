@@ -1,0 +1,20 @@
+# Isolated test infrastructure only; never merge with the production Compose file.
+name: logan-integration
+services:
+  mysql:
+    image: ${LOGAN_IT_MYSQL_IMAGE:?Set an explicit pinned MySQL image}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${LOGAN_IT_MYSQL_ROOT_PASSWORD:?Set a test-only password}
+      MYSQL_DATABASE: logan_it_control
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - '127.0.0.1:${LOGAN_IT_MYSQL_PORT:-13306}:3306'
+    tmpfs:
+      - /var/lib/mysql:size=1g
+    mem_limit: 1g
+    cpus: 1.0
+    healthcheck:
+      test: ['CMD-SHELL', 'MYSQL_PWD="$$MYSQL_ROOT_PASSWORD" mysqladmin ping -h127.0.0.1 --silent']
+      interval: 2s
+      timeout: 2s
+      retries: 60

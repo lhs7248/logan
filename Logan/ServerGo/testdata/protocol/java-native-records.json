@@ -1,0 +1,280 @@
+{
+  "records" : [ {
+    "input" : "{\"c\":\"first\",\"c\":\"last\"}",
+    "records" : [ {
+      "Content" : "last",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"C\":\"first\",\"C\":\"last\"}",
+    "records" : [ {
+      "Content" : "first",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":{\"z\":null,\"a\":0.0000001,\"b\":1.0,\"x\":-0.0}}",
+    "records" : [ {
+      "Content" : "{\"a\":1E-7,\"b\":1.0,\"x\":0.0}",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"C\":\"text\",\"F\":2,\"L\":42}",
+    "records" : [ {
+      "Content" : "text",
+      "LogType" : 2,
+      "LogTime" : 42
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":{\"x\":null}}",
+    "records" : [ {
+      "Content" : "{}",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":[1e2,-0,{\"b\":null}]}",
+    "records" : [ {
+      "Content" : "[1E+2,0,{}]",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":\"first\",\"C\":\"last\"}",
+    "records" : [ {
+      "Content" : "first",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"C\":\"first\",\"c\":\"last\"}",
+    "records" : [ {
+      "Content" : "first",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":{\"z\":1,\"a\":2,\"b\":3}}",
+    "records" : [ {
+      "Content" : "{\"a\":2,\"b\":3,\"z\":1}",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":1e2,\"f\":1e0,\"l\":1e2}",
+    "records" : [ {
+      "Content" : "1E+2",
+      "LogType" : 1,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":-0,\"f\":-0,\"l\":-0}",
+    "records" : [ {
+      "Content" : "-0",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":\"hello\\n<>&\\\"中\",\"f\":\"1\",\"l\":\"+42\"}",
+    "records" : [ {
+      "Content" : "hello\n<>&\"中",
+      "LogType" : 1,
+      "LogTime" : 42
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":123,\"f\":2,\"l\":123}",
+    "records" : [ {
+      "Content" : "123",
+      "LogType" : 2,
+      "LogTime" : 123
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":true,\"f\":3.0,\"l\":1.5}",
+    "records" : [ {
+      "Content" : "true",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":null,\"f\":null,\"l\":null}",
+    "records" : [ {
+      "Content" : null,
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{}",
+    "records" : [ {
+      "Content" : null,
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":{\"a\":1},\"f\":99,\"l\":\"9223372036854775808\"}",
+    "records" : [ {
+      "Content" : "{\"a\":1}",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "{\"c\":[1,true],\"f\":\" 1\",\"l\":\" 2\"}",
+    "records" : [ {
+      "Content" : "[1,true]",
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "\r\n \t \r{\"c\":\"a\",\"f\":\"+3\",\"l\":\"-1\"}\r\n{}\n",
+    "records" : [ {
+      "Content" : "a",
+      "LogType" : 3,
+      "LogTime" : -1
+    }, {
+      "Content" : null,
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  }, {
+    "input" : "bad",
+    "records" : [ ],
+    "error" : true
+  }, {
+    "input" : "null",
+    "records" : [ ],
+    "error" : true
+  }, {
+    "input" : "[]",
+    "records" : [ ],
+    "error" : true
+  }, {
+    "input" : "{\"f\":\"2147483648\"}",
+    "records" : [ {
+      "Content" : null,
+      "LogType" : 0,
+      "LogTime" : 0
+    } ],
+    "error" : false
+  } ],
+  "handlers" : [ {
+    "type" : 0,
+    "content" : "",
+    "simple" : "",
+    "format" : ""
+  }, {
+    "type" : 0,
+    "content" : "<>&\"\\\n中文",
+    "simple" : "<>&\"\\\n中文",
+    "format" : "<>&\"\\\n中文"
+  }, {
+    "type" : 0,
+    "content" : "{\"a\":1}",
+    "simple" : "{\"a\":1}",
+    "format" : "{\"a\":1}"
+  }, {
+    "type" : 0,
+    "content" : "  a\t ",
+    "simple" : "  a\t ",
+    "format" : "  a\t "
+  }, {
+    "type" : 1,
+    "content" : "",
+    "simple" : "",
+    "format" : ""
+  }, {
+    "type" : 1,
+    "content" : "<>&\"\\\n中文",
+    "simple" : "<>&\"\\\n中文",
+    "format" : "<>&\"\\\n中文"
+  }, {
+    "type" : 1,
+    "content" : "{\"a\":1}",
+    "simple" : "{\"a\":1}",
+    "format" : "{\"a\":1}"
+  }, {
+    "type" : 1,
+    "content" : "  a\t ",
+    "simple" : "  a\t ",
+    "format" : "  a\t "
+  }, {
+    "type" : 2,
+    "content" : "",
+    "simple" : "",
+    "format" : ""
+  }, {
+    "type" : 2,
+    "content" : "<>&\"\\\n中文",
+    "simple" : "<>&\"\\\n中文",
+    "format" : "<>&\"\\\n中文"
+  }, {
+    "type" : 2,
+    "content" : "{\"a\":1}",
+    "simple" : "{\"a\":1}",
+    "format" : "{\"a\":1}"
+  }, {
+    "type" : 2,
+    "content" : "  a\t ",
+    "simple" : "  a\t ",
+    "format" : "  a\t "
+  }, {
+    "type" : 3,
+    "content" : "",
+    "simple" : "",
+    "format" : ""
+  }, {
+    "type" : 3,
+    "content" : "<>&\"\\\n中文",
+    "simple" : "<>&\"\\\n中文",
+    "format" : "<>&\"\\\n中文"
+  }, {
+    "type" : 3,
+    "content" : "{\"a\":1}",
+    "simple" : "{\"a\":1}",
+    "format" : "{\"a\":1}"
+  }, {
+    "type" : 3,
+    "content" : "  a\t ",
+    "simple" : "  a\t ",
+    "format" : "  a\t "
+  }, {
+    "type" : 99,
+    "content" : "",
+    "simple" : "",
+    "format" : ""
+  }, {
+    "type" : 99,
+    "content" : "<>&\"\\\n中文",
+    "simple" : "<>&\"\\\n中文",
+    "format" : "<>&\"\\\n中文"
+  }, {
+    "type" : 99,
+    "content" : "{\"a\":1}",
+    "simple" : "{\"a\":1}",
+    "format" : "{\"a\":1}"
+  }, {
+    "type" : 99,
+    "content" : "  a\t ",
+    "simple" : "  a\t ",
+    "format" : "  a\t "
+  } ]
+}

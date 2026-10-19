@@ -1,0 +1,17 @@
+# INERT review fragment. Gateway must join the candidate network; no traffic is changed by this file.
+location /logan/ {
+    client_max_body_size 32m;
+    proxy_pass http://logan-go:8080/logan-web/logan/;
+    proxy_http_version 1.1;
+    proxy_request_buffering off;
+    proxy_buffering off;
+    # GETs may trigger parsing; never fail over or retry across Java and Go.
+    proxy_next_upstream off;
+    proxy_connect_timeout 5s;
+    proxy_send_timeout 65s;
+    proxy_read_timeout 65s;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}

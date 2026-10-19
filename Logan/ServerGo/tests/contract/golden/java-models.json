@@ -1,0 +1,53 @@
+{
+  "nativeTask" : {
+    "taskId" : 9007199254740993,
+    "amount" : null,
+    "appId" : null,
+    "unionId" : null,
+    "platform" : 0,
+    "buildVersion" : null,
+    "appVersion" : null,
+    "deviceId" : null,
+    "logDate" : 0,
+    "logFileName" : null,
+    "addTime" : 0,
+    "status" : 0
+  },
+  "nativeDetail" : {
+    "id" : 0,
+    "taskId" : 0,
+    "logType" : 0,
+    "content" : null,
+    "simpleContent" : null,
+    "formatContent" : null,
+    "logTime" : 0
+  },
+  "nativeSimple" : {
+    "id" : 0,
+    "logType" : 0,
+    "logTime" : 0
+  },
+  "webTask" : {
+    "taskId" : 0,
+    "deviceId" : null,
+    "webSource" : null,
+    "environment" : null,
+    "pageNum" : 0,
+    "addTime" : 0,
+    "logDate" : 0,
+    "status" : 0,
+    "customReportInfo" : null,
+    "tasks" : null,
+    "updateTime" : 1234
+  },
+  "webDetail" : {
+    "id" : 0,
+    "taskId" : 0,
+    "logType" : 0,
+    "content" : null,
+    "logTime" : 0,
+    "logLevel" : 0,
+    "minuteOffset" : 0,
+    "addTime" : 0
+  }
+}

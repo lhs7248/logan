@@ -1,0 +1,58 @@
+Browser tab: 1, Title: "Logan", URL: "http://localhost:3000/#/native-log-detail?tasks=1".
+0 AXWebArea Logan, URL: localhost:3000/#/native-log-detail?tasks=1
+	1 container
+		2 container
+			3 menu
+				4 icon: mobile Native日志
+					5 container icon: mobile
+					6 text Native日志
+				7 icon: html5 Web日志
+					8 container icon: html5
+					9 text Web日志
+			10 button icon: left 返回列表
+				11 container icon: left
+				12 text 返回列表
+			13 tab group
+				14 tab (collapsed, settable) icon: right 【testUnionId】日志基本信息, Secondary Actions: Expand
+					15 container icon: right
+					16 text 【
+					17 text testUnionId
+					18 text 】
+					19 text 日志基本信息
+			20 button icon: download 日志文件下载
+				21 container icon: download
+				22 text 日志文件下载
+			23 button icon: check-square 日志类型
+				24 container icon: check-square
+				25 text 日志类型
+			26 button icon: check-circle 排序方式：升序
+				27 container icon: check-circle
+				28 text 排序方式：升序
+			135 container icon: close-circle-o
+			29 text field (settable) click button 9
+			136 container icon: search
+			30 container infinite-container-inner
+				31 content list
+					137 container log-item-row-0
+						138 container
+							139 container
+								140 text exception catch 日志 :
+							141 text 16:38:37.793
+							142 text 日志ID： 11 1 PHASE24_IOS_CHAIN_20261019 click button 9
+			143 heading 日志条目详情, Value: 1
+				144 text 日志条目详情
+			145 button icon: close
+				146 container icon: close
+			147 container
+				148 text 日志编号  :  11
+			149 container
+				150 text 任务编号  :  1
+			151 container
+				152 text 日志类型  :  exception catch 日志
+			153 container
+				154 text 日志记录时间  :  2026-10-19 16:38:37.793
+			155 container
+				156 text 日志信息:
+				157 text 1 PHASE24_IOS_CHAIN_20261019 click button 9
+
+The focused UI element is 0 AXWebArea Logan, URL: localhost:3000/#/native-log-detail?tasks=1

@@ -1,0 +1,8 @@
+# Inert release overlay; does not authorize production use or bypass readiness.
+# LOGAN_GO_RELEASE_IMAGE must be an independently verified repository@sha256:digest.
+services:
+  logan-go:
+    build: !reset null
+    image: ${LOGAN_GO_RELEASE_IMAGE:?Set verified immutable repository@sha256 digest}
+    pull_policy: always
+    restart: unless-stopped

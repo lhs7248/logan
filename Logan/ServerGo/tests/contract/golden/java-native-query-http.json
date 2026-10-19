@@ -1,0 +1,675 @@
+[ {
+  "id" : "search-only-whitespace-end",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=%20%20",
+  "unhandled" : "java.lang.NullPointerException",
+  "status" : 500,
+  "evidence" : "Original method throws; standalone MockMvc has no servlet error page. Only failure status is compared."
+}, {
+  "id" : "search-repeated-device",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&deviceId=x&endTime=0",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "search-repeated-platform",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&platform=1&platform=2&endTime=0",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjMsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoxLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjEwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTMubG9nIiwiYWRkVGltZSI6MzAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MSwiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMS5sb2ciLCJhZGRUaW1lIjoxMDAwLCJzdGF0dXMiOjF9XX0="
+}, {
+  "id" : "brief-repeated-types",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?logTypes=1&logTypes=3",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo4LCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo5OX0seyJpZCI6MTAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjk3fSx7ImlkIjoxMiwibG9nVHlwZSI6MSwibG9nVGltZSI6OTV9LHsiaWQiOjE0LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo5M30seyJpZCI6MTYsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjkxfSx7ImlkIjoxOCwibG9nVHlwZSI6MywibG9nVGltZSI6ODl9LHsiaWQiOjIwLCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo4N30seyJpZCI6MjIsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjg1fSx7ImlkIjoyNCwibG9nVHlwZSI6MSwibG9nVGltZSI6ODN9LHsiaWQiOjI2LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo4MX0seyJpZCI6MjgsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjc5fSx7ImlkIjozMCwibG9nVHlwZSI6MywibG9nVGltZSI6Nzd9XV19"
+}, {
+  "id" : "brief-repeated-keyword",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?keyword=line&keyword=nomatch",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "details-repeated",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json?detailIds=8&detailIds=7",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3siaWQiOjgsInRhc2tJZCI6MSwibG9nVHlwZSI6MSwiY29udGVudCI6ImxpbmUtMSA8dGFnPiAmIFxu5Lit5paHIiwic2ltcGxlQ29udGVudCI6ImxpbmUtMSA8dGFnPiAmIFxu5Lit5paHIiwiZm9ybWF0Q29udGVudCI6bnVsbCwibG9nVGltZSI6OTl9LHsiaWQiOjcsInRhc2tJZCI6MSwibG9nVHlwZSI6MCwiY29udGVudCI6ImxpbmUtMCA8dGFnPiAmIFxu5Lit5paHIiwic2ltcGxlQ29udGVudCI6ImxpbmUtMCA8dGFnPiAmIFxu5Lit5paHIiwiZm9ybWF0Q29udGVudCI6bnVsbCwibG9nVGltZSI6MTAwfV19"
+}, {
+  "id" : "latest",
+  "method" : "GET",
+  "path" : "/logan/latest.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9LHsidGFza0lkIjoxLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoxMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0xLmxvZyIsImFkZFRpbWUiOjEwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "search",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&beginTime=1500&endTime=2500",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9XX0="
+}, {
+  "id" : "search-default-begin",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=0",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9LHsidGFza0lkIjoxLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoxMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0xLmxvZyIsImFkZFRpbWUiOjEwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "search-platform",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=0&platform=2",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjoyLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MiwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoyMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0yLmxvZyIsImFkZFRpbWUiOjIwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "search-platform-other",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=0&platform=-1",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9LHsidGFza0lkIjoxLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoxMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0xLmxvZyIsImFkZFRpbWUiOjEwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "search-empty",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=missing&endTime=0",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "search-no-device",
+  "method" : "GET",
+  "path" : "/logan/task/search.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "search-missing-end",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d",
+  "unhandled" : "java.lang.NullPointerException",
+  "status" : 500,
+  "evidence" : "Original method throws; standalone MockMvc has no servlet error page. Only failure status is compared."
+}, {
+  "id" : "search-binding",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&beginTime=x&endTime=0",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "search-empty-end",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=",
+  "unhandled" : "java.lang.NullPointerException",
+  "status" : 500,
+  "evidence" : "Original method throws; standalone MockMvc has no servlet error page. Only failure status is compared."
+}, {
+  "id" : "search-whitespace",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=%200%20",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9LHsidGFza0lkIjoxLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoxMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0xLmxvZyIsImFkZFRpbWUiOjEwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "search-hex",
+  "method" : "GET",
+  "path" : "/logan/task/search.json?deviceId=d&endTime=0x10",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3sidGFza0lkIjo5MDA3MTk5MjU0NzQwOTkzLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjozMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC05MDA3MTk5MjU0NzQwOTkzLmxvZyIsImFkZFRpbWUiOjQwMDAsInN0YXR1cyI6MX0seyJ0YXNrSWQiOjIsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoyLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjIwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTIubG9nIiwiYWRkVGltZSI6MjAwMCwic3RhdHVzIjoxfSx7InRhc2tJZCI6MywiYW1vdW50IjpudWxsLCJhcHBJZCI6bnVsbCwidW5pb25JZCI6bnVsbCwicGxhdGZvcm0iOjEsImJ1aWxkVmVyc2lvbiI6bnVsbCwiYXBwVmVyc2lvbiI6bnVsbCwiZGV2aWNlSWQiOiJkIiwibG9nRGF0ZSI6MTAwLCJsb2dGaWxlTmFtZSI6InRlc3QtMy5sb2ciLCJhZGRUaW1lIjozMDAwLCJzdGF0dXMiOjF9LHsidGFza0lkIjoxLCJhbW91bnQiOm51bGwsImFwcElkIjpudWxsLCJ1bmlvbklkIjpudWxsLCJwbGF0Zm9ybSI6MSwiYnVpbGRWZXJzaW9uIjpudWxsLCJhcHBWZXJzaW9uIjpudWxsLCJkZXZpY2VJZCI6ImQiLCJsb2dEYXRlIjoxMDAsImxvZ0ZpbGVOYW1lIjoidGVzdC0xLmxvZyIsImFkZFRpbWUiOjEwMDAsInN0YXR1cyI6MX1dfQ=="
+}, {
+  "id" : "info",
+  "method" : "GET",
+  "path" : "/logan/task/1/info.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6eyJ0YXNrSWQiOjEsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoxLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjEwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTEubG9nIiwiYWRkVGltZSI6MTAwMCwic3RhdHVzIjoxfX0="
+}, {
+  "id" : "info-large",
+  "method" : "GET",
+  "path" : "/logan/task/9007199254740993/info.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6eyJ0YXNrSWQiOjkwMDcxOTkyNTQ3NDA5OTMsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoxLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjMwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTkwMDcxOTkyNTQ3NDA5OTMubG9nIiwiYWRkVGltZSI6NDAwMCwic3RhdHVzIjoxfX0="
+}, {
+  "id" : "info-missing",
+  "method" : "GET",
+  "path" : "/logan/task/404/info.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6bnVsbH0="
+}, {
+  "id" : "info-invalid",
+  "method" : "GET",
+  "path" : "/logan/task/0/info.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "info-binding",
+  "method" : "GET",
+  "path" : "/logan/task/abc/info.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "info-hex",
+  "method" : "GET",
+  "path" : "/logan/task/0x1/info.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6eyJ0YXNrSWQiOjEsImFtb3VudCI6bnVsbCwiYXBwSWQiOm51bGwsInVuaW9uSWQiOm51bGwsInBsYXRmb3JtIjoxLCJidWlsZFZlcnNpb24iOm51bGwsImFwcFZlcnNpb24iOm51bGwsImRldmljZUlkIjoiZCIsImxvZ0RhdGUiOjEwMCwibG9nRmlsZU5hbWUiOiJ0ZXN0LTEubG9nIiwiYWRkVGltZSI6MTAwMCwic3RhdHVzIjoxfX0="
+}, {
+  "id" : "logtypes",
+  "method" : "GET",
+  "path" : "/logan/meta/logtypes.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3siZmlyc3QiOjEsInNlY29uZCI6IuaXpeW/l+exu+WeizEifSx7ImZpcnN0IjoyLCJzZWNvbmQiOiLml6Xlv5fnsbvlnosyIn0seyJmaXJzdCI6Mywic2Vjb25kIjoi5pel5b+X57G75Z6LMyJ9XX0="
+}, {
+  "id" : "brief",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo3LCJsb2dUeXBlIjowLCJsb2dUaW1lIjoxMDB9LHsiaWQiOjgsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjk5fSx7ImlkIjo5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo5OH0seyJpZCI6MTAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjk3fSx7ImlkIjoxMSwibG9nVHlwZSI6MCwibG9nVGltZSI6OTZ9LHsiaWQiOjEyLCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo5NX0seyJpZCI6MTMsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjk0fSx7ImlkIjoxNCwibG9nVHlwZSI6MywibG9nVGltZSI6OTN9LHsiaWQiOjE1LCJsb2dUeXBlIjowLCJsb2dUaW1lIjo5Mn0seyJpZCI6MTYsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjkxfSx7ImlkIjoxNywibG9nVHlwZSI6MiwibG9nVGltZSI6OTB9LHsiaWQiOjE4LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo4OX0seyJpZCI6MTksImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjg4fSx7ImlkIjoyMCwibG9nVHlwZSI6MSwibG9nVGltZSI6ODd9LHsiaWQiOjIxLCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo4Nn0seyJpZCI6MjIsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjg1fSx7ImlkIjoyMywibG9nVHlwZSI6MCwibG9nVGltZSI6ODR9LHsiaWQiOjI0LCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo4M30seyJpZCI6MjUsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjgyfSx7ImlkIjoyNiwibG9nVHlwZSI6MywibG9nVGltZSI6ODF9XSxbeyJpZCI6MjcsImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjgwfSx7ImlkIjoyOCwibG9nVHlwZSI6MSwibG9nVGltZSI6Nzl9LHsiaWQiOjI5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo3OH0seyJpZCI6MzAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjc3fSx7ImlkIjozMSwibG9nVHlwZSI6MCwibG9nVGltZSI6NzZ9XV19"
+}, {
+  "id" : "brief-filter",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?logTypes=1,3&keyword=line",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo4LCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo5OX0seyJpZCI6MTAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjk3fSx7ImlkIjoxMiwibG9nVHlwZSI6MSwibG9nVGltZSI6OTV9LHsiaWQiOjE0LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo5M30seyJpZCI6MTYsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjkxfSx7ImlkIjoxOCwibG9nVHlwZSI6MywibG9nVGltZSI6ODl9LHsiaWQiOjIwLCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo4N30seyJpZCI6MjIsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjg1fSx7ImlkIjoyNCwibG9nVHlwZSI6MSwibG9nVGltZSI6ODN9LHsiaWQiOjI2LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo4MX0seyJpZCI6MjgsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjc5fSx7ImlkIjozMCwibG9nVHlwZSI6MywibG9nVGltZSI6Nzd9XV19"
+}, {
+  "id" : "brief-empty-keyword",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?keyword=",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo3LCJsb2dUeXBlIjowLCJsb2dUaW1lIjoxMDB9LHsiaWQiOjgsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjk5fSx7ImlkIjo5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo5OH0seyJpZCI6MTAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjk3fSx7ImlkIjoxMSwibG9nVHlwZSI6MCwibG9nVGltZSI6OTZ9LHsiaWQiOjEyLCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo5NX0seyJpZCI6MTMsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjk0fSx7ImlkIjoxNCwibG9nVHlwZSI6MywibG9nVGltZSI6OTN9LHsiaWQiOjE1LCJsb2dUeXBlIjowLCJsb2dUaW1lIjo5Mn0seyJpZCI6MTYsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjkxfSx7ImlkIjoxNywibG9nVHlwZSI6MiwibG9nVGltZSI6OTB9LHsiaWQiOjE4LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo4OX0seyJpZCI6MTksImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjg4fSx7ImlkIjoyMCwibG9nVHlwZSI6MSwibG9nVGltZSI6ODd9LHsiaWQiOjIxLCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo4Nn0seyJpZCI6MjIsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjg1fSx7ImlkIjoyMywibG9nVHlwZSI6MCwibG9nVGltZSI6ODR9LHsiaWQiOjI0LCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo4M30seyJpZCI6MjUsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjgyfSx7ImlkIjoyNiwibG9nVHlwZSI6MywibG9nVGltZSI6ODF9XSxbeyJpZCI6MjcsImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjgwfSx7ImlkIjoyOCwibG9nVHlwZSI6MSwibG9nVGltZSI6Nzl9LHsiaWQiOjI5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo3OH0seyJpZCI6MzAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjc3fSx7ImlkIjozMSwibG9nVHlwZSI6MCwibG9nVGltZSI6NzZ9XV19"
+}, {
+  "id" : "brief-comma-types",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?logTypes=,",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo3LCJsb2dUeXBlIjowLCJsb2dUaW1lIjoxMDB9LHsiaWQiOjgsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjk5fSx7ImlkIjo5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo5OH0seyJpZCI6MTAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjk3fSx7ImlkIjoxMSwibG9nVHlwZSI6MCwibG9nVGltZSI6OTZ9LHsiaWQiOjEyLCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo5NX0seyJpZCI6MTMsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjk0fSx7ImlkIjoxNCwibG9nVHlwZSI6MywibG9nVGltZSI6OTN9LHsiaWQiOjE1LCJsb2dUeXBlIjowLCJsb2dUaW1lIjo5Mn0seyJpZCI6MTYsImxvZ1R5cGUiOjEsImxvZ1RpbWUiOjkxfSx7ImlkIjoxNywibG9nVHlwZSI6MiwibG9nVGltZSI6OTB9LHsiaWQiOjE4LCJsb2dUeXBlIjozLCJsb2dUaW1lIjo4OX0seyJpZCI6MTksImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjg4fSx7ImlkIjoyMCwibG9nVHlwZSI6MSwibG9nVGltZSI6ODd9LHsiaWQiOjIxLCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo4Nn0seyJpZCI6MjIsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjg1fSx7ImlkIjoyMywibG9nVHlwZSI6MCwibG9nVGltZSI6ODR9LHsiaWQiOjI0LCJsb2dUeXBlIjoxLCJsb2dUaW1lIjo4M30seyJpZCI6MjUsImxvZ1R5cGUiOjIsImxvZ1RpbWUiOjgyfSx7ImlkIjoyNiwibG9nVHlwZSI6MywibG9nVGltZSI6ODF9XSxbeyJpZCI6MjcsImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjgwfSx7ImlkIjoyOCwibG9nVHlwZSI6MSwibG9nVGltZSI6Nzl9LHsiaWQiOjI5LCJsb2dUeXBlIjoyLCJsb2dUaW1lIjo3OH0seyJpZCI6MzAsImxvZ1R5cGUiOjMsImxvZ1RpbWUiOjc3fSx7ImlkIjozMSwibG9nVHlwZSI6MCwibG9nVGltZSI6NzZ9XV19"
+}, {
+  "id" : "brief-bad-type",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?logTypes=x",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W1t7ImlkIjo3LCJsb2dUeXBlIjowLCJsb2dUaW1lIjoxMDB9LHsiaWQiOjExLCJsb2dUeXBlIjowLCJsb2dUaW1lIjo5Nn0seyJpZCI6MTUsImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjkyfSx7ImlkIjoxOSwibG9nVHlwZSI6MCwibG9nVGltZSI6ODh9LHsiaWQiOjIzLCJsb2dUeXBlIjowLCJsb2dUaW1lIjo4NH0seyJpZCI6MjcsImxvZ1R5cGUiOjAsImxvZ1RpbWUiOjgwfSx7ImlkIjozMSwibG9nVHlwZSI6MCwibG9nVGltZSI6NzZ9XV19"
+}, {
+  "id" : "brief-no-match",
+  "method" : "GET",
+  "path" : "/logan/task/1/brief.json?keyword=nomatch",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "brief-missing",
+  "method" : "GET",
+  "path" : "/logan/task/404/brief.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "brief-invalid",
+  "method" : "GET",
+  "path" : "/logan/task/0/brief.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "brief-overflow",
+  "method" : "GET",
+  "path" : "/logan/task/2147483648/brief.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "brief-binding",
+  "method" : "GET",
+  "path" : "/logan/task/abc/brief.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "details",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json?detailIds=8,404,7,8,0",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3siaWQiOjgsInRhc2tJZCI6MSwibG9nVHlwZSI6MSwiY29udGVudCI6ImxpbmUtMSA8dGFnPiAmIFxu5Lit5paHIiwic2ltcGxlQ29udGVudCI6ImxpbmUtMSA8dGFnPiAmIFxu5Lit5paHIiwiZm9ybWF0Q29udGVudCI6bnVsbCwibG9nVGltZSI6OTl9LG51bGwseyJpZCI6NywidGFza0lkIjoxLCJsb2dUeXBlIjowLCJjb250ZW50IjoibGluZS0wIDx0YWc+ICYgXG7kuK3mlociLCJzaW1wbGVDb250ZW50IjoibGluZS0wIDx0YWc+ICYgXG7kuK3mlociLCJmb3JtYXRDb250ZW50IjpudWxsLCJsb2dUaW1lIjoxMDB9LG51bGwsbnVsbF19"
+}, {
+  "id" : "details-invalid-value",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json?detailIds=x",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "details-comma",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json?detailIds=,",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W119"
+}, {
+  "id" : "details-missing",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "details-blank",
+  "method" : "GET",
+  "path" : "/logan/task/query/details.json?detailIds=%20%20",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "detail",
+  "method" : "GET",
+  "path" : "/logan/task/8/detail.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6eyJpZCI6OCwidGFza0lkIjoxLCJsb2dUeXBlIjoxLCJjb250ZW50IjoibGluZS0xIDx0YWc+ICYgXG7kuK3mlociLCJzaW1wbGVDb250ZW50IjpudWxsLCJmb3JtYXRDb250ZW50IjoibGluZS0xIDx0YWc+ICYgXG7kuK3mlociLCJsb2dUaW1lIjo5OX19"
+}, {
+  "id" : "detail-unknown",
+  "method" : "GET",
+  "path" : "/logan/task/7/detail.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6eyJpZCI6NywidGFza0lkIjoxLCJsb2dUeXBlIjowLCJjb250ZW50IjoibGluZS0wIDx0YWc+ICYgXG7kuK3mlociLCJzaW1wbGVDb250ZW50IjpudWxsLCJmb3JtYXRDb250ZW50IjoibGluZS0wIDx0YWc+ICYgXG7kuK3mlociLCJsb2dUaW1lIjoxMDB9fQ=="
+}, {
+  "id" : "detail-missing",
+  "method" : "GET",
+  "path" : "/logan/task/404/detail.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6bnVsbH0="
+}, {
+  "id" : "detail-invalid",
+  "method" : "GET",
+  "path" : "/logan/task/0/detail.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "detail-overflow",
+  "method" : "GET",
+  "path" : "/logan/task/2147483648/detail.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "detail-binding",
+  "method" : "GET",
+  "path" : "/logan/task/abc/detail.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "preflight",
+  "method" : "OPTIONS",
+  "path" : "/logan/latest.json",
+  "status" : 200,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+} ]

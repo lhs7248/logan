@@ -1,0 +1,23 @@
+{
+  "logan-ios24-db": {
+    "samples": 281,
+    "sampled_peak_memory_mib": 585.1,
+    "sampled_peak_cpu_percent": 26.65,
+    "first_unix": 1792401739.3416011,
+    "last_unix": 1792402585.238034
+  },
+  "logan-ios24-go": {
+    "samples": 281,
+    "sampled_peak_memory_mib": 39.46,
+    "sampled_peak_cpu_percent": 15.03,
+    "first_unix": 1792401739.341433,
+    "last_unix": 1792402585.237786
+  },
+  "logan-ios24-oss": {
+    "samples": 281,
+    "sampled_peak_memory_mib": 35.9,
+    "sampled_peak_cpu_percent": 1.36,
+    "first_unix": 1792401739.3416388,
+    "last_unix": 1792402585.238053
+  }
+}

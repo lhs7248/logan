@@ -1,0 +1,9 @@
+# INERT reference matching original Java URI mapping. Gateway must join the original Java network.
+location /logan/ {
+    proxy_pass http://backend:8080/logan-web/logan/;
+    proxy_next_upstream off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}

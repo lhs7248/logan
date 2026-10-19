@@ -1,0 +1,13 @@
+/output/
+/bin/
+/coverage.out
+/.env
+/tests/contract/captures/
+/tests/contract/vars.local.json
+/testdata/protocol/private/
+/tests/legacy-java/target/
+
+__pycache__/
+
+# Go test profile binaries
+/*.test

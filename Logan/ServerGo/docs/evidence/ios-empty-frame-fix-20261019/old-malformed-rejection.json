@@ -1,0 +1,12 @@
+{
+  "http_status": 200,
+  "response": {
+    "code": 500,
+    "msg": "ERROR_DECRYPT",
+    "data": null
+  },
+  "seconds": 0.19880008697509766,
+  "wire_bytes": 25999953,
+  "old_original_unmodified": true,
+  "source": "phase25 large32-single original, HTTP replay for strict-rejection check only"
+}

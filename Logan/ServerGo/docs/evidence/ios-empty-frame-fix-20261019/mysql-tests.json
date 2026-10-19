@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "oom_killed": false,
+  "seconds": 38.25067496299744,
+  "scope": "random disposable databases in isolated mysql; current binary; no Java execution"
+}

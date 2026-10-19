@@ -1,0 +1,23 @@
+[
+  {
+    "task_id": 12,
+    "bytes": 113376,
+    "sha256": "4b4b34d688cead6df3342ae63f047839d3c75281750ffa27659e4b267d4c6056",
+    "actual_browser_download": true,
+    "equals_independent_sdk_decryption": true
+  },
+  {
+    "task_id": 13,
+    "bytes": 811824,
+    "sha256": "f340ff2fde2bab1854bc540a91602748522f960ab2d636c7241e9167f9f470c2",
+    "actual_browser_download": true,
+    "equals_independent_sdk_decryption": true
+  },
+  {
+    "task_id": 14,
+    "bytes": 6493744,
+    "sha256": "21491515b54def9519a4086e5fef2c72f2b399b23f2ed799c6cf16cad9a22a67",
+    "actual_browser_download": true,
+    "equals_independent_sdk_decryption": true
+  }
+]

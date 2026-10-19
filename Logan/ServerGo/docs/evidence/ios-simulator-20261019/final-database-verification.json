@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "actual_ios_sdk_records": 11,
+  "content_sha256_all_match": true,
+  "done": true,
+  "owner_empty": true,
+  "lease_until": 0,
+  "fence": 1,
+  "source_revision": 1,
+  "attempts": 1,
+  "last_error_empty": true,
+  "original_sdk_files_unchanged": 176
+}

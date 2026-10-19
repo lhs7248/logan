@@ -1,0 +1,652 @@
+# JSON syntax is valid YAML. All samples are synthetic.
+{
+  "rule_files": [
+    "alerts.yml"
+  ],
+  "evaluation_interval": "1m",
+  "tests": [
+    {
+      "name": "LoganScrapeDown pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "up{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "0x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "scrape_down"
+              },
+              "exp_annotations": {
+                "summary": "Logan metrics scrape is failing"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganInstrumentationAbsent pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "up{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "1x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganInstrumentationAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganInstrumentationAbsent",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "instrumentation_absent"
+              },
+              "exp_annotations": {
+                "summary": "Logan runtime metrics are absent"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganHTTP5xxRatio pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_http_requests_total{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",status=\"500\",method=\"GET\"}",
+          "values": "0+60x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganHTTP5xxRatio",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTP5xxRatio",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "http_5xx"
+              },
+              "exp_annotations": {
+                "summary": "Logan business HTTP 5xx ratio exceeds 5 percent"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganHTTPP99High pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_http_duration_seconds_bucket{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",method=\"GET\",le=\"2.5\"}",
+          "values": "0+0x35"
+        },
+        {
+          "series": "logan_http_duration_seconds_bucket{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",method=\"GET\",le=\"10\"}",
+          "values": "0+60x35"
+        },
+        {
+          "series": "logan_http_duration_seconds_bucket{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",method=\"GET\",le=\"+Inf\"}",
+          "values": "0+60x35"
+        },
+        {
+          "series": "logan_http_duration_seconds_count{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",method=\"GET\"}",
+          "values": "0+60x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganHTTPP99High",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTPP99High",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "http_latency"
+              },
+              "exp_annotations": {
+                "summary": "Logan estimated business HTTP p99 exceeds 2.5 seconds"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganDBPoolSaturated pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_db_connections{job=\"logan-go\",instance=\"logan-go:8080\",state=\"in_use\"}",
+          "values": "10x35"
+        },
+        {
+          "series": "logan_db_connections{job=\"logan-go\",instance=\"logan-go:8080\",state=\"max_open\"}",
+          "values": "10x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganDBPoolSaturated",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganDBPoolSaturated",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "db_pool"
+              },
+              "exp_annotations": {
+                "summary": "Logan finite database pool is over 90 percent in use"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganProcessingFailed pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_processing_jobs{job=\"logan-go\",instance=\"logan-go:8080\",kind=\"native\",state=\"failed\"}",
+          "values": "1x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "kind": "native",
+                "state": "failed",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "processing_failed"
+              },
+              "exp_annotations": {
+                "summary": "Logan persistent processing jobs are failed"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganProcessingBacklog pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_processing_jobs{job=\"logan-go\",instance=\"logan-go:8080\",kind=\"web\",state=\"pending\"}",
+          "values": "101x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganProcessingBacklog",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingBacklog",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "kind": "web",
+                "state": "pending",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "processing_backlog"
+              },
+              "exp_annotations": {
+                "summary": "Logan processing pending count exceeds provisional threshold"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganMaintenanceFailed pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_maintenance_tasks{job=\"logan-go\",instance=\"logan-go:8080\",state=\"failed\"}",
+          "values": "1x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganMaintenanceFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceFailed",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "state": "failed",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "maintenance_failed"
+              },
+              "exp_annotations": {
+                "summary": "Logan maintenance task snapshot contains failures"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganMaintenanceCycleErrors pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_maintenance_operations_total{job=\"logan-go\",instance=\"logan-go:8080\",operation=\"cycle\",result=\"error\"}",
+          "values": "0+1x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganMaintenanceCycleErrors",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceCycleErrors",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "maintenance_cycle_errors"
+              },
+              "exp_annotations": {
+                "summary": "Logan maintenance cycles continue reporting errors"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LoganOSSErrors pending then firing",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "logan_oss_operation_duration_seconds_count{job=\"logan-go\",instance=\"logan-go:8080\",operation=\"get\",outcome=\"error\"}",
+          "values": "0+1x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganOSSErrors",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganOSSErrors",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "operation": "get",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "oss_errors"
+              },
+              "exp_annotations": {
+                "summary": "Logan OSS operations continue reporting errors"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "missing target fires with no invented instance label",
+      "interval": "1m",
+      "input_series": [],
+      "alert_rule_test": [
+        {
+          "eval_time": "0m",
+          "alertname": "LoganMetricsAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "6m",
+          "alertname": "LoganMetricsAbsent",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "target_absent"
+              },
+              "exp_annotations": {
+                "summary": "Logan scrape target is absent"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "readiness errors low business traffic unlimited pool zero backlog no errors",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "up{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "1x35"
+        },
+        {
+          "series": "go_goroutines{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "10x35"
+        },
+        {
+          "series": "logan_http_requests_total{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/readyz\",status=\"503\",method=\"GET\"}",
+          "values": "0+600x35"
+        },
+        {
+          "series": "logan_http_requests_total{job=\"logan-go\",instance=\"logan-go:8080\",route=\"/business\",status=\"500\",method=\"GET\"}",
+          "values": "0+1x35"
+        },
+        {
+          "series": "logan_db_connections{job=\"logan-go\",instance=\"logan-go:8080\",state=\"in_use\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_db_connections{job=\"logan-go\",instance=\"logan-go:8080\",state=\"max_open\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_processing_jobs{job=\"logan-go\",instance=\"logan-go:8080\",kind=\"native\",state=\"failed\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_processing_jobs{job=\"logan-go\",instance=\"logan-go:8080\",kind=\"native\",state=\"pending\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_maintenance_tasks{job=\"logan-go\",instance=\"logan-go:8080\",state=\"failed\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_maintenance_operations_total{job=\"logan-go\",instance=\"logan-go:8080\",operation=\"cycle\",result=\"error\"}",
+          "values": "0x35"
+        },
+        {
+          "series": "logan_oss_operation_duration_seconds_count{job=\"logan-go\",instance=\"logan-go:8080\",operation=\"get\",outcome=\"error\"}",
+          "values": "0x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "25m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMetricsAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganInstrumentationAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTP5xxRatio",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTPP99High",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganDBPoolSaturated",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingBacklog",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceCycleErrors",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganOSSErrors",
+          "exp_alerts": []
+        }
+      ]
+    },
+    {
+      "name": "disabled optional features have no samples",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "up{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "1x35"
+        },
+        {
+          "series": "go_goroutines{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "10x35"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "25m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMetricsAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganInstrumentationAbsent",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTP5xxRatio",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganHTTPP99High",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganDBPoolSaturated",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganProcessingBacklog",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceFailed",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganMaintenanceCycleErrors",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "25m",
+          "alertname": "LoganOSSErrors",
+          "exp_alerts": []
+        }
+      ]
+    },
+    {
+      "name": "scrape and processing failure recover",
+      "interval": "1m",
+      "input_series": [
+        {
+          "series": "up{job=\"logan-go\",instance=\"logan-go:8080\"}",
+          "values": "0x5 1x15"
+        },
+        {
+          "series": "logan_processing_jobs{job=\"logan-go\",instance=\"logan-go:8080\",kind=\"native\",state=\"failed\"}",
+          "values": "1x6 0x15"
+        }
+      ],
+      "alert_rule_test": [
+        {
+          "eval_time": "5m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "scrape_down"
+              },
+              "exp_annotations": {
+                "summary": "Logan metrics scrape is failing"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "6m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": [
+            {
+              "exp_labels": {
+                "job": "logan-go",
+                "instance": "logan-go:8080",
+                "kind": "native",
+                "state": "failed",
+                "severity": "warning",
+                "service": "logan-go",
+                "reason": "processing_failed"
+              },
+              "exp_annotations": {
+                "summary": "Logan persistent processing jobs are failed"
+              }
+            }
+          ]
+        },
+        {
+          "eval_time": "10m",
+          "alertname": "LoganScrapeDown",
+          "exp_alerts": []
+        },
+        {
+          "eval_time": "10m",
+          "alertname": "LoganProcessingFailed",
+          "exp_alerts": []
+        }
+      ]
+    }
+  ]
+}

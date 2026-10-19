@@ -1,0 +1,132 @@
+[ {
+  "id" : "upload-decrypt",
+  "method" : "POST",
+  "path" : "/logan/upload.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo1MDAsIm1zZyI6IkVSUk9SX0RFQ1JZUFQiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "upload-database",
+  "method" : "POST",
+  "path" : "/logan/upload.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo1MDAsIm1zZyI6IkVSUk9SX0RBVEFCQVNFIiwiZGF0YSI6bnVsbH0="
+}, {
+  "id" : "download-url",
+  "method" : "GET",
+  "path" : "/logan/task/42/download.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6Ii9sb2dhbi9kb3duaW5nP25hbWU9dGVzdC5sb2cifQ=="
+}, {
+  "id" : "download-url-invalid",
+  "method" : "GET",
+  "path" : "/logan/task/0/download.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "download-url-missing",
+  "method" : "GET",
+  "path" : "/logan/task/404/download.json",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json",
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}, {
+  "id" : "download-url-binding",
+  "method" : "GET",
+  "path" : "/logan/task/abc/download.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "download-url-overflow",
+  "method" : "GET",
+  "path" : "/logan/task/2147483648/download.json",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "download-no-name",
+  "method" : "GET",
+  "path" : "/logan/downing",
+  "status" : 400,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+}, {
+  "id" : "preflight-upload",
+  "method" : "OPTIONS",
+  "path" : "/logan/upload.json",
+  "status" : 200,
+  "headers" : {
+    "Vary" : "Origin",
+    "Access-Control-Allow-Origin" : "http://localhost:3000",
+    "Access-Control-Allow-Credentials" : "true",
+    "Access-Control-Allow-Methods" : "POST, GET, OPTIONS, DELETE",
+    "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept, X-CSRF-TOKEN",
+    "Access-Control-Max-Age" : "3600"
+  },
+  "body" : ""
+} ]

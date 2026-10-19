@@ -1,0 +1,11 @@
+{
+  "version" : 1,
+  "case_id" : "native-brief-invalid",
+  "captured_at" : "2026-10-15T08:59:28.546400Z",
+  "manifest_sha256" : "9baa6be2a03706edd6bdd884bc70b01695eb81daa5ac1c0bdf52bb822ad022a5",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json"
+  },
+  "body_base64" : "eyJjb2RlIjo0MDAsIm1zZyI6InBhcmFtIGlsbGVnYWwiLCJkYXRhIjpudWxsfQ=="
+}

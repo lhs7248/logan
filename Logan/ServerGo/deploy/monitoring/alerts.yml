@@ -1,0 +1,114 @@
+# Candidate thresholds require tuning against real traffic and worker capacity.
+groups:
+  - name: logan-go
+    rules:
+      - alert: LoganScrapeDown
+        expr: |
+          up{job="logan-go"} == 0
+        for: 2m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: scrape_down
+        annotations:
+          summary: Logan metrics scrape is failing
+      - alert: LoganMetricsAbsent
+        expr: |
+          absent(up{job="logan-go"})
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: target_absent
+        annotations:
+          summary: Logan scrape target is absent
+      - alert: LoganInstrumentationAbsent
+        expr: |
+          up{job="logan-go"} == 1 unless on(job, instance) go_goroutines{job="logan-go"}
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: instrumentation_absent
+        annotations:
+          summary: Logan runtime metrics are absent
+      - alert: LoganHTTP5xxRatio
+        expr: |
+          (sum by(job, instance) (rate(logan_http_requests_total{job="logan-go",route!~"/livez|/readyz|/ping|/metrics",status=~"5.."}[5m])) / sum by(job, instance) (rate(logan_http_requests_total{job="logan-go",route!~"/livez|/readyz|/ping|/metrics"}[5m])) > 0.05) and on(job, instance) (sum by(job, instance) (increase(logan_http_requests_total{job="logan-go",route!~"/livez|/readyz|/ping|/metrics"}[5m])) >= 100)
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: http_5xx
+        annotations:
+          summary: Logan business HTTP 5xx ratio exceeds 5 percent
+      - alert: LoganHTTPP99High
+        expr: |
+          (histogram_quantile(0.99, sum by(job, instance, le) (rate(logan_http_duration_seconds_bucket{job="logan-go",route!~"/livez|/readyz|/ping|/metrics"}[5m]))) > 2.5) and on(job, instance) (sum by(job, instance) (increase(logan_http_duration_seconds_count{job="logan-go",route!~"/livez|/readyz|/ping|/metrics"}[5m])) >= 100)
+        for: 10m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: http_latency
+        annotations:
+          summary: Logan estimated business HTTP p99 exceeds 2.5 seconds
+      - alert: LoganDBPoolSaturated
+        expr: |
+          (logan_db_connections{job="logan-go",state="in_use"} / ignoring(state) logan_db_connections{job="logan-go",state="max_open"} > 0.9) and ignoring(state) (logan_db_connections{job="logan-go",state="max_open"} > 0)
+        for: 10m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: db_pool
+        annotations:
+          summary: Logan finite database pool is over 90 percent in use
+      - alert: LoganProcessingFailed
+        expr: |
+          logan_processing_jobs{job="logan-go",state="failed"} > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: processing_failed
+        annotations:
+          summary: Logan persistent processing jobs are failed
+      - alert: LoganProcessingBacklog
+        expr: |
+          logan_processing_jobs{job="logan-go",state="pending"} > 100
+        for: 15m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: processing_backlog
+        annotations:
+          summary: Logan processing pending count exceeds provisional threshold
+      - alert: LoganMaintenanceFailed
+        expr: |
+          logan_maintenance_tasks{job="logan-go",state="failed"} > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: maintenance_failed
+        annotations:
+          summary: Logan maintenance task snapshot contains failures
+      - alert: LoganMaintenanceCycleErrors
+        expr: |
+          sum by(job, instance) (increase(logan_maintenance_operations_total{job="logan-go",operation="cycle",result=~"error|failed"}[5m])) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: maintenance_cycle_errors
+        annotations:
+          summary: Logan maintenance cycles continue reporting errors
+      - alert: LoganOSSErrors
+        expr: |
+          sum by(job, instance, operation) (increase(logan_oss_operation_duration_seconds_count{job="logan-go",outcome="error"}[5m])) > 0
+        for: 5m
+        labels:
+          severity: warning
+          service: logan-go
+          reason: oss_errors
+        annotations:
+          summary: Logan OSS operations continue reporting errors

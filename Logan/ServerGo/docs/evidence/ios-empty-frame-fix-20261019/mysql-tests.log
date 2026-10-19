@@ -1,0 +1,77 @@
+MySQL integration server version: 8.4.11
+=== RUN   TestAtomicUploadRetentionAndDurableOutbox
+--- PASS: TestAtomicUploadRetentionAndDurableOutbox (0.08s)
+=== RUN   TestMySQLWorkerProcess
+--- PASS: TestMySQLWorkerProcess (0.00s)
+=== RUN   TestKilledProcessRecoveryAndFencing
+--- PASS: TestKilledProcessRecoveryAndFencing (0.48s)
+=== RUN   TestNativePublicationRollbackAndRetry
+2026/10/19 10:05:08 INFO native processing stages task_id=3 outcome=other duration_ms=16.55936 stages_ms="map[publication:3.175307 queue:17 stage_decode:0.241698]"
+2026/10/19 10:05:09 INFO native processing stages task_id=3 outcome=none duration_ms=8.936624 stages_ms="map[db_insert:0.487981 publication:5.804299 stage_decode:0.011355]"
+--- PASS: TestNativePublicationRollbackAndRetry (1.07s)
+=== RUN   TestCompetingLeaseAndExpiredOwner
+--- PASS: TestCompetingLeaseAndExpiredOwner (0.31s)
+=== RUN   TestKilledNativeParserProcessRecovery
+    integration_test.go:537: native crash recovery: task=4 running fence=1 attempts=1 -> done fence=2 attempts=2; detail=3
+--- PASS: TestKilledNativeParserProcessRecovery (30.47s)
+=== RUN   TestWebPublicationAndRetention
+--- PASS: TestWebPublicationAndRetention (0.06s)
+=== RUN   TestMySQLWebUploadIdentityLockUpgrade
+--- PASS: TestMySQLWebUploadIdentityLockUpgrade (0.02s)
+=== RUN   TestMySQLEnsureIdentityLockUpgrade
+=== RUN   TestMySQLEnsureIdentityLockUpgrade/native
+=== RUN   TestMySQLEnsureIdentityLockUpgrade/web
+--- PASS: TestMySQLEnsureIdentityLockUpgrade (0.05s)
+    --- PASS: TestMySQLEnsureIdentityLockUpgrade/native (0.02s)
+    --- PASS: TestMySQLEnsureIdentityLockUpgrade/web (0.03s)
+=== RUN   TestMySQLPendingDoesNotLockLiveLease
+=== RUN   TestMySQLPendingDoesNotLockLiveLease/native
+=== RUN   TestMySQLPendingDoesNotLockLiveLease/web
+--- PASS: TestMySQLPendingDoesNotLockLiveLease (0.02s)
+    --- PASS: TestMySQLPendingDoesNotLockLiveLease/native (0.01s)
+    --- PASS: TestMySQLPendingDoesNotLockLiveLease/web (0.01s)
+=== RUN   TestMySQLExpirationCandidateOwnershipRace
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/native/renew
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/native/owner
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/native/fence
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/native/lease
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/web/renew
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/web/owner
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/web/fence
+=== RUN   TestMySQLExpirationCandidateOwnershipRace/web/lease
+--- PASS: TestMySQLExpirationCandidateOwnershipRace (0.10s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/native/renew (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/native/owner (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/native/fence (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/native/lease (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/web/renew (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/web/owner (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/web/fence (0.01s)
+    --- PASS: TestMySQLExpirationCandidateOwnershipRace/web/lease (0.01s)
+=== RUN   TestMySQLExpirationIsBoundedAndTerminal
+=== RUN   TestMySQLExpirationIsBoundedAndTerminal/native
+=== RUN   TestMySQLExpirationIsBoundedAndTerminal/web
+--- PASS: TestMySQLExpirationIsBoundedAndTerminal (0.04s)
+    --- PASS: TestMySQLExpirationIsBoundedAndTerminal/native (0.02s)
+    --- PASS: TestMySQLExpirationIsBoundedAndTerminal/web (0.02s)
+=== RUN   TestMySQLConcurrentEmptyDetailPublication
+=== RUN   TestMySQLConcurrentEmptyDetailPublication/native
+2026/10/19 10:05:40 INFO native processing stages task_id=7 outcome=none duration_ms=10.727271 stages_ms="map[db_insert:1.395263 publication:6.451562 queue:6 stage_decode:0.011397]"
+2026/10/19 10:05:40 INFO native processing stages task_id=6 outcome=none duration_ms=9.295418 stages_ms="map[db_insert:0.242126 publication:5.442304 queue:16 stage_decode:0.013038]"
+=== RUN   TestMySQLConcurrentEmptyDetailPublication/web
+--- PASS: TestMySQLConcurrentEmptyDetailPublication (0.07s)
+    --- PASS: TestMySQLConcurrentEmptyDetailPublication/native (0.03s)
+    --- PASS: TestMySQLConcurrentEmptyDetailPublication/web (0.04s)
+=== RUN   TestMySQLPublicationReplacesHistoricalDetails
+=== RUN   TestMySQLPublicationReplacesHistoricalDetails/native/stale=false
+2026/10/19 10:05:41 INFO native processing stages task_id=8 outcome=none duration_ms=15.510195 stages_ms="map[db_insert:0.58376 publication:10.178544 queue:1478 stage_decode:0.013333]"
+=== RUN   TestMySQLPublicationReplacesHistoricalDetails/native/stale=true
+2026/10/19 10:05:42 INFO native processing stages task_id=9 outcome=other duration_ms=6.459511 stages_ms="map[publication:0.724906 queue:1020 stage_decode:0]"
+=== RUN   TestMySQLPublicationReplacesHistoricalDetails/web/stale=false
+=== RUN   TestMySQLPublicationReplacesHistoricalDetails/web/stale=true
+--- PASS: TestMySQLPublicationReplacesHistoricalDetails (5.02s)
+    --- PASS: TestMySQLPublicationReplacesHistoricalDetails/native/stale=false (1.50s)
+    --- PASS: TestMySQLPublicationReplacesHistoricalDetails/native/stale=true (1.03s)
+    --- PASS: TestMySQLPublicationReplacesHistoricalDetails/web/stale=false (1.19s)
+    --- PASS: TestMySQLPublicationReplacesHistoricalDetails/web/stale=true (1.30s)
+PASS

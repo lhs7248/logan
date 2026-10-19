@@ -1,0 +1,6 @@
+context platform=ios device="MobileInspector-Harness-20261016" kind=simulator theme=unknown
+open "org.logan.acceptance.phase25.continuousformal"
+# agent-device:target-v1 {"role":"button","label":"continuous","ancestry":[{"role":"application","label":"Logan continuous"}],"sibling":0,"viewportOrder":0,"rect":{"x":24,"y":92.00000000000001,"width":354,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"continuous\" || label=\"continuous\""
+screenshot "/private/tmp/phase25-ios/continuous.png"
+close

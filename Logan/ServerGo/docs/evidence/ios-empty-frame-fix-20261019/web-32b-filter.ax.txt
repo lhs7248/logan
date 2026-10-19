@@ -1,0 +1,42 @@
+Browser tab: 6, Title: "Logan", URL: "http://localhost:3000/#/native-log-detail?tasks=16".
+1 AXWebArea Logan, URL: localhost:3000/#/native-log-detail?tasks=16
+	2 container
+		3 menu
+			4 icon: mobile Native日志
+				5 container icon: mobile
+				6 text Native日志
+			7 icon: html5 Web日志
+				8 container icon: html5
+				9 text Web日志
+		10 button icon: left 返回列表
+			11 container icon: left
+			12 text 返回列表
+		13 tab group
+			14 tab (collapsed, settable) icon: right 【testUnionId】日志基本信息, Secondary Actions: Expand
+				15 container icon: right
+				16 text 【
+				17 text testUnionId
+				18 text 】
+				19 text 日志基本信息
+		20 button icon: download 日志文件下载
+			21 container icon: download
+			22 text 日志文件下载
+		23 button icon: check-square 日志类型
+			24 container icon: check-square
+			25 text 日志类型
+		26 button icon: check-circle 排序方式：升序
+			27 container icon: check-circle
+			28 text 排序方式：升序
+		30 container icon: close-circle-o
+		29 text field (settable) P26|large32|00008191|
+		31 container icon: search
+		32 container infinite-container-inner
+			33 content list
+				34 container log-item-row-0
+					35 container
+						36 container
+							37 text exception catch 日志 :
+						38 text 18:07:17.790
+						39 text 日志ID： 20208 P26|large32|00008191|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
+
+The focused UI element is 29 text field (settable) P26|large32|00008191|

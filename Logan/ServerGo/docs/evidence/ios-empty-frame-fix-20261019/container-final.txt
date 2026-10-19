@@ -1,0 +1,3 @@
+/logan-ios26-go OOMKilled=false Restarts=0 Status=running
+/logan-ios24-db OOMKilled=false Restarts=0 Status=running
+/logan-ios24-oss OOMKilled=false Restarts=0 Status=running

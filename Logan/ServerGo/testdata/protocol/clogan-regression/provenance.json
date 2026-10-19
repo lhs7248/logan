@@ -1,0 +1,45 @@
+{
+  "native": {
+    "producer": "unchanged shared CLogan SDK, host C compiler",
+    "artifact": "native.bin",
+    "marker": "SDK_CHAIN_NATIVE_20261016 中文 🌏 + percent%",
+    "type": 7,
+    "timestamp": 1792108800123,
+    "key": "0123456789012345",
+    "iv": "0123456789012345",
+    "keyClassification": "public synthetic test material"
+  },
+  "sourceSha256": {
+    "Clogan/clogan_core.c": "a4506f5daadbd09200b33ea2cf0cfb1af19ab68907bc8c2afb48a60023bd422c",
+    "Clogan/mmap_util.c": "2902a7ed2985d7cd8afd32e46976a01d8acebada2746deb591ddeedcd912c4d0",
+    "Clogan/cJSON.c": "aa27b010d29ed20cb49b7f5678528f35eee43b5cb9beaf2b76dbd4c455dff449",
+    "Clogan/construct_data.c": "68dc4403c4f08ba101f21766b188d8ee9a39fe9a724e3cdfa6caa6e7deef5fd6",
+    "Clogan/zlib_util.c": "7bd41bce0d24512b4b714d94c7d96a5513db547c1f7ec18875d586f26352d0b8",
+    "Clogan/json_util.c": "16cbc8e2740b23ed446aa1783362ebcea58611bd7c492863b371f9e29af71ee5",
+    "Clogan/aes_util.c": "c7d9cefba445325eb83801d2c63b116462368a64e86384d9328c589bed88bbda",
+    "Clogan/directory_util.c": "22d41f153ce5ba1078b71e9faafd78a91871090dbbbc7259c57117482208ad9b",
+    "Clogan/base_util.c": "b7c5ff1ea29ad91e36b59b365bb0a0423a300f79b439909691bf5daf831c6b0f",
+    "Clogan/console_util.c": "75629b2c1f78cc507ed6ac677219a3d1affc3ddff38df405df1c60c1e312df0d",
+    "mbedtls/library/aes.c": "b5f9708c3c8d68fbe8364d8dd4ee0f2f366a66a53eb71afe538628111d7b4576",
+    "mbedtls/library/aesni.c": "87a35ae879fef3c0b5cd7511968c44c286e8457b18b9234121920282354df0bd",
+    "Clogan/aes_util.h": "29ba95676815937453629c27858d365582f05d617ed2f2d5ccc92b49474d98bd",
+    "Clogan/base_util.h": "1f5dd66ff54261e1ab0f009d56b5d66b6e27a7984c80d52904d99b69b55558bb",
+    "Clogan/cJSON.h": "bf99e80602f938d2fcb3282d57c4616c52a45a3ed0b27d9d3966dd1ff1184ef3",
+    "Clogan/clogan_core.h": "07dba520659fe38be58aac26cafcef528ae8995e6452d382e27055190a053e94",
+    "Clogan/clogan_status.h": "2274b3520f2e522d0021c3dbdad72e601e32a0996e5a684e5307a9b2e65142d1",
+    "Clogan/console_util.h": "858f6e4eaf951788f9de228ea9c2e9933864c5acab8274d89d5c97cec50dc18c",
+    "Clogan/construct_data.h": "8fa294d7d5bce8d2ef6b6c9cca6babc46ab655d77a1e301bd683048c1f403a98",
+    "Clogan/directory_util.h": "02a2a91cdf7eefda3ea5fd399cf76ece916e1e8a443a36404706fdc557847e25",
+    "Clogan/json_util.h": "5821045c90d8946290a8bc16ada99e87231377babc1a04a5c225c256a9d89730",
+    "Clogan/logan_config.h": "13c1f4edc24804b44bdb8036ffe4dcbd9b1bf76e0b5c7a5599cd6f49268ef94d",
+    "Clogan/mmap_util.h": "38c31cdab68b8404fc0553639356eba012a13cacb9718d7705ed364d74229134",
+    "Clogan/zlib_util.h": "3121ef6401857bc92c886d02fc7f98884ce97f18b1364570c868c50af4bc2868",
+    "mbedtls/include/mbedtls/aes.h": "f0052014ac0ef515e94731d84c46646ab2fb862da2310fb84dd3f7e1b72612ff"
+  },
+  "artifacts": {
+    "native.bin": "5d565df465fbaacde614f8eee67c0d7cb1b9990e2e42276aa1c3a3d7a5f5bda6",
+    "legacy-padded.gz": "b06698ee203bd2c124fd37d33c1f490190181987d383df3195755b0204565d39",
+    "native-plain.bin": "8cb48b633ac02c5a731ca7c50f0e3a924e4db8fe58617026832f4df4ce5095be"
+  },
+  "plaintextOracle": "OpenSSL CBC PKCS7 removal per frame, gzip decompression; legacy object uses OpenSSL -nopad"
+}

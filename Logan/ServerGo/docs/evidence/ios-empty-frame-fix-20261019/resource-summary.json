@@ -1,0 +1,17 @@
+{
+  "logan-ios24-db": {
+    "samples": 164,
+    "sampled_peak_memory_mib": 767.1,
+    "sampled_peak_cpu_percent": 50.07
+  },
+  "logan-ios24-oss": {
+    "samples": 164,
+    "sampled_peak_memory_mib": 117.3,
+    "sampled_peak_cpu_percent": 10.98
+  },
+  "logan-ios26-go": {
+    "samples": 164,
+    "sampled_peak_memory_mib": 46.12,
+    "sampled_peak_cpu_percent": 93.29
+  }
+}

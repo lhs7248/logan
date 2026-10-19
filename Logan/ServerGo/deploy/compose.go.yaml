@@ -1,0 +1,61 @@
+# Standalone candidate; never merge into the existing Java Compose project.
+name: logan-go-candidate
+services:
+  logan-go:
+    image: ${LOGAN_GO_IMAGE:-logan-servergo:candidate}
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    init: true
+    user: "10001:10001"
+    env_file:
+      - path: ${LOGAN_GO_ENV_FILE:?Set absolute path to a private Go environment file}
+        format: raw
+        required: true
+    environment:
+      LOGAN_HTTP_ADDRESS: ":8080"
+      LOGAN_NATIVE_TEMP_DIR: /var/lib/logan-tmp
+      LOGAN_WEB_RSA_PRIVATE_KEY_FILE: /run/logan-secrets/web-rsa.pem
+      # Even startup namespace binding writes to the DB. Enable only in a separately reviewed deployment.
+      LOGAN_MAINTENANCE_ENABLED: "${LOGAN_GO_ENABLE_MAINTENANCE:-false}"
+      LOGAN_METRICS_ENABLED: "true"
+    networks: [logan-go-ops]
+    ports:
+      - "${LOGAN_GO_BIND_ADDRESS:-127.0.0.1}:${LOGAN_GO_PORT:-18080}:8080"
+    volumes:
+      - type: bind
+        source: ${LOGAN_GO_SECRET_DIR:?Set absolute path to external private key directory}
+        target: /run/logan-secrets
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /var/lib/logan-tmp:rw,noexec,nosuid,nodev,size=536870912,mode=0700,uid=10001,gid=10001
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 1g
+    cpus: 1.0
+    pids_limit: 128
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 4096
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    healthcheck:
+      test: [CMD, wget, -q, -T, "2", -O, /dev/null, "http://127.0.0.1:8080/livez"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    stop_signal: SIGTERM
+    stop_grace_period: 90s
+    restart: "no"
+
+networks:
+  logan-go-ops:
+    driver: bridge

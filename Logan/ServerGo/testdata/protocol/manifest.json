@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "status": "awaiting-real-sdk-fixtures",
+  "samples": [
+    {
+      "file": "java-native-vectors.json",
+      "kind": "synthetic-original-java-execution",
+      "cases": 12
+    },
+    {
+      "file": "java-native-metadata.json",
+      "kind": "synthetic-original-java-metadata",
+      "cases": 9
+    },
+    {
+      "file": "java-web-vectors.json",
+      "kind": "synthetic-original-java-with-provider-config",
+      "envelopes": 16,
+      "details": 7
+    },
+    {
+      "file": "java-web-behavior.json",
+      "kind": "original-java-aggregation-and-overwrite-with-substitutes"
+    },
+    {
+      "file": "java-native-records.json",
+      "kind": "synthetic-original-java-records-and-handlers",
+      "records": 23,
+      "handlers": 20
+    }
+  ],
+  "requirements": [
+    "Android/iOS: encrypted blocks, multiple GZIP members, truncated tail, long UTF-8 lines",
+    "Web: v0 and RSA/AES-CTR v1, URL encoding, duplicate page overwrite",
+    "Record SDK version, sanitized provenance, expected decoded records and SHA-256",
+    "Synthetic controller data is not evidence of real SDK protocol compatibility"
+  ]
+}

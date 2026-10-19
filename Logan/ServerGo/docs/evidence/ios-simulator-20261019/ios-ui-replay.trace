@@ -1,0 +1,13 @@
+context platform=ios device="MobileInspector-Harness-20261016" kind=simulator theme=unknown
+open "org.logan.acceptance.phase24"
+# agent-device:target-v1 {"role":"button","label":"测试日志写入","ancestry":[{"role":"application","label":"Logan-iOS_Example"}],"sibling":0,"viewportOrder":0,"rect":{"x":36,"y":69,"width":92,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"测试日志写入\" || label=\"测试日志写入\""
+# agent-device:target-v1 {"role":"button","label":"查看所有日志文件信息","ancestry":[{"role":"application","label":"Logan-iOS_Example"}],"sibling":4,"viewportOrder":0,"rect":{"x":39,"y":163,"width":153,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"查看所有日志文件信息\" || label=\"查看所有日志文件信息\""
+# agent-device:target-v1 {"role":"button","label":"测试日志上报","ancestry":[{"role":"application","label":"Logan-iOS_Example"}],"sibling":1,"viewportOrder":0,"rect":{"x":39,"y":115,"width":92,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"测试日志上报\" || label=\"测试日志上报\""
+screenshot "/private/tmp/phase24-ios/ios-app.png"
+# agent-device:target-v1 {"role":"button","label":"查看所有日志文件信息","ancestry":[{"role":"application","label":"Logan-iOS_Example"}],"sibling":4,"viewportOrder":0,"rect":{"x":39,"y":163,"width":153,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"查看所有日志文件信息\" || label=\"查看所有日志文件信息\""
+screenshot "/private/tmp/phase24-ios/ios-app.png"
+close

@@ -1,0 +1,16 @@
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows3_flush0
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows6_flush3
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows64_flush1
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows64_flush3
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows64_flush0
+=== RUN   TestNativeSDKFlushHasNoEmptyFrame/rows8192_flush0
+--- PASS: TestNativeSDKFlushHasNoEmptyFrame (1.84s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows3_flush0 (0.42s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows6_flush3 (0.01s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows64_flush1 (0.02s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows64_flush3 (0.02s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows64_flush0 (0.01s)
+    --- PASS: TestNativeSDKFlushHasNoEmptyFrame/rows8192_flush0 (1.06s)
+PASS
+ok  	logan/servergo/tests/sdk	2.009s

@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/controller/LoganUploadController.java",
+      "sha256": "fde8fa7d3847d2ea7475bed75b4d309c5e130075b72d01a61e74634a7c683422"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/controller/WebLogUploadController.java",
+      "sha256": "26a4d9f9d658f3671db89e5ec7ed5b954a4cc43e94afe876cf3a67f03beac2f1"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/dto/LoganLogDetailDTO.java",
+      "sha256": "f09aa6471039eff78c0517a6d52c6830f89bef763b0292a9e20df41ec6104d09"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/dto/LoganTaskDTO.java",
+      "sha256": "b63b975465950831f8cd442c6b4c9c6babaff3b50400c7eb8a68ebede4300600"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/dto/WebLogDetailDTO.java",
+      "sha256": "a1381def5b1433463fc2ef69929e1004713ebe1426d1093e21cfb692f3ee03ef"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/dto/WebLogTaskDTO.java",
+      "sha256": "9673bc6ae9f20aef9ca888afa7704827d9f5f68f8edf6ced06a7b1eb8a9cc479"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/enums/LogTypeEnum.java",
+      "sha256": "068d347754ef4aa92f692818ef73512f397200fc8e1663c253364cf05778e9a9"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/enums/PlatformEnum.java",
+      "sha256": "12c6f4552e9ffca5197a5b2406cd8395c15acf46d2bd8dd2241894acf8acc331"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/enums/ResultEnum.java",
+      "sha256": "37ab941203936b5d7d07464010ef301ae3e3c1fb44244306cb72d3fac5cee496"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/enums/TaskStatusEnum.java",
+      "sha256": "0c79fb25f8b93b7241c90d3d9d4e09bddbda2138a0c4320fde2010e904d556a5"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/enums/WebLogFieldEnum.java",
+      "sha256": "e172b12db57236225a071cdbc85f91d792057c99023ad0abf926e94611a4d31f"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/filter/CORSFilter.java",
+      "sha256": "e69c8bc3013c10e034b62e5b5d6c7104a7ca044bde3d3af1b42fee76b8b7d195"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/handler/ContentHandler.java",
+      "sha256": "d5d41e182142b3669f054857307181c06a27a007465ace89e9f4055302047cc4"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/handler/LoganTypeOneHandler.java",
+      "sha256": "b575de6bbf6d959c01e7ce6b27db32326a7682f7065f7f531bf4f41cf6760b9c"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/handler/LoganTypeThreeHandler.java",
+      "sha256": "565ab70847036cc6939f868d2106f1ecb7895a5fd2d4855d7fb67b6e57cf8fca"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/handler/LoganTypeTwoHandler.java",
+      "sha256": "a1002e60866475d9553aa3b4e87e6eadfc2438b115cc2e178ee85cb33bf44b1b"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/handler/LoganTypeUnknownHandler.java",
+      "sha256": "0cef9c22d9fae6f4ef6dfa0a41a2ee620048b616f785df9436b764b77a736a61"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/mapper/LoganLogDetailMapper.java",
+      "sha256": "ae35c475d821bff3e56dd6ac44a1e6d115a0cec24d1e2c39fbda6bc4b77eb075"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/mapper/LoganTaskMapper.java",
+      "sha256": "33a2b954724393e73e0ed247c8f614e58ef7722e336eb044f54192a8327e2669"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/mapper/WebLogDetailMapper.java",
+      "sha256": "64231e5b364fdd965f441eecbc856705309255435c2edca6e6f153958700b3bb"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/mapper/WebLogTaskMapper.java",
+      "sha256": "b39a63d1bf03ace9296b3118301ded7205a6d20068f80cf95257331f08094c73"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/LoganLogDetailModel.java",
+      "sha256": "4bac2e3b68c088205cf556e276cecc4d04eba849cae5da59f1d4a142ae74e332"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/LoganLogItem.java",
+      "sha256": "0d1cd64f33aca42ead7742948e97a4f1de40269a157edff2e9765c00fd4cdd19"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/LoganLogSimpleModel.java",
+      "sha256": "7586bdd5302ff07145a9d1c7bcf62c71af550cc9c52019bf6bcddabbbb118471"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/LoganTaskModel.java",
+      "sha256": "07567fb26ff1ccf00c6d3b16cbe0bc11d79ee0911aa28633b1ad411645d7c997"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/Tuple.java",
+      "sha256": "24c7dfde679b1e2a2fea87381f406af794687037fb69b0c60184098ea15488d2"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/WebLogIndex.java",
+      "sha256": "7bed14839d622086e445460e4561218289761abec6ec12cd88f5a9a451bc9654"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/WebLogTaskModel.java",
+      "sha256": "bcfcab23910ee49c654f6f1c6983b24f6589505af6ea99b4e51cf66711129af1"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/request/LoganTaskRequest.java",
+      "sha256": "a78f7c0ed90eaa6fddf272aef02468ab24b0a0e5cbbbf789f02f29adf2700b7d"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/model/response/LoganResponse.java",
+      "sha256": "f62bb91541e3e13212710756306c233a12ddb79d8bdfcceba200211c5db214b3"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/parser/LegacyLoganProtocol.java",
+      "sha256": "f9ca8326c9644479c7ddebc7f2f55af63f9a6f0e3e460a66bfda7f5988871926"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/parser/LoganProtocol.java",
+      "sha256": "f46a8dadbbba627dc1b3f890259444f83136f010b1a38c680439caf1f3827763"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/parser/RequestContextParser.java",
+      "sha256": "a4b3ee0a7c095b4803c25192f3bd1195bad453208af9fc0ab69737e75ddeb810"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/parser/WebLogDecryptHelper.java",
+      "sha256": "17d601ff8525471b33f3a20b1adf51d874efc6f35ee7979905711110cd538759"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/parser/WebLogParser.java",
+      "sha256": "4002348d969795c22e93cc89d588bc8043f2e533786a0d1b9663552032afec5b"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/BatchInsertService.java",
+      "sha256": "5d2782517594147104679507b406aecd8f270e8d665ea5a21877b83e6a4c05d4"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/HandlerDispatcher.java",
+      "sha256": "c073bceac0586b82bec9427a22aa8696f3efe254e5b116f2e02c8edb811cddbc"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/LoganLogDetailService.java",
+      "sha256": "215ea7bb37148acb6d2c1943293e485f5ea9614eb279f8c51345d8dbed061641"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/LoganLogFileService.java",
+      "sha256": "285750260db24a530ecbf004f58c261fe21a105dfc1419a6830827b8296f9e57"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/LoganTaskService.java",
+      "sha256": "77960321cfa5b99914bc8bc958095a1939f983d11b4fe59b490534a3534ed6d2"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/WebLogDetailService.java",
+      "sha256": "39943b405816dd29202e187628c63c43dfa51006c57c1e4f76bce6553e29b872"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/WebTaskService.java",
+      "sha256": "a07df1f5a39f0ece3f5b1422d139a33d41151dda2a5d6ebd0b3be290df6423a7"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/AbstractBatchInsertService.java",
+      "sha256": "c242c92460c8007374b4f434c978f8e280d990edc7e6580278ab975f8e98a14e"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/HandlerDispatcherDefaultImpl.java",
+      "sha256": "280b81ca86e6c15be0bb5f934dc8d36163b4edb3d0ba91bc9a10b0ba5ee23874"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/LoganLogDetailServiceImpl.java",
+      "sha256": "7d2f3df10ae6698a125bfda7cccaefaab8fdaf1049f5b2a9127b7f8c5059af60"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/LoganLogFileServiceDefaultImpl.java",
+      "sha256": "29205c1cade9d0b39e15ae9364590f2b3fb3a6237f297d560cdd838f6f6b56ba"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/LoganTaskServiceImpl.java",
+      "sha256": "c4c2a1af36207aaf83a0e2ee14263539c2db94405eed6626cf631d03bdef89f9"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/WebLogDetailServiceImpl.java",
+      "sha256": "8fea2dfde7734210ccf7f6d403d0575e1b85386e039f827e7be615abe48df02c"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/service/impl/WebTaskServiceImpl.java",
+      "sha256": "8e31748c6a2eaad71b5a1113c209aec3dff10719779023a97a136d662a475b77"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/task/DelaySupplier.java",
+      "sha256": "83e42414c8e2d5233f217cf00e120c4712f39c48fe33c76c32ba9313ab5f67dc"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/task/LogCleanTask.java",
+      "sha256": "12cc07877db8b22de9e7cae8e452009aaee67291412193fca6d51ddd1231ee90"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/task/SingleThreadTaskLoop.java",
+      "sha256": "b6a5c5a874dcf745cc46f1ebe96ffd0013abcdb53c696f3ce2427401dc51e0d8"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/task/Task.java",
+      "sha256": "4ec0561c0f137a74a5ca92716eae6f586cde6776fe594a178481e00781dfeceb"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/task/TaskLoop.java",
+      "sha256": "7eff621d82d6ab0a548a13656df75da420774783539f98d8db0f5acfc67f22c7"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/DateFormatStyleEnum.java",
+      "sha256": "9ca3efeaf834264a0d75de2e081bb50739c725503ab12490be94cf210679fa7a"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/DateTimeUtil.java",
+      "sha256": "e2e5b4b1413c6232141e88cf9da7fbf40d230a20292e5619d26f44e79829aa13"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/FileUtil.java",
+      "sha256": "a2c4c4fba72f8146af79186f951d3a83726e2309bb36f1964cb0cf58553e2f40"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/LocalStringUtils.java",
+      "sha256": "48b648eadae0a4c236ef845f310aca653a49ab44d4c7d5428e741207969acf25"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/OrderUtil.java",
+      "sha256": "a9e0a6003375a2fe2520921a931378033fd05d039f8a4f5d6f602fea1192aea6"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/OssUtil.java",
+      "sha256": "d71496ae8deee3d9ff1d3ad0b8ba233df74d2ac46335af6aefebf8e8864fcbbf"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/Threads.java",
+      "sha256": "f8ba6909974606136c12591a3ebe8ea0d809255b3385058c3cd392ce4d2d62f9"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/TrimFieldEnum.java",
+      "sha256": "75c541f5d1f242e2bb1a778c56300af8f3c47afc389436ed0eac02fb45880c57"
+    },
+    {
+      "path": "src/main/java/com/meituan/logan/web/util/TypeSafeUtil.java",
+      "sha256": "fd8dad32042ccd93b0ddaf3f6f25936c678ada7f7453f79054da3ab42af086e1"
+    },
+    {
+      "path": "src/main/resources/sqlmap/LoganLogDetailMapper.xml",
+      "sha256": "4af203d259857d477c71dcec4ff16a492b948f3509f3bb4469c8f5fe1c61b731"
+    },
+    {
+      "path": "src/main/resources/sqlmap/LoganTaskMapper.xml",
+      "sha256": "b67817b36b077a270a285b56b0d3740943a839b97bc75398f562e0b7bc5cbfb9"
+    },
+    {
+      "path": "src/main/resources/sqlmap/WebLogDetailMapper.xml",
+      "sha256": "21be9fd81cd34b8372970fea92ed593a01457099b034841da0245e264fa0e4dc"
+    },
+    {
+      "path": "src/main/resources/sqlmap/WebLogTaskMapper.xml",
+      "sha256": "68fe8dea5c2dc4f044588a10b39ee57f90420b16cb2e7258b4d1da192f77d612"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml",
+      "sha256": "f2f1292aa437928951b5b63a30c271d09f3cd02fa4f10136427a6cd0f6fa532e"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/web.xml",
+      "sha256": "ddaf4c304d4986cffae080d6adebb1cce32da3398e3c764f0cf218d3fec1a46f"
+    },
+    {
+      "path": "pom.xml",
+      "sha256": "edb3f1af3763bebf8e71741affa5617719319a7b17969ee329a0f530ac00bc2e"
+    }
+  ]
+}

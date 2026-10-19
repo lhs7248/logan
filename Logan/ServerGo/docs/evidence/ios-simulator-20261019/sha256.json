@@ -1,0 +1,14 @@
+{
+  "browser-download.gz": "74faa2433690da6d48f6c73e876cd2d5e9816a08b35b387aa53518f4b8c1689c",
+  "chain-verification.json": "aceb0740d9402ab3fd6090c4877e520d1314f56615545c48ee9b4522aae3b640",
+  "final-database-verification.json": "771fa87657319731d6067e2cd457c04ff7aa3f2e9d831d7e9eaca2bcfaa71d5a",
+  "ios-app.png": "e49e97c15bb28f8ec1b7c99a2bedfd0cf6d7cea34b5b051640efae6defc649fc",
+  "ios-ui-replay.trace": "475a6eb17b16edb87641e9d51305c55ec0b20d15e0bb268a043ff281344b0a22",
+  "native-independent-plain.json": "a763e3271e0a9fb5e9d19cc58162c4baf470fc199c78509b8f14931a39dc1a2d",
+  "native-upload.bin": "934fa060d9cd536eaf023b5882d7ab5c237ef4912cdc042d459be4c21ac42762",
+  "source-manifest.json": "08a6d0d52eea7c64fee094752ee22f1d35250cd7d42fc2dd02cfdea6c180ca9a",
+  "web-details-all.jpg": "99af01251740b0e784cac440e527b5ae4d3529465b2680ef26f0f009b2b62e72",
+  "web-final-ax.txt": "9d2893dc7f499601f6f4d662c21ad33a03152ff7c5d2b572de13c386aa9ba081",
+  "web-final.jpg": "d14100ae2aae9a42b0c54fa946dc481e319888f2f9d1d607845f36b7df8d9e0a",
+  "web-list.jpg": "12e46253e5046a045f446f6c0ff749331f02682515a6b37879d85c41d0c156fd"
+}

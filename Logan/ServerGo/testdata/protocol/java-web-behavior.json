@@ -1,0 +1,69 @@
+{
+  "evidence" : "Original Java controller aggregation and WebTaskServiceImpl mapper calls with isolated substitutes",
+  "search" : {
+    "code" : 200,
+    "msg" : null,
+    "data" : [ {
+      "taskId" : 1,
+      "deviceId" : "d",
+      "webSource" : null,
+      "environment" : null,
+      "pageNum" : 1,
+      "addTime" : 2000,
+      "logDate" : 1609430400000,
+      "status" : 0,
+      "customReportInfo" : null,
+      "tasks" : "1",
+      "updateTime" : null
+    }, {
+      "taskId" : 3,
+      "deviceId" : "d",
+      "webSource" : null,
+      "environment" : null,
+      "pageNum" : 1,
+      "addTime" : 2000,
+      "logDate" : 1609603200000,
+      "status" : 0,
+      "customReportInfo" : null,
+      "tasks" : "3",
+      "updateTime" : null
+    }, {
+      "taskId" : 5,
+      "deviceId" : "d",
+      "webSource" : null,
+      "environment" : null,
+      "pageNum" : 1,
+      "addTime" : 2000,
+      "logDate" : 1609776000000,
+      "status" : 0,
+      "customReportInfo" : null,
+      "tasks" : "5",
+      "updateTime" : null
+    }, {
+      "taskId" : 2,
+      "deviceId" : "d",
+      "webSource" : null,
+      "environment" : null,
+      "pageNum" : 1,
+      "addTime" : 2000,
+      "logDate" : 1609516800000,
+      "status" : 0,
+      "customReportInfo" : null,
+      "tasks" : "2",
+      "updateTime" : null
+    }, {
+      "taskId" : 4,
+      "deviceId" : "d",
+      "webSource" : null,
+      "environment" : null,
+      "pageNum" : 1,
+      "addTime" : 2000,
+      "logDate" : 1609689600000,
+      "status" : 0,
+      "customReportInfo" : null,
+      "tasks" : "4",
+      "updateTime" : null
+    } ]
+  },
+  "analyzedOverwriteCalls" : [ "exist", "updateContent" ]
+}

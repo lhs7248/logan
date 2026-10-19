@@ -1,0 +1,10 @@
+{
+  "image": "sha256:8ee3667ae366c21c8092f1af24ec1316070a1b005594be2bdf1221ce7cdc1db2",
+  "binary_sha256": "b3a0acb55da0036827a886f7e9b10cd874dba113ff5c162709fcaacc10adbfde",
+  "container": "logan-ios26-go",
+  "go_cpu": 1,
+  "go_memory_bytes": 1073741824,
+  "db_memory_bytes": 2147483648,
+  "oss_memory_bytes": 268435456,
+  "old_container_retained_stopped": "logan-ios24-go-phase25"
+}

@@ -1,0 +1,649 @@
+{
+  "version": 1,
+  "status": "source-derived; runtime capture required",
+  "routes": [
+    {
+      "id": "native-latest",
+      "method": "GET",
+      "path": "/logan/latest.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "latest 20 by id then DTO ordering",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-search",
+      "method": "GET",
+      "path": "/logan/task/search.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "inclusive add_time bounds; endTime adds one day",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-info",
+      "method": "GET",
+      "path": "/logan/task/{taskId}/info.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "task DTO; nonexistent task returns success null",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-types",
+      "method": "GET",
+      "path": "/logan/meta/logtypes.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "types 1/2/3; Tuple first/second fields",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-brief",
+      "method": "GET",
+      "path": "/logan/task/{taskId}/brief.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "lazy parsing; id ordering; pages of 20",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-details",
+      "method": "GET",
+      "path": "/logan/task/query/details.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "detailIds order including absent rows",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-detail",
+      "method": "GET",
+      "path": "/logan/task/{detailId}/detail.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "formatContent and null fields",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-download-url",
+      "method": "GET",
+      "path": "/logan/task/{taskId}/download.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "relative /logan/downing?name= key",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-download",
+      "method": "GET",
+      "path": "/logan/downing",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganController.java",
+      "source_sha256": "efdda6e45f7f83e190914e97d12389905fe4df74a3fa8e3a751ffd8d27e3f441",
+      "notes": "302 no redirect follow; 400 missing name, 404 signing failure",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "native-upload",
+      "method": "POST",
+      "path": "/logan/upload.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/LoganUploadController.java",
+      "source_sha256": "fde8fa7d3847d2ea7475bed75b4d309c5e130075b72d01a61e74634a7c683422",
+      "notes": "binary upload headers and raw body",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-search",
+      "method": "GET",
+      "path": "/logan/web/search.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "endTime plus day; device/date group",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-latest",
+      "method": "GET",
+      "path": "/logan/web/latest.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "maxId-200 inclusive range; aggregate and cap at 20",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-index",
+      "method": "GET",
+      "path": "/logan/web/detailIndex.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "lazy parsing; minute offsets; pages of 20; SQL currently ignores keyword",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-task",
+      "method": "GET",
+      "path": "/logan/web/taskDetail.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "representative selected by pageNum",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-details",
+      "method": "GET",
+      "path": "/logan/web/details.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "IN query ordering not guaranteed",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-detail",
+      "method": "GET",
+      "path": "/logan/web/logDetail.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "NumberUtils invalid ID becomes zero",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-exception",
+      "method": "GET",
+      "path": "/logan/web/exception.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "success exception string; emits error log",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-download-url",
+      "method": "GET",
+      "path": "/logan/web/getDownLoadUrl.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "relative /logan/web/download.json?tasks= value",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-download",
+      "method": "GET",
+      "path": "/logan/web/download.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogController.java",
+      "source_sha256": "bda46996a5384348e738ff7cb080bf9d9f9d345cee861f5153dd797def0c5557",
+      "notes": "HTTP 201; concatenated content sorted by pageNum",
+      "evidence": "source-only",
+      "runtime_verified": false
+    },
+    {
+      "id": "web-upload",
+      "method": "POST",
+      "path": "/logan/web/upload.json",
+      "source": "src/main/java/com/meituan/logan/web/controller/WebLogUploadController.java",
+      "source_sha256": "26a4d9f9d658f3671db89e5ec7ed5b954a4cc43e94afe876cf3a67f03beac2f1",
+      "notes": "JSON v0/v1; page overwrite does not reset status",
+      "evidence": "source-only",
+      "runtime_verified": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "native-latest-normal",
+      "route": "native-latest",
+      "method": "GET",
+      "path": "/logan/latest.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-search-normal",
+      "route": "native-search",
+      "method": "GET",
+      "path": "/logan/task/search.json?deviceId=${DEVICE_ID}&beginTime=1&endTime=4102444800000&platform=0",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-info-normal",
+      "route": "native-info",
+      "method": "GET",
+      "path": "/logan/task/${NATIVE_TASK_ID}/info.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-types-normal",
+      "route": "native-types",
+      "method": "GET",
+      "path": "/logan/meta/logtypes.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "normal",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 200,
+        "msg": null,
+        "data": [
+          {
+            "first": 1,
+            "second": "日志类型1"
+          },
+          {
+            "first": 2,
+            "second": "日志类型2"
+          },
+          {
+            "first": 3,
+            "second": "日志类型3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-brief-normal",
+      "route": "native-brief",
+      "method": "GET",
+      "path": "/logan/task/${NATIVE_TASK_ID}/brief.json?logTypes=1,2,3&keyword=",
+      "comparison": "json",
+      "side_effects": true,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-details-normal",
+      "route": "native-details",
+      "method": "GET",
+      "path": "/logan/task/query/details.json?detailIds=${NATIVE_DETAIL_IDS}",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-detail-normal",
+      "route": "native-detail",
+      "method": "GET",
+      "path": "/logan/task/${NATIVE_DETAIL_ID}/detail.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-download-url-normal",
+      "route": "native-download-url",
+      "method": "GET",
+      "path": "/logan/task/${NATIVE_TASK_ID}/download.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-download-normal",
+      "route": "native-download",
+      "method": "GET",
+      "path": "/logan/downing?name=${OBJECT_KEY}",
+      "comparison": "bytes",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "native-upload-normal",
+      "route": "native-upload",
+      "method": "POST",
+      "path": "/logan/upload.json",
+      "comparison": "json",
+      "side_effects": true,
+      "suite": "fixture",
+      "scenario": "normal",
+      "body_file": "${NATIVE_UPLOAD_FILE}",
+      "headers": {
+        "Content-Type": "application/octet-stream",
+        "appId": "contract-test",
+        "deviceId": "${DEVICE_ID}",
+        "platform": "1",
+        "fileDate": "2026-10-15",
+        "unionId": "contract-test",
+        "buildVersion": "1",
+        "appVersion": "1"
+      }
+    },
+    {
+      "id": "web-search-normal",
+      "route": "web-search",
+      "method": "GET",
+      "path": "/logan/web/search.json?deviceId=${DEVICE_ID}&beginTime=1&endTime=4102444800000",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-latest-normal",
+      "route": "web-latest",
+      "method": "GET",
+      "path": "/logan/web/latest.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-index-normal",
+      "route": "web-index",
+      "method": "GET",
+      "path": "/logan/web/detailIndex.json?tasks=${WEB_TASK_IDS}&logTypes=&keyword=&beginTime=00:00&endTime=23:59",
+      "comparison": "json",
+      "side_effects": true,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-task-normal",
+      "route": "web-task",
+      "method": "GET",
+      "path": "/logan/web/taskDetail.json?tasks=${WEB_TASK_IDS}",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-details-normal",
+      "route": "web-details",
+      "method": "GET",
+      "path": "/logan/web/details.json?detailIds=${WEB_DETAIL_IDS}",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-detail-normal",
+      "route": "web-detail",
+      "method": "GET",
+      "path": "/logan/web/logDetail.json?detailId=${WEB_DETAIL_ID}",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-exception-normal",
+      "route": "web-exception",
+      "method": "GET",
+      "path": "/logan/web/exception.json",
+      "comparison": "json",
+      "side_effects": true,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-download-url-normal",
+      "route": "web-download-url",
+      "method": "GET",
+      "path": "/logan/web/getDownLoadUrl.json?tasks=${WEB_TASK_IDS}",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-download-normal",
+      "route": "web-download",
+      "method": "GET",
+      "path": "/logan/web/download.json?tasks=${WEB_TASK_IDS}",
+      "comparison": "bytes",
+      "side_effects": false,
+      "suite": "fixture",
+      "scenario": "normal"
+    },
+    {
+      "id": "web-upload-normal",
+      "route": "web-upload",
+      "method": "POST",
+      "path": "/logan/web/upload.json",
+      "comparison": "json",
+      "side_effects": true,
+      "suite": "fixture",
+      "scenario": "normal",
+      "body_file": "${WEB_UPLOAD_FILE}",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "id": "native-search-invalid",
+      "route": "native-search",
+      "method": "GET",
+      "path": "/logan/task/search.json?deviceId=&beginTime=1&endTime=1",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "native-info-invalid",
+      "route": "native-info",
+      "method": "GET",
+      "path": "/logan/task/0/info.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "native-brief-invalid",
+      "route": "native-brief",
+      "method": "GET",
+      "path": "/logan/task/0/brief.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "native-details-invalid",
+      "route": "native-details",
+      "method": "GET",
+      "path": "/logan/task/query/details.json?detailIds=",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "native-detail-invalid",
+      "route": "native-detail",
+      "method": "GET",
+      "path": "/logan/task/0/detail.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "native-download-url-invalid",
+      "route": "native-download-url",
+      "method": "GET",
+      "path": "/logan/task/0/download.json",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "param illegal",
+        "data": null
+      }
+    },
+    {
+      "id": "web-search-invalid",
+      "route": "web-search",
+      "method": "GET",
+      "path": "/logan/web/search.json?beginTime=0&endTime=0&deviceId=",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "invalid param",
+        "data": null
+      }
+    },
+    {
+      "id": "web-index-invalid",
+      "route": "web-index",
+      "method": "GET",
+      "path": "/logan/web/detailIndex.json?tasks=",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "empty tasks",
+        "data": null
+      }
+    },
+    {
+      "id": "web-task-invalid",
+      "route": "web-task",
+      "method": "GET",
+      "path": "/logan/web/taskDetail.json?tasks=",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "task not found",
+        "data": null
+      }
+    },
+    {
+      "id": "web-details-invalid",
+      "route": "web-details",
+      "method": "GET",
+      "path": "/logan/web/details.json?detailIds=",
+      "comparison": "json",
+      "side_effects": false,
+      "suite": "safe",
+      "scenario": "invalid",
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "not details for ",
+        "data": null
+      }
+    },
+    {
+      "id": "native-download-missing",
+      "route": "native-download",
+      "method": "GET",
+      "path": "/logan/downing",
+      "comparison": "bytes",
+      "suite": "safe",
+      "scenario": "missing",
+      "side_effects": false,
+      "expected_status": 400
+    },
+    {
+      "id": "web-upload-invalid",
+      "route": "web-upload",
+      "method": "POST",
+      "path": "/logan/web/upload.json",
+      "body": "{}",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "comparison": "json",
+      "suite": "safe",
+      "scenario": "invalid",
+      "side_effects": false,
+      "expected_status": 200,
+      "expected_json": {
+        "code": 400,
+        "msg": "invalid params",
+        "data": null
+      }
+    },
+    {
+      "id": "web-download-url-literal",
+      "route": "web-download-url",
+      "method": "GET",
+      "path": "/logan/web/getDownLoadUrl.json?tasks=1,2",
+      "comparison": "json",
+      "suite": "safe",
+      "scenario": "normal",
+      "side_effects": false,
+      "expected_status": 200,
+      "expected_json": {
+        "code": 200,
+        "msg": null,
+        "data": "/logan/web/download.json?tasks=1,2"
+      }
+    }
+  ]
+}

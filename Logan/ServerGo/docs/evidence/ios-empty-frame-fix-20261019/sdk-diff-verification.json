@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "files_checked": 176,
+  "compiled_copy_matches_repository": true,
+  "intended_changes": [
+    {
+      "file": "Logan/Clogan/clogan_core.c",
+      "before": "a4506f5daadbd09200b33ea2cf0cfb1af19ab68907bc8c2afb48a60023bd422c",
+      "after": "b299652bd861c77c628b7389bb1c0b15627b087c7337657fb2b0ec69d886c252"
+    }
+  ],
+  "unchanged_files": 175
+}

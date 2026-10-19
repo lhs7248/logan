@@ -1,0 +1,8 @@
+{
+  "version" : 1,
+  "evidence" : "java-controller-isolated",
+  "manifest_sha256" : "9baa6be2a03706edd6bdd884bc70b01695eb81daa5ac1c0bdf52bb822ad022a5",
+  "complete" : true,
+  "created_at" : "2026-10-15T08:59:28.640097Z",
+  "cases" : [ "native-types-normal", "native-search-invalid", "native-info-invalid", "native-brief-invalid", "native-details-invalid", "native-detail-invalid", "native-download-url-invalid", "web-search-invalid", "web-index-invalid", "web-task-invalid", "web-details-invalid", "native-download-missing", "web-upload-invalid", "web-download-url-literal" ]
+}

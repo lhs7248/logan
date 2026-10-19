@@ -1,0 +1,10 @@
+Harness check: passed
+Running: make test
+test: passed
+Running: make race
+race: passed
+Running: make vet
+vet: passed
+Running: make build
+build: passed
+Evidence: /var/folders/6w/c5rms8nd1z10_pdghq0j31bm0000gn/T/logan-agent-04oyjhq3/summary.json

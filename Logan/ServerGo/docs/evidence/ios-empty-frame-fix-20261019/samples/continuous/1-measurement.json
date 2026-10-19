@@ -1,0 +1,31 @@
+{
+  "client": {
+    "wire_bytes": 22858,
+    "expected_rows": 100,
+    "batch": 1,
+    "upload_ack_unix": 1792404632.956449,
+    "error": "",
+    "generation_start_unix": 1792404632.793253,
+    "content_bytes_per_row": 256,
+    "scenario": "continuous",
+    "pre_upload_snapshot": false,
+    "device_id": "phase26-ios-20261019-continuous",
+    "response": "{\"code\":200,\"msg\":null,\"data\":\"/logan/downing?name=testAppId_phase26-ios-20261019-continuous_1792339200000_5583041e-28f9-40fd-9d68-cdd91eb25ce2.log\"}",
+    "upload_start_unix": 1792404632.909477,
+    "http_status": 200
+  },
+  "observed_ack_unix": 1792404633.007692,
+  "errors": [],
+  "task_id": 18,
+  "brief_seconds": 0.10657620429992676,
+  "brief_observed_unix": 1792404633.1208909,
+  "complete_read_unix": 1792404633.152871,
+  "upload_ack_seconds": 0.046972036361694336,
+  "generation_flush_seconds": 0.11622405052185059,
+  "upload_to_all_queryable_seconds": 0.2433938980102539,
+  "ack_to_all_queryable_seconds": 0.19642186164855957,
+  "detail_read_seconds": 0.031980037689208984,
+  "records": 101,
+  "http_download_seconds": 0.0032529830932617188,
+  "status": "measured"
+}

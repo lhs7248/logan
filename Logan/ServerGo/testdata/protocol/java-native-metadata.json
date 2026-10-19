@@ -1,0 +1,98 @@
+[ {
+  "headers" : {
+    "filedate" : "2026-10-15",
+    "platform" : "1",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : 1,
+  "log_date" : 1791993600000,
+  "file_name_prefix" : "app_device_1791993600000_"
+}, {
+  "headers" : {
+    "filedate" : "2026-02-30",
+    "platform" : "2",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : 2,
+  "log_date" : 1772380800000,
+  "file_name_prefix" : "app_device_1772380800000_"
+}, {
+  "headers" : {
+    "filedate" : "2026-1-2suffix",
+    "platform" : "99",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : -1,
+  "log_date" : 1767283200000,
+  "file_name_prefix" : "app_device_1767283200000_"
+}, {
+  "headers" : {
+    "filedate" : "bad",
+    "platform" : " 1",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : 0,
+  "log_date" : 0,
+  "file_name_prefix" : "app_device_0_"
+}, {
+  "headers" : {
+    "filedate" : "2026-10-15",
+    "platform" : "2147483648",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : 0,
+  "log_date" : 1791993600000,
+  "file_name_prefix" : "app_device_1791993600000_"
+}, {
+  "headers" : {
+    "filedate" : "2026-10-15",
+    "platform" : "+1",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : 1,
+  "log_date" : 1791993600000,
+  "file_name_prefix" : "app_device_1791993600000_"
+}, {
+  "headers" : {
+    "filedate" : "2026-10-15",
+    "platform" : "-1",
+    "appid" : "app",
+    "deviceid" : "device"
+  },
+  "amount" : "3",
+  "platform" : -1,
+  "log_date" : 1791993600000,
+  "file_name_prefix" : "app_device_1791993600000_"
+}, {
+  "headers" : {
+    "filedate" : "2026-10-15",
+    "platform" : "",
+    "appid" : "app",
+    "deviceid" : ""
+  },
+  "amount" : "3",
+  "platform" : 0,
+  "log_date" : 1791993600000,
+  "file_name_prefix" : "app__1791993600000_"
+}, {
+  "headers" : {
+    "filedate" : "",
+    "platform" : ""
+  },
+  "amount" : "3",
+  "platform" : 0,
+  "log_date" : 0,
+  "file_name_prefix" : "null_null_0_"
+} ]

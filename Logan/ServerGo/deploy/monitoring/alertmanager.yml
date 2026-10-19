@@ -1,0 +1,11 @@
+# Intentionally no external integrations: alerts are visible in the local UI only.
+global:
+  resolve_timeout: 5m
+route:
+  receiver: blackhole
+  group_by: [alertname, job, instance]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+receivers:
+  - name: blackhole

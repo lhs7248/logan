@@ -1,0 +1,11 @@
+{
+  "version" : 1,
+  "case_id" : "native-types-normal",
+  "captured_at" : "2026-10-15T08:59:28.502404Z",
+  "manifest_sha256" : "9baa6be2a03706edd6bdd884bc70b01695eb81daa5ac1c0bdf52bb822ad022a5",
+  "status" : 200,
+  "headers" : {
+    "Content-Type" : "application/json"
+  },
+  "body_base64" : "eyJjb2RlIjoyMDAsIm1zZyI6bnVsbCwiZGF0YSI6W3siZmlyc3QiOjEsInNlY29uZCI6IuaXpeW/l+exu+WeizEifSx7ImZpcnN0IjoyLCJzZWNvbmQiOiLml6Xlv5fnsbvlnosyIn0seyJmaXJzdCI6Mywic2Vjb25kIjoi5pel5b+X57G75Z6LMyJ9XX0="
+}

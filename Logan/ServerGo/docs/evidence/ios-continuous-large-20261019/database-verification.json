@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "sql_records_matched": 3811,
+  "jobs_done_with_empty_owner_zero_lease_fence1_revision1_attempt1": 7,
+  "failed32_task_count": 0,
+  "failed32_managed_object_count": 0,
+  "innodb_lock_metrics": [
+    [
+      "lock_deadlocks",
+      "0",
+      "enabled"
+    ],
+    [
+      "lock_timeouts",
+      "0",
+      "enabled"
+    ]
+  ]
+}

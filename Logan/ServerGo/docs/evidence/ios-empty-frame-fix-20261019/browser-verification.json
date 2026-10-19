@@ -1,0 +1,26 @@
+[
+  {
+    "scenario": "large32a",
+    "task_id": 15,
+    "bytes": 25973920,
+    "sha256": "0ef221fd78d4e86d2353c6a923031ba38dfcbc00ea47ec3492064fce4a9900c0",
+    "actual_browser_download": true,
+    "equals_independent_decryption": true
+  },
+  {
+    "scenario": "large32b",
+    "task_id": 16,
+    "bytes": 25970880,
+    "sha256": "87ca9d90bfaa58a3c61e8376a1316891d0428b67fc5f08d1a2ff8fcae8d8c953",
+    "actual_browser_download": true,
+    "equals_independent_decryption": true
+  },
+  {
+    "scenario": "large32c",
+    "task_id": 17,
+    "bytes": 25974688,
+    "sha256": "367d2e782f46b96233c595096e794ca8898dd88d356004c3416d4372f66c875b",
+    "actual_browser_download": true,
+    "equals_independent_decryption": true
+  }
+]

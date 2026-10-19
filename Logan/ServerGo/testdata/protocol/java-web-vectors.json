@@ -1,0 +1,121 @@
+{
+  "evidence" : "Synthetic vectors executed by unchanged Java WebLogParser and WebLogDecryptHelper; JVM timezone Asia/Shanghai; BC key factories before SunRsaSign; SunJCE ciphers to accept legacy PKCS1 bytes passed as PKCS8; no private key exported",
+  "cases" : [ {
+    "name" : "only-commas",
+    "raw" : ",,,",
+    "output" : "[]"
+  }, {
+    "name" : "null-version",
+    "raw" : "%7B%22v%22%3Anull%2C%22l%22%3A%22YQ%3D%3D%22%7D",
+    "output" : "[\"a\"]"
+  }, {
+    "name" : "html-string",
+    "raw" : "%7B%22l%22%3A%22PHRhZz4m5Lit5paH%22%7D",
+    "output" : "[\"<tag>&中文\"]"
+  }, {
+    "name" : "v0-default",
+    "raw" : "%7B%22l%22%3A%22aGVsbG8%3D%22%7D",
+    "output" : "[\"hello\"]"
+  }, {
+    "name" : "permissive-unpadded",
+    "raw" : "%7B%22v%22%3A0%2C%22l%22%3A%22aGVs%21bG8%22%7D",
+    "output" : "[\"hello\"]"
+  }, {
+    "name" : "padding-stops-decoder",
+    "raw" : "%7B%22l%22%3A%22YQ%3D%3DYmI%3D%22%7D",
+    "output" : "[\"a\"]"
+  }, {
+    "name" : "url-safe-base64",
+    "raw" : "%7B%22l%22%3A%2277-_%22%7D",
+    "output" : "[\"￿\"]"
+  }, {
+    "name" : "unknown-version",
+    "raw" : "%7B%22v%22%3A99%2C%22l%22%3A%22YQ%3D%3D%22%7D",
+    "output" : "[]"
+  }, {
+    "name" : "missing-log",
+    "raw" : "%7B%7D",
+    "output" : "[]"
+  }, {
+    "name" : "malformed-url",
+    "raw" : "%xx",
+    "error" : true
+  }, {
+    "name" : "malformed-json",
+    "raw" : "%7B",
+    "error" : true
+  }, {
+    "name" : "string-version",
+    "raw" : "%7B%22v%22%3A%220%22%2C%22l%22%3A%22YQ%3D%3D%22%7D",
+    "error" : true
+  }, {
+    "name" : "multiple-trailing",
+    "raw" : "%7B%22l%22%3A%22YQ%3D%3D%22%7D,%7B%22l%22%3A%22Yg%3D%3D%22%7D,,",
+    "output" : "[\"a\",\"b\"]"
+  }, {
+    "name" : "v1-rsa-aes-ctr",
+    "raw" : "%7B%22v%22%3A1%2C%22k%22%3A%22SxZ1t6it4Quj9%2FNzPA%2B4hC%2FCfBcwST%2B0S73tflUcMPg72372cUjY2eXi6UUIHLgVrG8DkF6KhiITuL46LI74vnyjokdDCvw3Iifxm3GPPchItUem8lc8FtSa2vpQZmep2g5NPii2AztGm1ugQUHamKbtuVU8UyQ0xv2OlEnoQdM%3D%22%2C%22iv%22%3A%22fedcba9876543210%22%2C%22l%22%3A%22Yy66HZmUx6RerkQ%3D%22%7D",
+    "output" : "[\"hello中文\"]"
+  }, {
+    "name" : "v1-invalid-iv-skipped",
+    "raw" : "%7B%22v%22%3A1%2C%22k%22%3A%22SxZ1t6it4Quj9%2FNzPA%2B4hC%2FCfBcwST%2B0S73tflUcMPg72372cUjY2eXi6UUIHLgVrG8DkF6KhiITuL46LI74vnyjokdDCvw3Iifxm3GPPchItUem8lc8FtSa2vpQZmep2g5NPii2AztGm1ugQUHamKbtuVU8UyQ0xv2OlEnoQdM%3D%22%2C%22iv%22%3A%22short%22%2C%22l%22%3A%22Yy66HZmUx6RerkQ%3D%22%7D",
+    "output" : "[]"
+  }, {
+    "name" : "v1-invalid-wrapped-key",
+    "raw" : "%7B%22v%22%3A1%2C%22k%22%3A%22broken%22%2C%22iv%22%3A%22short%22%2C%22l%22%3A%22Yy66HZmUx6RerkQ%3D%22%7D",
+    "error" : true
+  } ],
+  "details" : [ {
+    "name" : "normal",
+    "content" : "[\"{\\\"t\\\":\\\"2\\\",\\\"c\\\":\\\"hello+%E4%B8%AD%E6%96%87%2B\\\",\\\"d\\\":\\\"0\\\"}\"]",
+    "output" : [ {
+      "taskId" : 42,
+      "logType" : 2,
+      "content" : "hello 中文+",
+      "logTime" : 0,
+      "minuteOffset" : 480
+    } ]
+  }, {
+    "name" : "fallback",
+    "content" : "[\"{\\\"t\\\":\\\"oops\\\",\\\"c\\\":\\\"x\\\",\\\"d\\\":\\\"oops\\\"}\"]",
+    "output" : [ {
+      "taskId" : 42,
+      "logType" : 0,
+      "content" : "x",
+      "logTime" : 0,
+      "minuteOffset" : 480
+    } ]
+  }, {
+    "name" : "overflow",
+    "content" : "[\"{\\\"t\\\":\\\"2147483648\\\",\\\"c\\\":\\\"x\\\",\\\"d\\\":\\\"9223372036854775808\\\"}\"]",
+    "output" : [ {
+      "taskId" : 42,
+      "logType" : 0,
+      "content" : "x",
+      "logTime" : 0,
+      "minuteOffset" : 480
+    } ]
+  }, {
+    "name" : "numeric",
+    "content" : "[\"{\\\"t\\\":3,\\\"c\\\":\\\"x\\\",\\\"d\\\":1609459200000}\"]",
+    "output" : [ {
+      "taskId" : 42,
+      "logType" : 3,
+      "content" : "x",
+      "logTime" : 1609459200000,
+      "minuteOffset" : 480
+    } ]
+  }, {
+    "name" : "missing",
+    "content" : "[\"{\\\"t\\\":\\\"1\\\"}\"]",
+    "output" : [ ]
+  }, {
+    "name" : "bad-url",
+    "content" : "[\"{\\\"t\\\":1,\\\"c\\\":\\\"%xx\\\",\\\"d\\\":1}\"]",
+    "error" : true
+  }, {
+    "name" : "bad-json",
+    "content" : "[\"{\"]",
+    "error" : true
+  } ]
+}

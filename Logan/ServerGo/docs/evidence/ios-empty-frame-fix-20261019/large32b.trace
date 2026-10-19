@@ -1,0 +1,6 @@
+context platform=ios device="MobileInspector-Harness-20261016" kind=simulator theme=unknown
+open "org.logan.acceptance.phase26.large32b"
+# agent-device:target-v1 {"role":"button","label":"large32","ancestry":[{"role":"application","label":"Logan large32b"}],"sibling":3,"viewportOrder":0,"rect":{"x":24,"y":254,"width":354,"height":30},"verification":"verified"}
+press "role=\"button\" label=\"large32\" || label=\"large32\""
+screenshot "/private/tmp/phase26/large32b.png"
+close
