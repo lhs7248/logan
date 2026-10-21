@@ -1,0 +1,97 @@
+{
+  "asset": {
+    "id": "LOG-004",
+    "platform": "Native",
+    "device": "demo-A17",
+    "version": "3.8.1",
+    "build": "38107",
+    "files": [
+      {
+        "name": "native-import.log",
+        "bytes": 147
+      }
+    ]
+  },
+  "run": {
+    "id": "P2",
+    "status": "完成",
+    "phase": 3,
+    "format": "auto",
+    "policy": "strict",
+    "created": "2026/10/20 16:33:19",
+    "task": "TASK-LOG-004-P2",
+    "records": [
+      {
+        "time": "10:42:01.120",
+        "level": "INFO",
+        "module": "ImportedApp",
+        "content": "用户点击登录 requestId=native-import-42",
+        "file": null,
+        "line": null,
+        "requestId": "native-import-42",
+        "url": null,
+        "sourceName": "native-import.log",
+        "originLine": 1,
+        "scene": "generic",
+        "sourceVerified": false,
+        "fields": {
+          "time": "10:42:01.120",
+          "level": "INFO",
+          "module": "ImportedApp",
+          "message": "用户点击登录 requestId=native-import-42",
+          "requestId": "native-import-42"
+        }
+      },
+      {
+        "time": "10:42:09.142",
+        "level": "ERROR",
+        "module": "ImportedApp",
+        "content": "请求超时 requestId=native-import-42",
+        "file": null,
+        "line": null,
+        "requestId": "native-import-42",
+        "url": null,
+        "sourceName": "native-import.log",
+        "originLine": 2,
+        "scene": "generic",
+        "sourceVerified": false,
+        "fields": {
+          "time": "10:42:09.142",
+          "level": "ERROR",
+          "module": "ImportedApp",
+          "message": "请求超时 requestId=native-import-42",
+          "requestId": "native-import-42"
+        }
+      }
+    ],
+    "errors": [],
+    "fileResults": [
+      {
+        "name": "native-import.log",
+        "size": "147 B",
+        "count": 2,
+        "status": "解析完成"
+      }
+    ],
+    "events": [
+      {
+        "time": "2026/10/20 16:33:19",
+        "text": "创建重新解析批次，沿用原文件；旧批次和任务保留"
+      },
+      {
+        "time": "2026/10/20 16:33:20",
+        "text": "文件大小、编码与格式检查完成；开始按配置解析"
+      },
+      {
+        "time": "2026/10/20 16:33:21",
+        "text": "记录解析完成，等待发布索引；可读记录 2 条"
+      },
+      {
+        "time": "2026/10/20 16:33:21",
+        "text": "发布 TASK-LOG-004-P2；2 条事件可查"
+      }
+    ],
+    "validCount": 2,
+    "warnings": []
+  }
+}

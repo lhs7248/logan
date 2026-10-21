@@ -8,6 +8,12 @@
 
 [中文说明](./README-zh.md)
 
+## Investigation workbench prototype
+
+[Interactive prototype and tests](prototypes/logan-investigation/README.md) · [Product design and development specification](docs/product/2026-10-21-logan-workbench/README.md)
+
+The workbench is a local simulation covering log import, parsing, source evidence, collection tracking, AI investigation, verification and ticket updates. It does not connect to real push channels, models or ticket systems. Run `node server.js` from `prototypes/logan-investigation` to preview it locally; run `node --test *.test.js` in that directory to check its state and interaction models.
+
 # Overview
 Logan is a log platform with ability to collect、store、upload and analyze front-end logs. We provide five components, including [iOS SDK](https://github.com/Meituan-Dianping/Logan/tree/master/Logan/iOS), [Android SDK](https://github.com/Meituan-Dianping/Logan/tree/master/Example/Logan-Android), [Web SDK](https://github.com/Meituan-Dianping/Logan/tree/master/Logan/WebSDK), analysis services [Server SDK](https://github.com/Meituan-Dianping/Logan/tree/master/Logan/Server) and [LoganSite](https://github.com/Meituan-Dianping/Logan/tree/master/Logan/LoganSite). In addition, we also provide a Flutter plugin [Flutter Plugin](https://github.com/Meituan-Dianping/Logan/tree/master/Flutter).
 

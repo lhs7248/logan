@@ -1,0 +1,91 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "文件与解析"
+    - button "搜索与阅读"
+    - button "关联源码"
+    - button "采集任务"
+    - button "问题工单"
+  - paragraph:
+    - text: 交互原型 · 本地文件与合成样例
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 日志中心
+  - status: 自动保存于此浏览器 · 本地原型
+  - button "演练指南"
+  - heading "日志中心" [level=1]
+  - paragraph: 选中日志后，直接阅读、搜索、查看解析结果或关联源码。
+  - generic: 本地原型 · 无真实接口
+  - button "上传导入日志"
+  - button "载入 Web 样例"
+  - button "下载 Web 样例"
+  - button "采集更多日志"
+  - generic: 日志列表 · 18
+  - textbox "日志列表 · 18" [active]:
+    - /placeholder: 日志、设备、工单
+    - text: web-partial.jsonl
+  - generic: 日志状态
+  - combobox "日志状态":
+    - option "全部状态" [selected]
+    - option "解析完成"
+    - option "部分可查"
+    - option "解析失败"
+  - button "LOG-002 / P1 解析失败 browser-import-qa · ISS-1044 · Web · 本地文件":
+    - generic: LOG-002 / P1
+    - generic: 解析失败
+    - generic: browser-import-qa · ISS-1044 · Web · 本地文件
+  - button "TASK-LOG-002-P2 部分可查 browser-import-qa · ISS-1044 · Web · 本地文件":
+    - generic: TASK-LOG-002-P2
+    - generic: 部分可查
+    - generic: browser-import-qa · ISS-1044 · Web · 本地文件
+  - heading "TASK-LOG-002-P2" [level=2]
+  - paragraph: browser-import-qa · ISS-1044 · 部分可查
+  - button "下载正文"
+  - button "进入工单排查"
+  - tablist:
+    - tab "文件与解析" [selected]
+    - tab "搜索与上下文"
+    - tab "源码与变更"
+  - heading "LOG-002 · Web · P2" [level=3]
+  - generic: 部分成功
+  - paragraph: 来源：本地文件导入 · 工单 ISS-1044 · browser-import-qa · 3.8.1 / 38107
+  - paragraph: 声明范围（北京时间）：2026-10-20 10:40 — 2026-10-20 10:45
+  - paragraph: 事件覆盖：2026-10-20T10:42:01+08:00 — 2026-10-20T10:42:09+08:00
+  - generic: 本地文件解析与索引演示，无设备推送、服务端上传或真实源码映射。
+  - generic: 文件接收 · 完成
+  - generic: 格式校验 · 完成
+  - generic: 事件解析 · 完成
+  - generic: 索引发布 · 可查
+  - paragraph: 格式：auto · 隔离错误行策略 · 2 条已识别事件 · 1 条错误
+  - button "重新解析原文件"
+  - button "阅读解析结果"
+  - button "下载解析正文"
+  - button "导出解析记录"
+  - heading "原文件与解析结果" [level=3]
+  - text: web-partial.jsonl · 385 B · 原文保留
+  - paragraph: 部分成功
+  - button "下载原文件"
+  - heading "错误与处理记录" [level=3]
+  - paragraph: web-partial.jsonl · 第 2 条记录：JSONL 行无法解析
+  - paragraph:
+    - text: 2026/10/20 16:29:56
+    - text: 创建重新解析批次，沿用原文件；旧批次和任务保留
+  - paragraph:
+    - text: 2026/10/20 16:29:57
+    - text: 文件大小、编码与格式检查完成；开始按配置解析
+  - paragraph:
+    - text: 2026/10/20 16:29:57
+    - text: 记录解析完成，等待发布索引；可读记录 2 条
+  - paragraph:
+    - text: 2026/10/20 16:29:58
+    - text: 发布 TASK-LOG-002-P2；2 条事件可查，1 条错误已隔离
+  - heading "解析批次历史" [level=3]
+  - paragraph: 相同原文件的各次配置、结果和任务独立保留。
+  - generic: P1 · 解析失败 · 未生成任务 · auto / strict
+  - button "查看此批次"
+  - generic: P2 · 部分成功 · TASK-LOG-002-P2 · auto / skip
+  - button "当前批次" [disabled]
+  - generic: Logan 本地原型 · 文件解析在浏览器执行，推送、源码映射与 AI 为模拟 · 时间采用北京时间

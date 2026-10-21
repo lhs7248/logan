@@ -1,0 +1,15 @@
+const test=require('node:test'),assert=require('node:assert/strict'),AI=require('./ai-model.js');
+const log={id:'TASK-208-L4',kind:'log',task:'TASK-208',index:4,label:'L5',text:'retry exhausted; loading=true'};
+const code={id:'TASK-208-S4',kind:'source',task:'TASK-208',index:4,label:'S5',text:'catch 未复位',mode:'matched',match:'版本匹配'};
+const setup=()=>({rounds:[],context:[{...log}],hypotheses:[],revision:0});
+test('自然语言提问保存问题及当前证据快照',()=>{let s=setup(),r=AI.start(s,'为什么一直转圈？');assert.equal(r?.question,'为什么一直转圈？');s.context[0].text='后来修改';assert.equal(r.snapshot[0].text,log.text);});
+test('停止的回答不当成已完成结论',()=>{let s=setup(),r=AI.start(s,'分析登录失败');AI.stop(s,r.id);AI.finish(s,r.id);assert.equal(r.status,'canceled');assert.equal(r.answer,undefined);});
+test('补充证据后旧轮次不变，新轮次带新证据',()=>{let s=setup(),a=AI.start(s,'解释');AI.finish(s,a.id);AI.add(s,code);let b=AI.start(s,'结合源码继续');assert.equal(a.snapshot.length,1);assert.equal(b.snapshot.length,2);assert.equal(b.previous,a.id);});
+test('同一条证据不会重复进入上下文',()=>{let s=setup();AI.add(s,log);assert.equal(s.context.length,1);});
+test('无证据与关键词候选不得确认代码根因',()=>{let s=setup();s.context=[{...code,mode:'candidate'}];let r=AI.start(s,'源码是否确认原因？');AI.finish(s,r.id);assert.equal(r.answer.codeConfirmed,false);assert.match(r.answer.body,/不足|未验证/);});
+test('验证结果需要方法与实际观察',()=>{let s=setup();AI.finish(s,AI.start(s,'解释').id);assert.throws(()=>AI.verify(s,'H1',{outcome:'supported',method:'',observation:''}),/验证步骤|观察/);});
+test('验证记录加入下一轮快照，旧回答保留',()=>{let s=setup(),a=AI.start(s,'解释');AI.finish(s,a.id);AI.verify(s,'H1',{outcome:'refuted',method:'模拟超时路径',observation:'实际状态已复位，仍在转圈',evidenceIds:[log.id]});let b=AI.start(s,'结合验证结果继续');AI.finish(s,b.id);assert.equal(a.verifications.length,0);assert.equal(b.verifications.length,1);assert.match(b.answer.body,/反驳|否定/);});
+test('未完成轮次不能生成回写快照',()=>{let s=setup(),r=AI.start(s,'排查');assert.throws(()=>AI.handoff(s,r.id),/完成/);AI.finish(s,r.id);let h=AI.handoff(s,r.id);AI.add(s,code);assert.equal(h.evidence.length,1);});
+test('同一调查同时只允许一轮生成，空白提问不发送',()=>{let s=setup();assert.throws(()=>AI.start(s,'   '),/问题/);AI.start(s,'分析');assert.throws(()=>AI.start(s,'并发'),/正在/);});
+test('回写保留新增验证引用的证据，即使后来移出当前范围',()=>{let s=setup(),r=AI.start(s,'解释');AI.finish(s,r.id);AI.add(s,code);AI.verify(s,'H1',{outcome:'refuted',method:'检查失败分支',observation:'状态已复位',evidenceIds:[code.id]});s.context=s.context.filter(e=>e.id!==code.id);let h=AI.handoff(s,r.id);assert.ok(h.evidence.some(e=>e.id===code.id));});
+test('假设被反驳后的代码追问不再重复推荐原假设',()=>{let s=setup();AI.finish(s,AI.start(s,'为什么转圈').id);AI.verify(s,'H1',{outcome:'refuted',method:'复现并观察状态',observation:'状态已恢复但仍转圈'});let r=AI.start(s,'源码是否证明了 H1？');AI.finish(s,r.id);assert.doesNotMatch(r.answer.body,/失败后状态未恢复是解释持续转圈的候选假设/);});

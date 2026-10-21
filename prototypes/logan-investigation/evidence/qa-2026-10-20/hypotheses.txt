@@ -1,0 +1,70 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "采集任务"
+    - button "问题工单"
+    - button "AI 对话"
+    - button "调查证据"
+    - button "假设验证"
+    - button "回写工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 问题排查
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - heading "问题排查工作台" [level=1]
+  - paragraph: 围绕同一工单补充证据、追问、验证与保存结果
+  - generic: 合成数据 · 无真实接口
+  - generic: 问题工单 · 3
+  - textbox "问题工单 · 3":
+    - /placeholder: 工单或问题
+  - button "ISS-1042 调查中 登录后持续转圈 8 轮对话 · 9 项证据":
+    - generic: ISS-1042
+    - generic: 调查中
+    - generic: 登录后持续转圈
+    - generic: 8 轮对话 · 9 项证据
+  - button "ISS-1043 调查中 证据不足场景（演练） 0 轮对话 · 1 项证据":
+    - generic: ISS-1043
+    - generic: 调查中
+    - generic: 证据不足场景（演练）
+    - generic: 0 轮对话 · 1 项证据
+  - button "ISS-1044 待验证 全流程验收：登录超时后持续转圈 5 轮对话 · 5 项证据":
+    - generic: ISS-1044
+    - generic: 待验证
+    - generic: 全流程验收：登录超时后持续转圈
+    - generic: 5 轮对话 · 5 项证据
+  - heading "ISS-1044 · 全流程验收：登录超时后持续转圈" [level=2]
+  - paragraph: demo-A17 · 待验证
+  - button "发起日志回捞"
+  - tablist:
+    - tab "AI 对话"
+    - tab "日志与源码证据"
+    - tab "源码关联"
+    - tab "假设验证" [selected]
+    - tab "回写工单"
+  - button "粘贴日志 / 源码片段"
+  - button "导出对话与调查"
+  - heading "待验证计划" [level=3]
+  - checkbox "复现登录超时，检查失败分支是否恢复 loading · 已执行" [checked]
+  - text: 复现登录超时，检查失败分支是否恢复 loading · 已执行
+  - paragraph: 待补充：缺少构建与提交映射
+  - text: 勾选仅记录执行进度，假设结论仍需填写实际观察。
+  - heading "假设与验证" [level=3]
+  - generic: 人工记录
+  - text: H1
+  - heading "登录失败路径未恢复加载状态" [level=4]
+  - generic: 人工记录支持
+  - paragraph: 检查失败后 loading 与 UI 是否实际恢复。
+  - generic "1 条验证记录 · 最新：10:00:10"
+  - button "补充验证记录"
+  - text: H2
+  - heading "网络切换导致此次请求超时" [level=4]
+  - generic: 待验证
+  - paragraph: 检查网络切换与超时是否有可重复的因果关系。
+  - button "记录验证结果"
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间

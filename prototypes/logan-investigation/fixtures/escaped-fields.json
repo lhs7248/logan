@@ -1,0 +1,1 @@
+[{"timestamp":"2026-10-20T10:42:00+08:00","level":"WARN","module":"<em id=qa-unescaped-module>文字模块</em>","message":"字面文本 <b id=qa-unescaped-message>不可作为 HTML 执行</b>","file":"src/<i id=qa-unescaped-file>示例</i>.tsx","line":5}]

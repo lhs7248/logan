@@ -1,0 +1,112 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "采集任务"
+    - button "推送与设备响应"
+    - button "返回文件"
+    - button "失败与重试"
+    - button "问题工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 采集任务
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - heading "采集任务" [level=1]
+  - paragraph: 左侧选择请求，右侧直接追踪推送、上传和解析，或运行本地演示。
+  - generic: 合成数据 · 无真实接口
+  - button "新建采集"
+  - tablist:
+    - tab "推送与设备响应"
+    - tab "文件与处理结果"
+    - tab "失败与重试" [selected]
+  - generic: 采集请求 · 4
+  - textbox "采集请求 · 4":
+    - /placeholder: 请求、设备、工单
+  - generic: 采集状态
+  - combobox "采集状态":
+    - option "全部状态" [selected]
+    - option "部分成功"
+    - option "设备响应超时"
+    - option "解析失败"
+  - button "COL-209 部分成功 demo-A17 · ISS-1042":
+    - generic: COL-209
+    - generic: 部分成功
+    - generic: demo-A17 · ISS-1042
+  - button "COL-210 设备响应超时 demo-A17 · ISS-1042 · 重试 COL-209":
+    - generic: COL-210
+    - generic: 设备响应超时
+    - generic: demo-A17 · ISS-1042 · 重试 COL-209
+  - button "COL-212 解析失败 demo-A17 · ISS-1042":
+    - generic: COL-212
+    - generic: 解析失败
+    - generic: demo-A17 · ISS-1042
+  - button "COL-216 部分成功 demo-A17 · ISS-1044":
+    - generic: COL-216
+    - generic: 部分成功
+    - generic: demo-A17 · ISS-1044
+  - heading "COL-209 · demo-A17" [level=2]
+  - paragraph: ISS-1042 · 2026-10-19 10:40 — 10:45
+  - generic: 部分成功
+  - generic: 推送通道
+  - generic: 已接受
+  - generic: 设备送达
+  - generic: 已送达
+  - generic: SDK 确认
+  - generic: 已确认
+  - generic: 可查日志
+  - generic: TASK-209
+  - button "重试未完成部分"
+  - button "打开返回日志"
+  - button "导出处理记录"
+  - text: 演示按钮仅推进本地回调。推送接受、设备送达与索引可查分别追踪。
+  - heading "文件与处理结果" [level=3]
+  - table:
+    - rowgroup:
+      - row "文件 大小 状态":
+        - columnheader "文件"
+        - columnheader "大小"
+        - columnheader "状态"
+    - rowgroup:
+      - row "应用日志.log 4.6 MiB 可查":
+        - cell "应用日志.log"
+        - cell "4.6 MiB"
+        - cell "可查":
+          - generic: 可查
+      - row "网络日志.log 1.2 MiB 上传失败":
+        - cell "网络日志.log"
+        - cell "1.2 MiB"
+        - cell "上传失败":
+          - generic: 上传失败
+  - generic: 成功文件可立即打开；重试仅包含未完成文件。
+  - heading "回调与通知时间线" [level=3]
+  - checkbox "后续完成或失败时生成站内提醒" [checked]
+  - text: 后续完成或失败时生成站内提醒
+  - text: 只影响后续本地结果提醒，已生成记录保留；与设备采集推送独立。
+  - paragraph:
+    - text: 19:48:19
+    - text: 回捞请求已创建，等待发送采集指令
+  - paragraph:
+    - text: 19:48:20
+    - text: 推送服务已接受 · push-COL-209；不代表设备收到
+  - paragraph:
+    - text: 19:48:20
+    - text: 设备送达回执已收到；尚未同意采集
+  - paragraph:
+    - text: 19:48:20
+    - text: SDK 已确认采集指令；校验设备与日志时间范围
+  - paragraph:
+    - text: 19:48:20
+    - text: 文件上传结束，开始完整性检查
+  - paragraph:
+    - text: 19:48:21
+    - text: 发布 TASK-209，可查文件自动关联工单；失败文件不计为成功
+  - paragraph:
+    - text: 19:48:21
+    - text: 生成本地站内通知：部分成功（未发送外部消息）
+  - paragraph: 结果通知：完成、部分成功或失败时记录本地提醒 · 有效期 30 分钟 · 预算 32 MiB
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间

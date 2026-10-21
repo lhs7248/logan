@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-21",
+  "scope": "repository-relative markdown links, JSON syntax and requirement coverage only; not product acceptance",
+  "markdownFiles": 5,
+  "localLinksChecked": 29,
+  "archiveMarkdownFilesChecked": 14,
+  "archiveLocalLinksChecked": 71,
+  "requirements": 19,
+  "acceptanceCases": 38,
+  "uncoveredRequirements": [],
+  "coverage": {
+    "COL-01": [
+      "AT-12",
+      "AT-13"
+    ],
+    "COL-02": [
+      "AT-14",
+      "AT-15"
+    ],
+    "COL-03": [
+      "AT-16",
+      "AT-17"
+    ],
+    "COL-04": [
+      "AT-18"
+    ],
+    "INV-01": [
+      "AT-22"
+    ],
+    "INV-02": [
+      "AT-23",
+      "AT-36"
+    ],
+    "INV-03": [
+      "AT-24",
+      "AT-25",
+      "AT-26"
+    ],
+    "INV-04": [
+      "AT-27",
+      "AT-28"
+    ],
+    "INV-05": [
+      "AT-29",
+      "AT-30",
+      "AT-37",
+      "AT-38"
+    ],
+    "LOG-01": [
+      "AT-01"
+    ],
+    "LOG-02": [
+      "AT-02",
+      "AT-03"
+    ],
+    "LOG-03": [
+      "AT-04"
+    ],
+    "LOG-04": [
+      "AT-05",
+      "AT-06",
+      "AT-07",
+      "AT-08",
+      "AT-35"
+    ],
+    "LOG-05": [
+      "AT-09",
+      "AT-10"
+    ],
+    "LOG-06": [
+      "AT-11"
+    ],
+    "SRC-01": [
+      "AT-19",
+      "AT-20"
+    ],
+    "SRC-02": [
+      "AT-21"
+    ],
+    "SYS-01": [
+      "AT-31",
+      "AT-32"
+    ],
+    "SYS-02": [
+      "AT-33",
+      "AT-34"
+    ]
+  },
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Logan 本地产品原型：工单、定向回捞、推送状态、日志源码关联与可复核的 AI 调查。">
+<title>Logan · 问题排查工作台</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="desk.css">
+<script defer src="model.js"></script><script defer src="log-data.js"></script><script defer src="app.js"></script>
+<script defer src="ai-model.js"></script><script defer src="ai.js"></script>
+<script defer src="log-workspace.js"></script>
+<script defer src="navigation.js"></script><script defer src="log-import.js"></script>
+<script defer src="desk-model.js"></script><script defer src="desk.js"></script>
+</head>
+<body>
+<aside><h2>LOGAN</h2><small>问题排查工作台</small><nav id="nav" aria-label="主要导航"></nav><div class="sidebar-bottom"><p>交互原型 · 本地文件与合成样例<br>未接真实推送、设备或模型</p><button onclick="resetDemo()">重置演示</button></div></aside>
+<main><header><span>现场排查 / <b id="crumb"></b></span><div class="header-tools"><small id="global-status" role="status"></small><button onclick="showGuide()">演练指南</button></div></header><section id="view"></section><footer>Logan 本地原型 · 文件解析在浏览器执行，推送、源码映射与 AI 为模拟 · 时间采用北京时间</footer></main>
+<dialog id="modal"></dialog><div id="toast" role="status" aria-live="polite"></div>
+</body></html>

@@ -1,0 +1,75 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "采集任务"
+    - button "问题工单"
+    - button "AI 对话"
+    - button "调查证据"
+    - button "假设验证"
+    - button "回写工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 问题排查
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - heading "问题排查工作台" [level=1]
+  - paragraph: 围绕同一工单补充证据、追问、验证与保存结果
+  - generic: 合成数据 · 无真实接口
+  - generic: 问题工单 · 3
+  - textbox "问题工单 · 3":
+    - /placeholder: 工单或问题
+  - button "ISS-1042 调查中 登录后持续转圈 8 轮对话 · 9 项证据":
+    - generic: ISS-1042
+    - generic: 调查中
+    - generic: 登录后持续转圈
+    - generic: 8 轮对话 · 9 项证据
+  - button "ISS-1043 调查中 证据不足场景（演练） 0 轮对话 · 1 项证据":
+    - generic: ISS-1043
+    - generic: 调查中
+    - generic: 证据不足场景（演练）
+    - generic: 0 轮对话 · 1 项证据
+  - button "ISS-1044 待验证 全流程验收：登录超时后持续转圈 5 轮对话 · 5 项证据":
+    - generic: ISS-1044
+    - generic: 待验证
+    - generic: 全流程验收：登录超时后持续转圈
+    - generic: 5 轮对话 · 5 项证据
+  - heading "ISS-1044 · 全流程验收：登录超时后持续转圈" [level=2]
+  - paragraph: demo-A17 · 待验证
+  - button "发起日志回捞"
+  - tablist:
+    - tab "AI 对话"
+    - tab "日志与源码证据"
+    - tab "源码关联" [selected]
+    - tab "假设验证"
+    - tab "回写工单"
+  - button "粘贴日志 / 源码片段"
+  - button "导出对话与调查"
+  - text: 选择此工单的日志
+  - combobox "选择此工单的日志":
+    - option "TASK-214" [selected]
+    - option "TASK-216"
+    - option "TASK-217"
+  - text: 定位事件
+  - combobox "源码定位事件":
+    - option "L1 · LoginView"
+    - option "L2 · Network"
+    - option "L3 · AuthClient"
+    - option "L4 · AuthClient"
+    - option "L5 · LoginViewModel" [selected]
+  - text: 版本依据
+  - combobox "源码匹配状态":
+    - option "演示：构建匹配"
+    - option "关键词候选"
+    - option "映射缺失" [selected]
+  - generic: TASK-214 / L5 · retry exhausted; loading=true; requestId=req-7f2
+  - heading "缺少构建到提交的映射" [level=3]
+  - paragraph: 此时不能把其他版本的源码当作现场代码。
+  - button "记录缺失信息"
+  - button "查看关键词候选"
+  - text: 来源 3.8.1 / build 38107 · 源码与提交均为合成示例。
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间

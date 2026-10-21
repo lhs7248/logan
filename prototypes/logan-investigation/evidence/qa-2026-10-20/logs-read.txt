@@ -1,0 +1,116 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "文件与解析"
+    - button "搜索与阅读"
+    - button "关联源码"
+    - button "采集任务"
+    - button "问题工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 日志中心
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - heading "日志中心" [level=1]
+  - paragraph: 选中日志后，直接阅读、搜索、查看解析结果或关联源码。
+  - generic: 合成数据 · 无真实接口
+  - button "采集更多日志"
+  - generic: 日志列表 · 8
+  - textbox "日志列表 · 8":
+    - /placeholder: 日志、设备、工单
+  - generic: 日志状态
+  - combobox "日志状态":
+    - option "全部状态" [selected]
+    - option "解析完成"
+    - option "部分可查"
+    - option "解析失败"
+  - button "TASK-208 解析完成 demo-A17 · ISS-1042":
+    - generic: TASK-208
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-209 部分可查 demo-A17 · ISS-1042":
+    - generic: TASK-209
+    - generic: 部分可查
+    - generic: demo-A17 · ISS-1042
+  - button "COL-212 解析失败 demo-A17 · ISS-1042":
+    - generic: COL-212
+    - generic: 解析失败
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-213 解析完成 demo-A17 · ISS-1042":
+    - generic: TASK-213
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-211 解析完成 demo-A17 · ISS-1043":
+    - generic: TASK-211
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1043
+  - button "TASK-214 解析完成 demo-A17 · ISS-1044":
+    - generic: TASK-214
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1044
+  - button "TASK-216 部分可查 demo-A17 · ISS-1044":
+    - generic: TASK-216
+    - generic: 部分可查
+    - generic: demo-A17 · ISS-1044
+  - button "TASK-217 解析完成 demo-A17 · ISS-1044":
+    - generic: TASK-217
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1044
+  - heading "TASK-214" [level=2]
+  - paragraph: demo-A17 · ISS-1044 · 解析完成
+  - button "下载正文"
+  - button "进入工单排查"
+  - tablist:
+    - tab "文件与解析"
+    - tab "搜索与上下文" [selected]
+    - tab "源码与变更"
+  - textbox "日志关键词":
+    - /placeholder: 关键词 / requestId
+  - combobox "日志级别":
+    - option "全部" [selected]
+    - option "ERROR"
+    - option "INFO"
+  - button "清除筛选"
+  - text: 合成样例共 5 条，筛选与上下文操作在此直接生效。
+  - heading "事件列表" [level=3]
+  - generic: 5 / 5 条命中
+  - button "L1 · 10:42:01.120 · LoginView INFO 用户点击登录，requestId=req-7f2":
+    - text: L1 · 10:42:01.120 · LoginView
+    - generic: INFO
+    - text: 用户点击登录，requestId=req-7f2
+  - button "L2 · 10:42:01.136 · Network INFO 网络状态切换 Wi-Fi → cellular":
+    - text: L2 · 10:42:01.136 · Network
+    - generic: INFO
+    - text: 网络状态切换 Wi-Fi → cellular
+  - button "L3 · 10:42:09.142 · AuthClient ERROR POST /login timeout; requestId=req-7f2; attempt=1":
+    - text: L3 · 10:42:09.142 · AuthClient
+    - generic: ERROR
+    - text: POST /login timeout; requestId=req-7f2; attempt=1
+  - button "L4 · 10:42:17.150 · AuthClient ERROR POST /login timeout; requestId=req-7f2; attempt=2":
+    - text: L4 · 10:42:17.150 · AuthClient
+    - generic: ERROR
+    - text: POST /login timeout; requestId=req-7f2; attempt=2
+  - button "L5 · 10:42:25.162 · LoginViewModel ERROR retry exhausted; loading=true; requestId=req-7f2":
+    - text: L5 · 10:42:25.162 · LoginViewModel
+    - generic: ERROR
+    - text: retry exhausted; loading=true; requestId=req-7f2
+  - heading "日志详情 · L5" [level=3]
+  - text: TASK-214 · 10:42:25.162
+  - generic: retry exhausted; loading=true; requestId=req-7f2
+  - button "加入调查证据"
+  - button "查看原始上下文"
+  - term: 模块
+  - definition: LoginViewModel
+  - term: 构建
+  - definition: 3.8.1 / 38107
+  - term: 源码线索
+  - definition: LoginViewModel.swift:124
+  - button "定位关联源码"
+  - button "交给 AI 排查"
+  - button "按 requestId=req-7f2 关联"
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间

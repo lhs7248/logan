@@ -1,0 +1,6 @@
+合成演示正文；不是加密上传原文件
+10:42:01.120 INFO LoginView 用户点击登录，requestId=req-7f2
+10:42:01.136 INFO Network 网络状态切换 Wi-Fi → cellular
+10:42:09.142 ERROR AuthClient POST /login timeout; requestId=req-7f2; attempt=1
+10:42:17.150 ERROR AuthClient POST /login timeout; requestId=req-7f2; attempt=2
+10:42:25.162 ERROR LoginViewModel retry exhausted; loading=true; requestId=req-7f2

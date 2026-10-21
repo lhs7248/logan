@@ -1,0 +1,2 @@
+10:42:01.120 INFO ImportedApp 用户点击登录 requestId=native-import-42
+10:42:09.142 ERROR ImportedApp 请求超时 requestId=native-import-42

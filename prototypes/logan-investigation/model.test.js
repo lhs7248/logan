@@ -1,0 +1,12 @@
+const test=require('node:test'),assert=require('node:assert/strict'),M=require('./model.js');
+const setup=()=>{let s=M.initial(),i=s.issues[0],f={device:i.device,begin:i.begin,end:i.end,types:['应用日志','网络日志'],budget:'32',ttl:'30',notify:true};return {s,i,f,r:M.create(s,i,f).request};};
+const finish=r=>{for(let j=0;j<8;j++)M.advance(r);};
+test('推送接受、设备送达与 SDK 确认不提前发布任务',()=>{let {r}=setup();for(let j=0;j<4;j++){M.advance(r);assert.equal(r.task,null);}assert.equal(r.status,'解析中');M.advance(r);assert.equal(r.status,'完成');assert.ok(r.task);let count=r.events.length;M.advance(r);assert.equal(r.events.length,count);});
+test('同设备、时间、种类的进行中请求合并',()=>{let {s,i,f,r}=setup();let second=M.create(s,i,f);assert.equal(second.duplicate,true);assert.equal(second.request.id,r.id);assert.equal(i.requests.length,1);});
+test('部分成功重试只处理失败文件，不覆盖原有任务与事件',()=>{let {s,i,r}=setup();r.scenario='partial';finish(r);assert.equal(r.status,'部分成功');assert.equal(r.files.filter(f=>f.status==='可查').length,1);let task=r.task,count=r.events.length,out=M.retry(s,i,r);assert.deepEqual(out.request.types,['网络日志']);assert.equal(out.request.parent,r.id);finish(out.request);assert.equal(out.request.status,'完成');assert.equal(r.task,task);assert.equal(r.events.length,count);assert.equal(M.tasks(i).length,2);});
+test('超时后不能接收模拟推进，重试保留历史',()=>{let {s,i,r}=setup();r.scenario='timeout';finish(r);assert.equal(r.status,'设备响应超时');assert.equal(M.tasks(i).length,0);let retry=M.retry(s,i,r);assert.notEqual(retry.request.id,r.id);assert.equal(r.status,'设备响应超时');assert.equal(retry.request.parent,r.id);});
+for(const [scenario,status] of Object.entries({pushfail:'推送失败',unsupported:'设备不支持',empty:'无可用日志',uploadfail:'上传失败',parsefail:'解析失败'}))test(status+' 不发布可查任务',()=>{let {i,r}=setup();r.scenario=scenario;finish(r);assert.equal(r.status,status);assert.equal(M.tasks(i).length,0);});
+test('单文件部分失败不生成空任务',()=>{let {r}=setup();r.types=['应用日志'];r.scenario='partial';finish(r);assert.equal(r.status,'上传失败');assert.equal(r.task,null);});
+test('取消后无状态推进',()=>{let {r}=setup();r.status='已取消';M.advance(r);assert.equal(r.status,'已取消');assert.equal(r.step,0);});
+test('部分任务只暴露成功的种类',()=>{let {i,r}=setup();r.scenario='partial';finish(r);assert.deepEqual(M.tasks(i)[0].types,['应用日志']);});
+test('失败提醒只生成一次，终态重复推进不产生重复提醒',()=>{let {r}=setup();r.scenario='timeout';finish(r);assert.equal(r.events.filter(e=>e.text.startsWith('生成本地站内通知')).length,1);M.advance(r);assert.equal(r.events.filter(e=>e.text.startsWith('生成本地站内通知')).length,1);});

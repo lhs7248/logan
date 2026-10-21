@@ -1,0 +1,67 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "采集任务"
+    - button "问题工单"
+    - button "AI 对话"
+    - button "调查证据"
+    - button "假设验证"
+    - button "回写工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 问题工单
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - button "进入排查工作台"
+  - button "发起日志回捞"
+  - heading "问题与工单" [level=1]
+  - paragraph: 用同一份问题记录连接采集、分析与处理。
+  - generic: 合成数据 · 无真实接口
+  - textbox "搜索工单" [active]:
+    - /placeholder: 工单、设备、问题关键词
+  - button "新建工单"
+  - table:
+    - rowgroup:
+      - row "问题 / 设备 优先级 状态 日志准备 操作":
+        - columnheader "问题 / 设备"
+        - columnheader "优先级"
+        - columnheader "状态"
+        - columnheader "日志准备"
+        - columnheader "操作"
+    - rowgroup:
+      - row "ISS-1042 · 登录后持续转圈 demo-A17 · 3.8.1 P1 调查中 3 个任务 · 6 次回捞 打开工单":
+        - cell "ISS-1042 · 登录后持续转圈 demo-A17 · 3.8.1":
+          - text: ISS-1042 · 登录后持续转圈
+          - text: demo-A17 · 3.8.1
+        - cell "P1"
+        - cell "调查中":
+          - generic: 调查中
+        - cell "3 个任务 · 6 次回捞"
+        - cell "打开工单":
+          - button "打开工单"
+      - row "ISS-1043 · 证据不足场景（演练） demo-A17 · 3.8.1 P1 调查中 1 个任务 · 1 次回捞 打开工单":
+        - cell "ISS-1043 · 证据不足场景（演练） demo-A17 · 3.8.1":
+          - text: ISS-1043 · 证据不足场景（演练）
+          - text: demo-A17 · 3.8.1
+        - cell "P1"
+        - cell "调查中":
+          - generic: 调查中
+        - cell "1 个任务 · 1 次回捞"
+        - cell "打开工单":
+          - button "打开工单"
+      - row "ISS-1044 · 全流程验收：登录超时后持续转圈 demo-A17 · 3.8.1 P1 待验证 3 个任务 · 3 次回捞 打开工单":
+        - cell "ISS-1044 · 全流程验收：登录超时后持续转圈 demo-A17 · 3.8.1":
+          - text: ISS-1044 · 全流程验收：登录超时后持续转圈
+          - text: demo-A17 · 3.8.1
+        - cell "P1"
+        - cell "待验证":
+          - generic: 待验证
+        - cell "3 个任务 · 3 次回捞"
+        - cell "打开工单":
+          - button "打开工单"
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间

@@ -1,0 +1,140 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "日志中心"
+    - button "文件与解析"
+    - button "搜索与阅读"
+    - button "关联源码"
+    - button "采集任务"
+    - button "问题工单"
+  - paragraph:
+    - text: 交互原型 · 全程合成数据
+    - text: 未接真实推送、设备或模型
+  - button "重置演示"
+- main:
+  - generic: 移动端稳定性 / 日志中心
+  - status: 自动保存于此浏览器 · 合成演示
+  - button "演练指南"
+  - heading "日志中心" [level=1]
+  - paragraph: 选中日志后，直接阅读、搜索、查看解析结果或关联源码。
+  - generic: 合成数据 · 无真实接口
+  - button "采集更多日志"
+  - generic: 日志列表 · 8
+  - textbox "日志列表 · 8":
+    - /placeholder: 日志、设备、工单
+  - generic: 日志状态
+  - combobox "日志状态":
+    - option "全部状态" [selected]
+    - option "解析完成"
+    - option "部分可查"
+    - option "解析失败"
+  - button "TASK-208 解析完成 demo-A17 · ISS-1042":
+    - generic: TASK-208
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-209 部分可查 demo-A17 · ISS-1042":
+    - generic: TASK-209
+    - generic: 部分可查
+    - generic: demo-A17 · ISS-1042
+  - button "COL-212 解析失败 demo-A17 · ISS-1042":
+    - generic: COL-212
+    - generic: 解析失败
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-213 解析完成 demo-A17 · ISS-1042":
+    - generic: TASK-213
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1042
+  - button "TASK-211 解析完成 demo-A17 · ISS-1043":
+    - generic: TASK-211
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1043
+  - button "TASK-214 解析完成 demo-A17 · ISS-1044":
+    - generic: TASK-214
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1044
+  - button "TASK-216 部分可查 demo-A17 · ISS-1044":
+    - generic: TASK-216
+    - generic: 部分可查
+    - generic: demo-A17 · ISS-1044
+  - button "TASK-217 解析完成 demo-A17 · ISS-1044":
+    - generic: TASK-217
+    - generic: 解析完成
+    - generic: demo-A17 · ISS-1044
+  - heading "TASK-214" [level=2]
+  - paragraph: demo-A17 · ISS-1044 · 解析完成
+  - button "下载正文"
+  - button "进入工单排查"
+  - tablist:
+    - tab "文件与解析" [selected]
+    - tab "搜索与上下文"
+    - tab "源码与变更"
+  - heading "TASK-214 · demo-A17" [level=3]
+  - text: 文件来源：日志回捞 COL-214 · 关联工单 ISS-1044
+  - generic: 解析完成
+  - text: 日志范围
+  - generic: 2026-10-19 10:40 — 10:45
+  - text: 应用版本 / 构建
+  - generic: 3.8.1 / 38107
+  - text: 预算
+  - generic: 32 MiB
+  - generic: 文件接收 · 已有文件
+  - generic: 解码与校验 · 完成
+  - generic: 记录解析 · 完成
+  - generic: 索引发布 · 可查
+  - paragraph: 解析内部阶段为交互示意；当前模拟只收到整体解析结果，没有真实阶段耗时或吞吐数据，不展示虚构性能指标。
+  - button "阅读已解析日志"
+  - button "下载可查正文样例"
+  - button "查看采集与推送"
+  - button "导出处理记录"
+  - heading "文件处理结果" [level=3]
+  - table:
+    - rowgroup:
+      - row "文件 大小（演示） 结果":
+        - columnheader "文件"
+        - columnheader "大小（演示）"
+        - columnheader "结果"
+    - rowgroup:
+      - row "应用日志.log 4.6 MiB 可查":
+        - cell "应用日志.log"
+        - cell "4.6 MiB"
+        - cell "可查":
+          - generic: 可查
+      - row "网络日志.log 1.2 MiB 可查":
+        - cell "网络日志.log"
+        - cell "1.2 MiB"
+        - cell "可查":
+          - generic: 可查
+  - heading "处理记录与错误" [level=3]
+  - paragraph:
+    - text: 09:57:25
+    - text: 回捞请求已创建，等待发送采集指令
+  - paragraph:
+    - text: 09:57:33
+    - text: 推送服务已接受 · push-COL-214；不代表设备收到
+  - paragraph:
+    - text: 09:57:39
+    - text: 设备送达回执已收到；尚未同意采集
+  - paragraph:
+    - text: 09:57:39
+    - text: SDK 已确认采集指令；校验设备与日志时间范围
+  - paragraph:
+    - text: 09:57:40
+    - text: 文件上传结束，开始完整性检查
+  - paragraph:
+    - text: 09:57:41
+    - text: 发布 TASK-214，可查文件自动关联工单；失败文件不计为成功
+  - paragraph:
+    - text: 09:57:41
+    - text: 生成本地站内通知：完成（未发送外部消息）
+  - heading "日志关联" [level=3]
+  - paragraph:
+    - text: 目标设备：demo-A17
+    - text: 来源请求：COL-214
+    - text: 可查任务：TASK-214
+    - text: 关联工单：ISS-1044
+  - button "打开关联工单"
+  - heading "后续排查" [level=3]
+  - paragraph: 解析成功后，先阅读原始日志与上下文，再选择关联源码或将证据送入 AI 调查。
+  - button "进入日志阅读"
+  - generic: Logan 产品原型 · 推送、日志、源码和 AI 均为模拟 · 时间范围采用北京时间
