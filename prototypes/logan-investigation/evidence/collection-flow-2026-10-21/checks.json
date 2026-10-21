@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-21",
+  "scope": "local prototype collection flow",
+  "testsPassed": 106,
+  "testsFailed": 0,
+  "syntaxPassed": true,
+  "gitDiffCheckPassed": true,
+  "harnessCheckPassed": true,
+  "realInterfacesTested": false,
+  "browserConsoleErrors": 0,
+  "previewFilesChecked": [
+    "app.js",
+    "navigation.js",
+    "index.html",
+    "collection-flow-model.js",
+    "collection-flow.js",
+    "collection-flow.css"
+  ],
+  "previewMismatches": [],
+  "markdownFilesChecked": 9,
+  "localLinksChecked": 63,
+  "linkErrors": []
+}

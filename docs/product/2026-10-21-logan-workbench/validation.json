@@ -87,5 +87,68 @@
     ]
   },
   "errors": [],
-  "passed": true
+  "passed": true,
+  "productAlignment": {
+    "report": "../../../prototypes/logan-investigation/evidence/product-alignment-2026-10-21/report.md",
+    "testsPassed": 90,
+    "markdownFilesChecked": 15,
+    "localLinksChecked": 94,
+    "linkErrors": [],
+    "realInterfacesTested": false
+  },
+  "collectionFlow": {
+    "date": "2026-10-21",
+    "scope": "local prototype collection flow",
+    "testsPassed": 106,
+    "testsFailed": 0,
+    "syntaxPassed": true,
+    "gitDiffCheckPassed": true,
+    "harnessCheckPassed": true,
+    "realInterfacesTested": false,
+    "browserConsoleErrors": 0,
+    "previewFilesChecked": [
+      "app.js",
+      "navigation.js",
+      "index.html",
+      "collection-flow-model.js",
+      "collection-flow.js",
+      "collection-flow.css"
+    ],
+    "previewMismatches": [],
+    "markdownFilesChecked": 9,
+    "localLinksChecked": 63,
+    "linkErrors": [],
+    "report": "../../../prototypes/logan-investigation/evidence/collection-flow-2026-10-21/report.md"
+  },
+  "pushFlow": {
+    "date": "2026-10-21",
+    "testsPassed": 113,
+    "testsFailed": 0,
+    "browserRequest": "COL-229",
+    "pushId": "PUSH-COL-229",
+    "browserPath": "submit -> channel accepted -> delivered -> SDK confirmed -> uploaded -> parsed -> read 5 events -> refresh",
+    "localLinksChecked": 57,
+    "linkErrors": [],
+    "realInterfacesTested": false,
+    "report": "../../../prototypes/logan-investigation/evidence/collection-flow-2026-10-21/push-review.md"
+  },
+  "aliyunRetrieval": {
+    "date": "2026-10-21",
+    "testsPassed": 124,
+    "localLinksChecked": 65,
+    "linkErrors": [],
+    "previewFilesMatch": [
+      "aliyun-retrieval-model.js",
+      "aliyun-retrieval.js",
+      "collection-flow.js",
+      "collection-flow.css",
+      "index.html",
+      "log-data.js",
+      "desk.js"
+    ],
+    "browserRequest": "COL-230",
+    "reparseAsset": "LOG-010/P1",
+    "realInterfacesTested": false,
+    "report": "../../../prototypes/logan-investigation/evidence/collection-flow-2026-10-21/aliyun-review.md"
+  }
 }

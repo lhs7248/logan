@@ -1,5 +1,7 @@
 'use strict';
 const M=LoganModel,KEY='logan-investigation-prototype-v2';let state,storageOK=true;try{state=JSON.parse(localStorage.getItem(KEY));if(!state||state.version!==2)state=M.initial();}catch{state=M.initial();storageOK=false;}
+// Preserve persisted selection until all optional source adapters have loaded.
+const initialWorkspaceSelection=JSON.parse(JSON.stringify({active:state.active,workspace:state.workspaceUI||{},desk:state.deskUI||{}}));
 const $=s=>document.querySelector(s),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const names={issues:'问题与工单',collect:'推送与日志回捞',logs:'日志探索',source:'源码与变更',report:'AI 调查与证据'};
 let page='issues',issueDetail=true,requestId=null,taskId=null,selected=4,query='',level='全部',contextMode=false,sourceMode='matched',wizard=null,aiTimer=null,toastTimer;

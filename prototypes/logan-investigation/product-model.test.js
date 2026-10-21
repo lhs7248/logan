@@ -1,0 +1,20 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const P=require('./product-model');
+const issue=()=>({id:'I1',owner:'A',status:'调查中',description:'现象',updates:[],investigation:{revision:0,context:[],rounds:[],hypotheses:[]}});
+const draft=i=>({id:'D1',mode:'manual',scopeToken:P.token(i),status:'待验证',owner:'A',summary:'观察记录',confirmed:true,evidence:[],fixes:[]});
+test('按日采集扩大范围，结束恰在午夜不会多采一天',()=>{
+ assert.deepEqual(P.captureScope('2026-10-19T10:40','2026-10-19T10:45','day'),{begin:'2026-10-19T00:00',end:'2026-10-20T00:00',expanded:true});
+ assert.equal(P.captureScope('2026-10-19T00:00','2026-10-20T00:00','day').expanded,false);
+ assert.throws(()=>P.captureScope('2026-10-19T11:00','2026-10-19T10:00','day'));
+});
+test('精确采集保持范围，未知设备能力拒绝发送',()=>{assert.equal(P.captureScope('2026-10-19T10:00','2026-10-19T11:00','precise').expanded,false);assert.throws(()=>P.captureScope('2026-10-19T10:00','2026-10-19T11:00','unsupported'),/不支持/);});
+test('原资产失效阻断不同历史快照，恢复演练不改正文',()=>{const i=issue(),e={id:'E1',task:'T1',text:'original'};i.product={unavailableTasks:{T1:'expired'}};assert.equal(P.availability(i,e),'expired');delete i.product.unavailableTasks.T1;assert.equal(P.availability(i,e),'available');assert.equal(e.text,'original');});
+test('修复验证需要构建、场景、预期、观察、执行人和证据',()=>{assert.throws(()=>P.validateFix({outcome:'pass'}),/填写/);assert.throws(()=>P.validateFix({build:'B',scenario:'S',expected:'E',actual:'A',actor:'U',outcome:'pass',evidence:[]}),/证据/);});
+test('假设支持不能替代修复验证关闭工单',()=>{const i=issue();i.status='待验证';i.investigation.hypotheses=[{status:'supported'}];assert.throws(()=>P.validateHandoff(i,{...draft(i),status:'已解决'}),/修复验证/);});
+test('调查中即使验证通过，也必须先进入待验证',()=>{const i=issue();i.product={fixes:[{id:'F1',outcome:'pass',evidence:[{id:'E1'}]}]};assert.throws(()=>P.validateHandoff(i,{...draft(i),status:'已解决'}),/先保存为待验证/);});
+test('最新修复验证失败或证据失效时不能关闭',()=>{const i=issue();i.status='待验证';i.product={fixes:[{outcome:'pass',evidence:[{id:'E1'}]},{outcome:'fail',evidence:[{id:'E1'}]}]};assert.throws(()=>P.validateHandoff(i,{...draft(i),status:'已解决'}),/通过的修复验证/);i.product.fixes.pop();i.product.availability={E1:'expired'};assert.throws(()=>P.validateHandoff(i,{...draft(i),status:'已解决'}),/证据/);});
+test('草稿遇到补证、编辑工单或新增修复验证时拒绝并保留文本',()=>{for(const change of [i=>i.investigation.revision++,i=>i.owner='B',i=>i.product={fixes:[{id:'F'}]}]){const i=issue(),d=draft(i);change(i);assert.throws(()=>P.validateHandoff(i,d),/已变化/);assert.equal(d.summary,'观察记录');}});
+test('人工模式无需模型，AI 模式不能引用未完成轮次',()=>{const i=issue();P.validateHandoff(i,draft(i));assert.throws(()=>P.validateHandoff(i,{...draft(i),mode:'ai',round:'R1'}),/完成/);});
+test('同一草稿重复回写仅生成一条记录',()=>{const i=issue(),d=draft(i);const a=P.commitHandoff(i,d),b=P.commitHandoff(i,d);assert.equal(i.updates.length,1);assert.equal(a.id,b.id);assert.equal(i.status,'待验证');});
+test('已解决只能重新调查，保留旧更新',()=>{const i=issue();i.status='已解决';assert.throws(()=>P.validateHandoff(i,{...draft(i),status:'待修复'}),/重新调查/);P.commitHandoff(i,{...draft(i),status:'重新调查'});assert.equal(i.status,'重新调查');});
+test('迟到回执记录不回退取消状态，重复回执不重复追加',()=>{const r={status:'已取消',step:1,events:[]};P.lateReceipt(r);P.lateReceipt(r);assert.equal(r.status,'已取消');assert.equal(r.events.length,1);});

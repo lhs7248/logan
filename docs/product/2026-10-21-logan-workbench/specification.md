@@ -43,7 +43,7 @@
 | 对象 | 关键字段与约束 |
 | --- | --- |
 | Issue | id、projectId、revision、标题/现象/负责人/优先级、context、status、createdAt；context 包含 app/platform/environment/device/build/timeWindow，允许有明确 unknown 的字段 |
-| CollectionRequest | id、issueId、parentId、contextSnapshot、requestedWindow、effectiveWindow、requestedKinds、capabilitySnapshot、budget、expiresAt、aggregateStatus；创建后现场不可改，变更需新请求 |
+| CollectionRequest | id、projectId、可空 issueId、parentId、targetSnapshot、expectedIncidentContext、requestedWindow、effectiveWindow（能力决定的执行计划）、requestedKinds、capabilitySnapshot、budget、expiresAt、aggregateStatus；采集现场不可改，关联工单通过追加关联事件完成，变更目标需新请求 |
 | CollectionEvent / File | eventId、requestId、attemptId、occurredAt、receivedAt、来源/验签结果；File 有 kind、hash、size、coverage、assetId、状态；事件只追加 |
 | LogAsset | id、projectId、来源 import/native/web/collection/demo、rawHash、size、存储键、sourceRevision、expiresAt、legacyRef；原始内容不可覆盖 |
 | ParseRun / LogEvent | runId、assetId、parserVersion、配置摘要、状态、计数、诊断；eventId 绑定 runId 和记录位置，含原始时间、UTC 时间、时区依据、原始字段、字段来源 |
@@ -79,9 +79,13 @@ ParseRun 状态：queued → running → succeeded / partial / failed / canceled
 
 ## 5. 补采与推送状态
 
+采集任务可以独立存在，issueId 可空，不创建占位工单。从工单补采时带入现象、设备和故障时间作为线索；从采集中心新建时默认不关联。目标通过 project/app/environment + install/session 身份解析，平台和能力由目标记录提供，不能默认 Native。工单预期构建、设备最近已知构建、文件/事件实际构建分开保存；实际构建缺失或混合时保持未知，不能继承工单构建用于精确源码映射。关联工单不改采集快照；已解决工单须先重新调查，或独立采集后再决定关联。
+
+希望获取时段、预计采集范围和返回材料的事件观察范围分别展示。创建时的 effectiveWindow 是执行计划；返回文件声明和解析事件时间须注明来源。首末事件不能证明连续覆盖，没有覆盖清单时保持未知。
+
 创建前先读取设备能力：支持的日志类型、实际时间粒度、可回捞时长、最大体积、远程接收方式、在线状态及其更新时间。现有 SDK 上报接口不证明已经具备远程指令接收和 ACK。没有渠道/SDK 支持时保留创建表单，但提交前明确说明阻塞原因。
 
-当前 SDK 按日获取/上报文件，不能默认承诺按分钟或按业务种类在端侧裁剪。请求时间与实际采集时间分别展示；如需扩大到整日，提交前明确确认实际范围。应用/网络分类仅在能力声明支持时显示为可采种类，否则显示混合文件、解析后筛选。Web 页面未运行时不能承诺后台送达；已增量上报并清理的内容可能不可回捞。
+当前 SDK 按日获取/上报文件，不能默认承诺按分钟或按业务种类在端侧裁剪。请求时段与预计采集范围分别展示；如需扩大到整日，提交前明确确认预计范围。应用/网络分类仅在能力声明支持时显示为可采种类，否则显示混合文件、解析后筛选。Web 页面未运行时不能承诺后台送达；已增量上报并清理的内容可能不可回捞。
 
 追踪五个独立维度，不能用一条线假装每个阶段都有回执：
 
@@ -174,3 +178,7 @@ Turn 状态 queued → running → completed / failed / canceled / interrupted�
 | [现有前端](../../../Logan/LoganSite/src/app.js)、[API 适配](../../../Logan/LoganSite/src/common/api.js) | 旧页面和业务响应约定需要保留 |
 | [最近 SDK 修复验证](../../../Logan/ServerGo/docs/ios-empty-frame-fix.md) | 已有隔离环境和模拟器证据，不能替代真实渠道、云存储及生产验收 |
 | [原型能力](../../../prototypes/logan-investigation/capability-map.md)、[连续工作台验收](../../../prototypes/logan-investigation/evidence/workspace-redesign-2026-10-20/report.md)、[推理验收](../../../prototypes/logan-investigation/evidence/reasoning-audit-2026-10-20/report.md) | 已有能力保留与状态逻辑基线；不是服务端实现证明 |
+
+## 阿里云回捞入口对齐
+
+回捞与日志解析分开建模。接收日志并关联请求后回捞成功，解析失败不会撤销该结果。目标输入、工单带入和未确认协议的边界以 [阿里云回捞流程](aliyun-retrieval-flow.md) 为准；此前合成绑定和命令载荷不作为开发协议。

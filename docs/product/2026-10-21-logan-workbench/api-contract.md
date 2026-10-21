@@ -56,8 +56,10 @@
 | PATCH /issues/{id} | If-Match + 编辑字段/状态/理由；关闭状态需修复验证引用及复核权限 |
 | GET /issues/{id}/updates | 只追加的更新记录与证据快照引用；到期内容保留 tombstone |
 | POST /issues/{id}/log-links | 关联已有授权任务/资产；检查上下文差异，需显式确认差异，不修改原资产身份 |
-| POST /collections | 见补采示例；创建前固定能力和现场快照，返回 202 |
-| GET /collections | issueId/status/deviceId/cursor；支持失败和部分成功视图 |
+| GET /collection-targets | 按 project/app/environment 和设备线索查安装/会话；返回平台、身份来源、能力版本及最近联系时间；未知不能补成在线 |
+| POST /collections | issueId 可空；创建前核验 targetRef，固定目标、能力和预期现场快照，返回 202 |
+| GET /collections | issueId/unlinked/status/deviceId/cursor；支持独立请求、失败和部分成功视图 |
+| POST /collections/{id}/issue-link | issueId、issueRevision、collectionRevision、幂等键；同项目权限检查，追加关联事件，不改变采集身份；重复相同关联返回原结果，已关联其他工单返回冲突 |
 | GET /collections/{id} | 各状态维度、覆盖范围、文件、父子请求、终态理由 |
 | GET /collections/{id}/events | 使用游标持续查询真实事件，断线可恢复，不依赖前端计时器推进状态 |
 | POST /collections/{id}/cancel | 服务端请求取消，显示已无法撤回的阶段 |
@@ -109,13 +111,15 @@ parser 逻辑名由服务端可用解析器列表决定；解析器实际版本�
 
 ```json
 {
+  "projectId": "sample-project",
   "issueId": "iss_1047",
   "issueRevision": 8,
+  "targetRef": {"kind": "installation", "id": "install-a17"},
   "deviceId": "demo-A17",
   "appId": "sample-app",
   "platform": "android",
   "environment": "test",
-  "buildId": "build_42",
+  "expectedBuildId": "build_42",
   "requestedWindow": {
     "start": "2026-10-19T10:40:00+08:00",
     "end": "2026-10-19T10:50:00+08:00"
@@ -132,7 +136,9 @@ parser 逻辑名由服务端可用解析器列表决定；解析器实际版本�
 }
 ```
 
-此例表示设备只支持按日采混合文件，用户已看到并接受范围扩大。服务端复核能力版本、有效期、数据仍可获取、字节预算和工单版本；过期或能力变化返回错误，不静默换用其他设备或更大范围。
+此例为从工单补采；独立采集传 issueId=null，省略 issueRevision 与无依据的 expectedBuildId。expectedBuildId 只表示故障线索，不能当作日志实际构建。targetRef 是发送目标，deviceId 辅助展示；服务端校验其项目、应用、环境和平台一致性。
+
+此例表示设备只支持按日采混合文件，用户已看到并接受范围扩大。acceptedEffectiveWindow 是经确认的执行计划，不是实际返回覆盖证明。返回数据分别提供文件声明范围、解析事件 min/max、构建身份及来源，没有覆盖清单时 coverage.complete=unknown。服务端复核能力版本、有效期、数据仍可获取和字节预算；有关联工单时同时核对工单版本。过期或能力变化返回错误，不静默换用其他设备或更大范围。
 
 回调使用隔离的集成入口，不走普通用户身份。每个回调至少含 requestId、attemptId、eventId、设备身份、eventType、occurredAt、nonce、协议版本及签名；服务端检查签名/有效期/重放/关联身份，再追加事件。供应商未提供的字段标 unknown，不能臆造。
 
@@ -206,3 +212,15 @@ mode=ai 的预览从指定 completed turn 生成草稿；mode=manual 从人工�
 请求 resolved 时，服务端要求前态 awaiting_verification、有最新有效 pass 修复验证、无未处理的相反验证及复核权限，并关联所验证构建。仅有 hypothesis support、模型建议或“我已核对”勾选框不够。
 
 冲突时显示原草稿与最新工单差异，保留用户编辑，重新预览确认；不得最后写入者自动覆盖。后续若接外部工单，增加 outbox 和外部更新 ID、pending/succeeded/failed/unknown 状态，在外部成功确认前不展示“已写入外部”；本版内部保存成功不能冒充外部同步成功。
+
+## 回捞推送发起契约补充
+
+产品提交动作创建回捞请求并提交推送作业；接受回捞请求不等于推送已被渠道接受。保存应用环境、目标绑定引用、客户端指令（日志时间、类型、上限、有效期）及幂等关联 ID。通道凭据由服务端保管，不让操作人输入 Token。
+
+响应与查询分别返回回捞 ID、推送 ID、提交状态、渠道回执及客户端响应；通道接受、设备送达、SDK 确认、文件上传、解析可读独立记录。失败重试创建关联的新尝试并保留原记录；已有文件重解析不创建推送。Web 必须具备已接入的业务消息或推送绑定，普通会话存在不构成可推送条件。
+
+当前仅实现本地合成对象与回调演练；真实服务端提交原子性、幂等保证、凭据保护与渠道对接属于开发及联调验收范围。
+
+## 阿里云业务参数确认后的修订
+
+[阿里云回捞流程](aliyun-retrieval-flow.md) 为入口基线。应用包名、设备 / 账号 / 别名的值来自用户确认；实际阿里云消息类型、命令字、载荷、接收反馈和平台通知接口仍待业务代码确认。此前示例中的通用 retrieve_logs 指令不是已确认的协议。回捞接收成功与解析状态独立返回，不能用解析完成替代平台接收成功。

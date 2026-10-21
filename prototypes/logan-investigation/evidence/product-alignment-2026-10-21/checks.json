@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-21",
+  "scope": "local prototype only",
+  "tests": {
+    "total": 90,
+    "passed": 90,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": {
+    "prototypes/logan-investigation/product-collection.js": {
+      "passed": true,
+      "output": ""
+    },
+    "prototypes/logan-investigation/product-evidence.js": {
+      "passed": true,
+      "output": ""
+    },
+    "prototypes/logan-investigation/product-handoff.js": {
+      "passed": true,
+      "output": ""
+    },
+    "prototypes/logan-investigation/product-integration.test.js": {
+      "passed": true,
+      "output": ""
+    },
+    "prototypes/logan-investigation/product-model.js": {
+      "passed": true,
+      "output": ""
+    },
+    "prototypes/logan-investigation/product-model.test.js": {
+      "passed": true,
+      "output": ""
+    }
+  },
+  "harness": "passed",
+  "browserErrors": [],
+  "realInterfacesTested": false,
+  "markdownFilesChecked": 15,
+  "localLinksChecked": 94,
+  "linkErrors": [],
+  "diffCheck": {
+    "passed": true,
+    "output": ""
+  },
+  "previewMatches": {
+    "index.html": true,
+    "product-collection.js": true,
+    "product-evidence.js": true,
+    "product-model.js": true,
+    "product-handoff.js": true,
+    "product.css": true
+  }
+}
