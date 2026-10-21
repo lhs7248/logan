@@ -8,6 +8,10 @@
 
 [中文说明](./README-zh.md)
 
+## Server-backed investigation workbench
+
+The independent Go workbench implements persistent log import, parsing, reading, source evidence, investigation and internal ticket updates. See the [implementation status](docs/product/2026-10-21-logan-workbench/implementation-status.md) and [operator runbook](Logan/ServerGo/docs/workbench.md). Aliyun push remains deferred; source, model and legacy services require explicit configuration.
+
 ## Investigation workbench prototype
 
 [Interactive prototype and tests](prototypes/logan-investigation/README.md) · [Product design and development specification](docs/product/2026-10-21-logan-workbench/README.md)

@@ -1,0 +1,109 @@
+{
+  "scope": "isolated real HTTP workbench API with synthetic inputs",
+  "checks": [
+    {
+      "name": "unauthenticated API access rejected",
+      "passed": true
+    },
+    {
+      "name": "authenticated project session",
+      "passed": true
+    },
+    {
+      "name": "durable issue creation and idempotency content conflict",
+      "passed": true
+    },
+    {
+      "name": "stale issue revision rejected",
+      "passed": true
+    },
+    {
+      "name": "original upload bytes/hash persisted and unknown identity preserved",
+      "passed": true
+    },
+    {
+      "name": "strict parsing fails and skip-mode reparse publishes only valid records",
+      "passed": true
+    },
+    {
+      "name": "parse comparison preserves failed version and independent readable publication",
+      "passed": true
+    },
+    {
+      "name": "event publication, zero-match and level filtering",
+      "passed": true
+    },
+    {
+      "name": "log evidence is tied to immutable run/event identity",
+      "passed": true
+    },
+    {
+      "name": "deferred Aliyun connector cannot fabricate push success",
+      "passed": true
+    },
+    {
+      "name": "capabilities expose configuration state",
+      "passed": true
+    },
+    {
+      "name": "unconfigured model creates explicit failed round and never fabricates an answer",
+      "passed": true
+    },
+    {
+      "name": "pre-preview manual draft is durable and recoverable",
+      "passed": true
+    },
+    {
+      "name": "manual investigation handoff works without model and replays once",
+      "passed": true
+    },
+    {
+      "name": "workspace reflects durable linked business objects",
+      "passed": true
+    }
+  ],
+  "objects": {
+    "issueId": "438c3ac77b8cc63e6ef243fdd948b83c",
+    "assetId": "c347e4b9a964c7a81f35ce6ab69b4784",
+    "strictRunId": "ad6dc420bbfad83b8a6b2b31bdca0190",
+    "readableRunId": "118b4f88e832bbd9ffab11356c5ebf9e",
+    "updateId": "1f22394e93c5080c7a8ef0f3d81f6cf2"
+  },
+  "capabilities": {
+    "collections": {
+      "code": "CONNECTOR_UNCONFIGURED",
+      "configured": false,
+      "reason": "Aliyun protocol and credentials are deferred"
+    },
+    "legacy": {
+      "available": false,
+      "reason": "Project mapping and read-only legacy adapter are not configured"
+    },
+    "limits": {
+      "batchBytes": 16777216,
+      "events": 100000,
+      "fileBytes": 8388608,
+      "files": 10
+    },
+    "model": {
+      "configured": false,
+      "reason": "Model endpoint and per-project modelEnabled consent must both be configured"
+    },
+    "parsing": true,
+    "protocols": {
+      "native": {
+        "configured": false
+      },
+      "web": {
+        "configured": false,
+        "encryptedConfigured": false
+      }
+    },
+    "source": {
+      "configured": false
+    },
+    "storage": "durable",
+    "uploads": true
+  },
+  "passed": true
+}

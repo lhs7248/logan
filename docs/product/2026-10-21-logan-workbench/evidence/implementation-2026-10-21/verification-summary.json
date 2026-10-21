@@ -1,0 +1,70 @@
+{
+  "profile": "full",
+  "scope": "Selected commands only; not integration or release acceptance",
+  "steps": [
+    {
+      "command": [
+        "make",
+        "test"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "race"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "vet"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "build"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0,
+  "unexecuted": [],
+  "additionalChecks": [
+    {
+      "name": "new workbench executable build",
+      "status": "passed"
+    },
+    {
+      "name": "frontend behavior and ES module checks",
+      "tests": 16,
+      "status": "passed"
+    },
+    {
+      "name": "preserved prototype regression",
+      "tests": 124,
+      "status": "passed"
+    },
+    {
+      "name": "real HTTP final executable acceptance",
+      "tests": 15,
+      "status": "passed"
+    },
+    {
+      "name": "harness self-test",
+      "tests": 17,
+      "status": "passed"
+    }
+  ]
+}
