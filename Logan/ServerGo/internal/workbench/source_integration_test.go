@@ -133,6 +133,18 @@ func TestSourceAPIUsesImmutableRepositoryAndIndependentAssetIdentity(t *testing.
 		}
 		return Record(data(t, o))
 	}
+	// The requested range can exceed the actual file length. Only the returned
+	// fragment's range establishes whether the event location was covered.
+	s.mu.Lock()
+	s.state.bucket("events")[oldEvent]["sourceLine"] = 50
+	s.mu.Unlock()
+	code, o = req(t, s, "POST", "/source-resolutions", "p", "truncated-range", "", Record{"eventId": oldEvent, "start": 1, "end": 100})
+	if code != 201 || data(t, o)["verified"] != false || data(t, o)["status"] != "candidate" {
+		t.Fatalf("truncated source fragment incorrectly covers event line 50: %v", o)
+	}
+	s.mu.Lock()
+	s.state.bucket("events")[oldEvent]["sourceLine"] = 2
+	s.mu.Unlock()
 	left := resolve(oldEvent, "old-fragment")
 	right := resolve(newEvent, "new-fragment")
 	if left["commit"] != oldCommit || left["mappingId"] != oldMapping || !strings.Contains(str(left["content"]), "loading = true") || right["commit"] != newCommit {

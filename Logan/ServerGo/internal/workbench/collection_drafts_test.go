@@ -80,7 +80,7 @@ func TestCollectionDraftIsDurableScopedAndNeverSends(t *testing.T) {
 func TestCollectionDraftRejectsInventedTargetsAndUnknownFields(t *testing.T) {
 	s := openTest(t, t.TempDir())
 	defer s.Close()
-	for n, b := range []Record{{"app": "other-app"}, {"targetType": "tag"}, {"status": "completed"}, {"channelReceipt": "fake"}, {"issueId": "foreign"}, {"begin": "2026-10-22T09:00:00+08:00"}} {
+	for n, b := range []Record{{"app": "other-app"}, {"targetType": "tag"}, {"status": "completed"}, {"channelReceipt": "fake"}, {"issueId": "foreign"}, {"begin": "invalid time"}} {
 		code, _ := req(t, s, "POST", "/collection-drafts", "p", fmt.Sprint("invalid-", n), "", b)
 		if code < 400 {
 			t.Fatalf("unsafe draft accepted %v", b)
@@ -89,5 +89,68 @@ func TestCollectionDraftRejectsInventedTargetsAndUnknownFields(t *testing.T) {
 	code, o := req(t, s, "POST", "/collection-drafts", "p", "empty-draft", "", Record{})
 	if code != 201 || data(t, o)["targetValue"] != "" {
 		t.Fatal("blank draft should remain unknown", o)
+	}
+}
+
+func TestCollectionDraftRejectsMaskedTargetWithoutCorruptingStoredParameters(t *testing.T) {
+	s := openTest(t, t.TempDir())
+	defer s.Close()
+	_, o := req(t, s, "POST", "/collection-drafts", "p", "masked-alias", "", Record{"targetType": "alias", "targetValue": "13800138000", "bindingConfirmed": true})
+	d := data(t, o)
+	id := str(d["id"])
+	if d["targetValue"] != "[REDACTED_PHONE]" {
+		t.Fatal("phone was not masked", o)
+	}
+	code, _ := req(t, s, "PATCH", "/collection-drafts/"+id, "p", "masked-overwrite", "1", Record{"targetValue": d["targetValue"], "title": "new purpose"})
+	if code != 422 {
+		t.Fatalf("mask accepted as target: %d", code)
+	}
+	code, o = req(t, s, "PATCH", "/collection-drafts/"+id, "p", "title-only", "1", Record{"title": "new purpose"})
+	if code != 200 {
+		t.Fatal(o)
+	}
+	s.mu.Lock()
+	stored := clone(s.state.bucket("collectionDrafts")[id])
+	s.mu.Unlock()
+	if stored["targetValue"] != "13800138000" || stored["bindingConfirmed"] != true {
+		t.Fatal("unmodified secret target changed")
+	}
+	for i, target := range []string{"[REDACTED]", "[REDACTED_PHONE]", "prefix[REDACTED_EMAIL]suffix"} {
+		code, _ = req(t, s, "POST", "/collection-drafts", "p", fmt.Sprint("invalid-mask-", i), "", Record{"targetValue": target})
+		if code != 422 {
+			t.Fatal("new masked target accepted", target, code)
+		}
+	}
+}
+
+func TestCollectionDraftPreservesIncompleteTimeWindow(t *testing.T) {
+	s := openTest(t, t.TempDir())
+	defer s.Close()
+	for n, partial := range []Record{{"begin": "2026-10-22T09:00:00+08:00"}, {"end": "2026-10-22T09:05:00+08:00"}} {
+		code, o := req(t, s, "POST", "/collection-drafts", "p", fmt.Sprint("partial-time-", n), "", partial)
+		if code != 201 {
+			t.Fatalf("incomplete draft lost: %d %v", code, o)
+		}
+		d := data(t, o)
+		id := str(d["id"])
+		code, o = req(t, s, "GET", "/collection-drafts/"+id, "p", "", "", nil)
+		if code != 200 {
+			t.Fatal(o)
+		}
+		for k, v := range partial {
+			if data(t, o)[k] != v {
+				t.Fatal("draft endpoint changed", o)
+			}
+		}
+		code, o = req(t, s, "PATCH", "/collection-drafts/"+id, "p", fmt.Sprint("complete-time-", n), "1", Record{"begin": "2026-10-22T09:00:00+08:00", "end": "2026-10-22T09:05:00+08:00"})
+		if code != 200 {
+			t.Fatal(o)
+		}
+	}
+	for n, invalid := range []Record{{"end": "invalid"}, {"begin": "2026-10-22T09:00:00"}, {"begin": "2026-10-22T09:05:00+08:00", "end": "2026-10-22T09:00:00+08:00"}} {
+		code, _ := req(t, s, "POST", "/collection-drafts", "p", fmt.Sprint("invalid-window-", n), "", invalid)
+		if code != 422 {
+			t.Fatal("invalid endpoint accepted", invalid, code)
+		}
 	}
 }

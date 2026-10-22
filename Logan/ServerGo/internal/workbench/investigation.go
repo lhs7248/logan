@@ -169,7 +169,7 @@ func (q *request) resolveSource(b Record) (any, int, *apiError) {
 		return nil, 0, e
 	}
 	boundPath := str(event["file"]) != "" && str(event["file"]) == path
-	boundLine := num(event["sourceLine"]) > 0 && num(event["sourceLine"]) >= start && num(event["sourceLine"]) <= end
+	boundLine := num(event["sourceLine"]) > 0 && num(event["sourceLine"]) >= fragment.Start && num(event["sourceLine"]) <= fragment.End
 	r := Record{}
 	raw, _ := json.Marshal(fragment)
 	_ = json.Unmarshal(raw, &r)
@@ -228,12 +228,38 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 	if e := q.permission("model"); e != nil {
 		return nil, 0, e
 	}
+	includeSource := b["includeSource"] != false
+	if v, exists := b["includeSource"]; exists && v != nil {
+		if _, ok := v.(bool); !ok {
+			return nil, 0, fail(422, "SOURCE_SELECTION_INVALID", "includeSource must be a boolean")
+		}
+	}
 	question := strings.TrimSpace(str(b["question"]))
 	if question == "" || len(question) > 16000 {
 		return nil, 0, fail(422, "QUESTION_INVALID", "Question must be 1–16000 bytes")
 	}
 	if fixed == nil && num(b["contextRevision"]) != num(issue["contextRevision"]) {
 		return nil, 0, fail(409, "CONTEXT_CONFLICT", "Evidence scope changed; reload before asking")
+	}
+	if expected, exists := b["expectedEvidenceVersionIds"]; fixed == nil && exists {
+		values, ok := expected.([]any)
+		if !ok {
+			return nil, 0, fail(422, "EVIDENCE_MEMBERS_INVALID", "Expected evidence members must be an array of IDs")
+		}
+		ids := stringsOf(expected)
+		if len(ids) != len(values) {
+			return nil, 0, fail(422, "EVIDENCE_MEMBERS_INVALID", "Expected evidence IDs must be strings")
+		}
+		members := unique(ids)
+		current := unique(stringsOf(issue["evidenceIds"]))
+		if len(members) != len(current) {
+			return nil, 0, fail(409, "CONTEXT_CONFLICT", "Selected evidence members changed; reload before asking")
+		}
+		for _, eid := range members {
+			if !contains(current, eid) {
+				return nil, 0, fail(409, "CONTEXT_CONFLICT", "Selected evidence members changed; reload before asking")
+			}
+		}
 	}
 	if parent := str(b["parentTurnId"]); parent != "" {
 		p, e := q.get("turns", parent)
@@ -245,6 +271,9 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 		}
 		if q.hasSourceRefs(p, map[string]bool{}) && q.permission("source") != nil {
 			return nil, 0, fail(403, "PERMISSION_FORBIDDEN", "Parent answer depends on source evidence")
+		}
+		if !includeSource && p["includeSource"] != false && q.hasSourceRefs(p, map[string]bool{}) {
+			return nil, 0, fail(422, "PARENT_SOURCE_EXCLUDED", "Start a new turn without this source-derived parent when excluding source content")
 		}
 		if p["issueId"] != issue["id"] || p["status"] != "completed" {
 			return nil, 0, fail(422, "PARENT_TURN_INVALID", "Follow-up requires a completed turn from this issue")
@@ -263,8 +292,38 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 	} else {
 		snapshot = clone(fixed)
 	}
+	// Excluded source is selection metadata, never a content dependency of this
+	// turn. Otherwise expiry/redaction/permission traversal would still treat a
+	// log-only answer as source-derived, even though no source was sent.
+	if !includeSource {
+		kept := []Record{}
+		keptIDs := []string{}
+		excluded := sliceOf(snapshot["excludedEvidence"])
+		newlyExcluded := false
+		for _, value := range sliceOf(snapshot["evidence"]) {
+			ev := record(value)
+			if q.hasSourceRefs(ev, map[string]bool{}) {
+				excluded = append(excluded, Record{"evidenceId": ev["id"], "excludedKind": ev["kind"], "reason": "source_excluded", "originalContentHash": ev["contentHash"]})
+				newlyExcluded = true
+				continue
+			}
+			kept = append(kept, ev)
+			keptIDs = append(keptIDs, str(ev["id"]))
+		}
+		if newlyExcluded {
+			snapshot["contextEvidenceIds"] = snapshot["evidenceIds"]
+			snapshot["evidenceIds"] = keptIDs
+			snapshot["evidence"] = kept
+			snapshot["excludedEvidence"] = excluded
+			snapshot["expiresAt"] = earliestExpiry(Record{"evidence": kept}, q.s.cfg.Retention)
+		}
+	}
 	evidence := []connectors.Evidence{}
 	manifest := []Record{}
+	for _, value := range sliceOf(snapshot["excludedEvidence"]) {
+		excluded := record(value)
+		manifest = append(manifest, Record{"evidenceId": excluded["evidenceId"], "included": false, "reason": excluded["reason"], "originalContentHash": excluded["originalContentHash"], "sentContentHash": "", "sentBytes": 0, "maskingPolicy": "default-v1"})
+	}
 	total := 0
 	for _, value := range sliceOf(snapshot["evidence"]) {
 		ev := record(value)
@@ -279,7 +338,7 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 			reason = "source_permission"
 		}
 		content := str(ev["content"])
-		if total+len(content) > 192<<10 {
+		if included && total+len(content) > 192<<10 {
 			included = false
 			reason = "input_budget"
 		}
@@ -287,7 +346,13 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 			total += len(content)
 			evidence = append(evidence, q.modelEvidence(ev))
 		}
-		manifest = append(manifest, Record{"evidenceId": ev["id"], "included": included, "reason": reason, "originalContentHash": ev["contentHash"], "sentContentHash": digest([]byte(maskText(content))), "sentBytes": len(maskText(content)), "maskingPolicy": "default-v1", "verified": ev["verified"], "availability": ev["availability"], "originRef": ev["originRef"]})
+		sentBytes := 0
+		sentHash := ""
+		if included {
+			sentBytes = len(maskText(content))
+			sentHash = digest([]byte(maskText(content)))
+		}
+		manifest = append(manifest, Record{"evidenceId": ev["id"], "included": included, "reason": reason, "originalContentHash": ev["contentHash"], "sentContentHash": sentHash, "sentBytes": sentBytes, "maskingPolicy": "default-v1", "verified": ev["verified"], "availability": ev["availability"], "originRef": ev["originRef"]})
 	}
 	activeCount := 0
 	for _, active := range q.s.state.bucket("turns") {
@@ -309,7 +374,7 @@ func (q *request) createTurn(issue, b, fixed Record) (any, int, *apiError) {
 		status = "failed"
 		turnError = Record{"code": "CONNECTOR_UNCONFIGURED", "message": "Model provider is not configured; manual investigation remains available"}
 	}
-	turn := q.s.state.add("turns", q.project, Record{"issueId": issue["id"], "question": question, "parentTurnId": b["parentTurnId"], "status": status, "snapshot": snapshot, "answer": nil, "error": turnError, "actor": q.actor.Actor, "retrievalManifest": manifest, "promptVersion": "workbench-1", "expiresAt": q.dependencyExpiry(Record{"snapshot": snapshot, "parentTurnId": b["parentTurnId"]}), "revision": 1})
+	turn := q.s.state.add("turns", q.project, Record{"issueId": issue["id"], "question": question, "parentTurnId": b["parentTurnId"], "includeSource": includeSource, "retryOf": b["retryOf"], "status": status, "snapshot": snapshot, "answer": nil, "error": turnError, "actor": q.actor.Actor, "retrievalManifest": manifest, "promptVersion": "workbench-1", "expiresAt": q.dependencyExpiry(Record{"snapshot": snapshot, "parentTurnId": b["parentTurnId"]}), "revision": 1})
 	if status == "queued" {
 		tid := str(turn["id"])
 		in := connectors.Investigation{Question: maskText(question), Evidence: evidence, PriorRounds: []connectors.PriorRound{}}

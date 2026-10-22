@@ -138,6 +138,22 @@ def main():
         checked('log evidence is tied to immutable run/event identity')
         request('POST', '/collections', {}, (503,))
         checked('deferred Aliyun connector cannot fabricate push success')
+        capture = request('POST', '/collection-drafts',
+                          {'app': 'com.hxl.xlb.test', 'targetType': 'alias',
+                           'targetValue': '13800000000', 'bindingConfirmed': True,
+                           'issueId': issue_id, 'title': 'Synthetic unsent draft',
+                           'begin': '2026-10-21T10:00:00+08:00'}, (201,))
+        assert capture['status'] == 'draft' and capture['targetValue'] != '13800000000'
+        capture_id = capture['id']
+        request('PATCH', '/collection-drafts/' + capture_id,
+                {'targetValue': capture['targetValue'], 'title': 'must not corrupt target'},
+                (422,), revision=capture['revision'])
+        capture = request('PATCH', '/collection-drafts/' + capture_id,
+                          {'title': 'Purpose edited without replacing masked target'}, revision=capture['revision'])
+        assert capture['title'] == 'Purpose edited without replacing masked target'
+        assert capture['bindingConfirmed'] is True
+        assert request('GET', '/collection-drafts/' + capture_id)['id'] == capture_id
+        checked('unfinished collection draft persists without masked target overwrite or fake push')
         capability = request('GET', '/capabilities')
         report['capabilities'] = capability
         checked('capabilities expose configuration state')
@@ -155,6 +171,21 @@ def main():
         restored = request('GET', '/handoff-drafts/' + draft['id'])
         assert restored['summary'] == draft['summary'] and restored['editable']
         checked('pre-preview manual draft is durable and recoverable')
+
+        # A different known build/device is an explicit investigation decision,
+        # never a silent rewrite of an uploaded asset's original identity.
+        other_issue = request('POST', '/issues',
+                              {**issue_body, 'title': 'HTTP 验收：差异日志关联',
+                               'context': {'platform': 'android', 'device': 'other-device'}}, (201,))
+        link_path = '/issues/' + other_issue['id'] + '/log-links'
+        request('POST', link_path, {'assetId': asset_id}, (409,))
+        linked = request('POST', link_path,
+                         {'assetId': asset_id, 'confirmed': True, 'reason': 'Explicit cross-platform comparison'},
+                         revision=other_issue['revision'])
+        assert asset_id in linked['assetIds']
+        history = request('GET', '/issues/' + other_issue['id'] + '/history')
+        assert any(x.get('reason') == 'Explicit cross-platform comparison' for x in history)
+        checked('different log identity requires confirmation and appends relationship history')
 
         issue = request('GET', '/issues/' + issue_id)
         preview = request('POST', '/issues/' + issue_id + '/handoff-previews',

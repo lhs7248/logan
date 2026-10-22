@@ -32,6 +32,11 @@ func (q *request) collectionDraft(r, b Record) (any, int, *apiError) {
 		} else if _, ok := v.(string); !ok {
 			return nil, 0, fail(422, "DRAFT_FIELD_INVALID", "Draft fields must be strings")
 		}
+		// Presentation masks are never valid routing parameters. Clients editing
+		// another field must omit the masked target to preserve its stored value.
+		if k == "targetValue" && strings.Contains(strings.ToUpper(str(v)), "[REDACTED") {
+			return nil, 0, fail(422, "DRAFT_TARGET_MASKED", "Omit an unchanged masked target or enter the actual push target")
+		}
 		if len(str(v)) > 2048 {
 			return nil, 0, fail(422, "DRAFT_FIELD_INVALID", "Draft field too long")
 		}
@@ -57,15 +62,24 @@ func (q *request) collectionDraft(r, b Record) (any, int, *apiError) {
 		}
 	}
 	begin, end := str(next["begin"]), str(next["end"])
-	if (begin == "") != (end == "") {
-		return nil, 0, fail(422, "DRAFT_TIME_INVALID", "Provide both endpoints or leave the investigation window empty")
-	}
-	if begin != "" {
-		a, e := time.Parse(time.RFC3339Nano, begin)
-		z, f := time.Parse(time.RFC3339Nano, end)
-		if e != nil || f != nil || !z.After(a) {
-			return nil, 0, fail(422, "DRAFT_TIME_INVALID", "Use a complete ordered ISO time range with time zone")
+	// Drafts may be incomplete; validate each entered endpoint independently.
+	// The confirmation step still requires both endpoints before proceeding.
+	var a, z time.Time
+	for _, endpoint := range []struct {
+		value  string
+		target *time.Time
+	}{{begin, &a}, {end, &z}} {
+		if endpoint.value == "" {
+			continue
 		}
+		parsed, err := time.Parse(time.RFC3339Nano, endpoint.value)
+		if err != nil {
+			return nil, 0, fail(422, "DRAFT_TIME_INVALID", "Use an ISO timestamp with time zone for each entered endpoint")
+		}
+		*endpoint.target = parsed
+	}
+	if begin != "" && end != "" && !z.After(a) {
+		return nil, 0, fail(422, "DRAFT_TIME_INVALID", "End must be later than start")
 	}
 	next["actor"] = q.actor.Actor
 	next["status"] = "draft"

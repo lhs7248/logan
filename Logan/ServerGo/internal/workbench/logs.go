@@ -78,10 +78,20 @@ func (q *request) importFiles() (any, int, *apiError) {
 	if str(meta["origin"]) == "demo" && !q.isDemo() {
 		return nil, 0, fail(403, "DEMO_PROJECT_REQUIRED", "Demo assets belong only in demo projects")
 	}
+	var linkedIssue, beforeLink Record
 	if iid := str(meta["issueId"]); iid != "" {
-		if _, e := q.get("issues", iid); e != nil {
+		var e *apiError
+		linkedIssue, e = q.get("issues", iid)
+		if e != nil {
 			return nil, 0, e
 		}
+		if e = confirmAssetContext(linkedIssue, meta, meta); e != nil {
+			return nil, 0, e
+		}
+		if len(assetContextDifferences(linkedIssue, meta)) > 0 && fmt.Sprint(meta["issueRevision"]) != fmt.Sprint(linkedIssue["revision"]) {
+			return nil, 0, fail(409, "REVISION_CONFLICT", "Issue changed; review the batch identity differences again")
+		}
+		beforeLink = clone(linkedIssue)
 	}
 	assets := []Record{}
 	for _, f := range files {
@@ -90,6 +100,14 @@ func (q *request) importFiles() (any, int, *apiError) {
 			return nil, 0, e
 		}
 		assets = append(assets, a)
+	}
+	if linkedIssue != nil {
+		linkedIssue["updatedAt"] = now()
+		reason := strings.TrimSpace(str(meta["reason"]))
+		if reason == "" {
+			reason = "导入日志并关联问题"
+		}
+		q.history(linkedIssue, beforeLink, "edited", reason)
 	}
 	batch := q.s.state.add("imports", q.project, Record{"assets": assets, "status": "completed", "actor": q.actor.Actor, "clientBatchId": str(meta["clientBatchId"]), "revision": 1})
 	return batch, 201, nil
@@ -448,6 +466,9 @@ func (q *request) filtered(run Record, values url.Values) ([]Record, string, *ap
 	sort.Slice(out, func(i, j int) bool {
 		a, b := str(out[i]["time"]), str(out[j]["time"])
 		if a == b {
+			if left, right := num(out[i]["line"]), num(out[j]["line"]); left != right {
+				return left < right
+			}
 			return str(out[i]["id"]) < str(out[j]["id"])
 		}
 		if a == "" {

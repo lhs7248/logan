@@ -226,13 +226,7 @@ func (q *request) route() (any, int, *apiError) {
 				switch parts[2] {
 				case "log-links":
 					if method == "POST" {
-						a, err := q.get("assets", str(b["assetId"]))
-						if err != nil {
-							return nil, 0, err
-						}
-						issue["assetIds"] = unique(append(stringsOf(issue["assetIds"]), str(a["id"])))
-						issue["revision"] = num(issue["revision"]) + 1
-						return issue, 200, nil
+						return q.linkAsset(issue, b)
 					}
 				case "evidence":
 					if method == "POST" {
@@ -404,6 +398,12 @@ func (q *request) route() (any, int, *apiError) {
 				if v["editable"] != true {
 					return nil, 0, fail(409, "PREVIEW_IMMUTABLE", "Create an editable draft to change text")
 				}
+				if q.hasSourceRefs(v, map[string]bool{}) && q.permission("source") != nil {
+					return nil, 0, fail(403, "DRAFT_RESTRICTED", "Draft depends on restricted source content; use current authorized evidence in a new draft")
+				}
+				if q.expired(v) || q.hasExpiredRefs(v, map[string]bool{}) {
+					return nil, 0, fail(410, "DRAFT_EXPIRED", "Editable draft expired; create a new draft with current evidence and fresh text")
+				}
 				if e := q.match(v, "revision"); e != nil {
 					return nil, 0, e
 				}
@@ -455,7 +455,7 @@ func (q *request) route() (any, int, *apiError) {
 					if !contains([]string{"failed", "canceled", "interrupted"}, str(turn["status"])) {
 						return nil, 0, fail(409, "TURN_RETRY_INVALID", "Only failed, canceled or interrupted turns may be retried")
 					}
-					return q.createTurn(issue, Record{"question": turn["question"], "parentTurnId": turn["parentTurnId"]}, record(turn["snapshot"]))
+					return q.createTurn(issue, Record{"question": turn["question"], "parentTurnId": turn["parentTurnId"], "includeSource": turn["includeSource"], "retryOf": turn["id"]}, record(turn["snapshot"]))
 				}
 			}
 		case "notifications":

@@ -2,7 +2,7 @@ package workbench
 
 func (q *request) saveDraft(issue, b Record) (any, int, *apiError) {
 	for _, draft := range q.forIssue("editableDrafts", str(issue["id"])) {
-		if draft["actor"] == q.actor.Actor {
+		if draft["actor"] == q.actor.Actor && !q.expired(draft) && !q.hasExpiredRefs(draft, map[string]bool{}) && !(q.hasSourceRefs(draft, map[string]bool{}) && q.permission("source") != nil) {
 			return nil, 0, fail(409, "DRAFT_EXISTS", "Editable draft already exists; reload it and update its revision")
 		}
 	}
