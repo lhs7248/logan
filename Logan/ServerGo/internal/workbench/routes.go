@@ -58,6 +58,8 @@ func (q *request) route() (any, int, *apiError) {
 				}
 			}
 			return Record{"actor": q.actor.Actor, "role": q.role, "projects": projects, "projectId": q.project, "permissions": q.actor.Permissions}, 200, nil
+		case "/collection-drafts":
+			return q.collectionDraftList(), 200, nil
 		case "/capabilities":
 			return q.capabilities(), 200, nil
 		case "/workspace":
@@ -77,6 +79,7 @@ func (q *request) route() (any, int, *apiError) {
 				}
 			}
 			out["handoffDrafts"] = drafts
+			out["collectionDrafts"] = q.collectionDraftList()
 			return out, 200, nil
 		case "/issues":
 			return q.list("issues"), 200, nil
@@ -99,6 +102,8 @@ func (q *request) route() (any, int, *apiError) {
 			return r, 201, nil
 		case "/imports":
 			return q.importFiles()
+		case "/collection-drafts":
+			return q.collectionDraft(nil, b)
 		case "/collections":
 			return nil, 0, fail(503, "CONNECTOR_UNCONFIGURED", "Aliyun push is deferred until server and client protocol configuration is provided")
 		case "/source-mappings":
@@ -112,6 +117,24 @@ func (q *request) route() (any, int, *apiError) {
 	if len(parts) >= 2 {
 		kind, id := parts[0], parts[1]
 		switch kind {
+		case "collection-drafts":
+			draft, e := q.get("collectionDrafts", id)
+			if e != nil {
+				return nil, 0, e
+			}
+			if draft["actor"] != q.actor.Actor {
+				return nil, 0, fail(404, "NOT_FOUND", "Draft not found")
+			}
+			if len(parts) == 2 && method == "GET" {
+				if q.expired(draft) {
+					return Record{"id": id, "status": "draft", "availability": "expired", "revision": draft["revision"]}, 200, nil
+				}
+				return draft, 200, nil
+			}
+			if len(parts) == 2 && method == "PATCH" {
+				return q.collectionDraft(draft, b)
+			}
+
 		case "legacy":
 			if len(parts) == 6 && parts[1] == "tasks" && parts[4] == "details" && method == "GET" {
 				if q.s.cfg.Legacy == nil {

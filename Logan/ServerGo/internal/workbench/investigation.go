@@ -462,7 +462,7 @@ func (q *request) redactRecord(value Record) Record {
 	expired := q.expired(r) || (dependentBody(r) && q.hasExpiredRefs(r, map[string]bool{}))
 	sourceDenied := q.hasSourceRefs(r, map[string]bool{}) && q.permission("source") != nil
 	if expired || sourceDenied {
-		for _, k := range []string{"content", "fields", "answer", "summary", "observed", "expected", "method", "text", "reason", "before", "after", "question", "download"} {
+		for _, k := range []string{"content", "fields", "answer", "summary", "observed", "expected", "method", "text", "reason", "before", "after", "question", "download", "targetValue", "bindingConfirmed"} {
 			if _, ok := r[k]; ok {
 				r[k] = nil
 			}

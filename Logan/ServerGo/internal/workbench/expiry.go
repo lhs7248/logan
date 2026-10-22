@@ -17,7 +17,7 @@ func scrubExpired(value any) any {
 	case Record:
 		r := v
 		if recordExpired(r) {
-			for _, key := range []string{"content", "fields", "answer", "summary", "question", "observed", "expected", "method", "text", "before", "after", "reason"} {
+			for _, key := range []string{"content", "fields", "answer", "summary", "question", "observed", "expected", "method", "text", "before", "after", "reason", "targetValue", "bindingConfirmed"} {
 				if _, ok := r[key]; ok {
 					r[key] = nil
 				}

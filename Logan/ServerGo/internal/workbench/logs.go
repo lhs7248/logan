@@ -471,6 +471,9 @@ func (q *request) readEvents(run Record, mode string) (any, int, *apiError) {
 		return nil, 0, e
 	}
 	if mode == "histogram" {
+		if q.r.URL.Query().Get("bins") == "24" {
+			return q.adaptiveHistogram(run, events, hash), 200, nil
+		}
 		counts := map[string]int{}
 		unknown := 0
 		for _, ev := range events {

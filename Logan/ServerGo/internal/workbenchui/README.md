@@ -2,6 +2,8 @@
 
 The independent workbench executable serves this dependency-free client at `/workbench/`. The client calls only the same-origin `/logan-web/api/workbench/v1` API; it does not read or alter the prototype, legacy browser storage, or prototype state transitions.
 
+The approved prototype's four CSS files are embedded as byte-identical `design-*.css` assets. The DOM follows its three navigation entries, switchable library, reader and six investigation tools. The integration stylesheet only adapts API-backed states and accessibility. Design acceptance is recorded separately in [the restoration report](../../../../docs/product/2026-10-21-logan-workbench/design-restoration-acceptance.md); API tests alone cannot establish design fidelity. Event clocks explicitly display Beijing time with milliseconds, and adaptive histogram bins retain server-side filter identity.
+
 ## Local verification
 
 From `Logan/ServerGo` run:
@@ -26,7 +28,7 @@ Start the independent server with its documented auth file and data directory, t
 6. Open **AI 排查**, inspect the next-round evidence scope and delta, ask a question, inspect each claim citation and the fixed snapshot. Cancel a live request or retry an ended attempt. Without a model, no answer is synthesized; manual investigation remains usable.
 7. Create or select a stable hypothesis ID and version. Record hypothesis support/refutation/uncertainty separately from fix pass/fail. Fix verification includes build, scenario, expected and observed behavior and selected evidence.
 8. Open **回写**. Enter a manual summary or choose a completed AI turn; edit owner/status and observe the autosaved server revision before generating a preview. Check its snapshot and explicitly confirm. Changes to issue, evidence or verification make the draft stale; edited text survives re-preview. Repeated submission uses the same generated UUIDv7 per draft and the server checks its stored receipt. Inspect immutable internal update history. Closing/reopening rules are enforced by the server.
-9. Open **日志回捞**. Aliyun must stay explicitly pending; there is no simulated send or fake progress. Manual import and server-provided demo fixtures are the available paths; demo loading is restricted by the server.
+9. Open **日志回捞**. Use the three-step wizard to enter explicit app and device/account/alias parameters, optional issue and investigation window, then review them. Durable actor-owned unsent drafts survive refresh. Ordinary issue devices are never substituted for Aliyun deviceId. Actual sending remains disabled; push/files/retry tabs show no fabricated receipts. Manual import and server-provided demo fixtures remain available from reading; demo loading is restricted by the server.
 10. Reload and reconnect: saved issues, raw files, parse history, evidence, turns, verifications and internal updates must remain. Verify wrong project/token and viewer writes produce visible API errors, with a trace ID when supplied.
 
 ## Boundaries
