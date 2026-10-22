@@ -53,5 +53,28 @@
     "references": [
       ".harness/workflows/bugfix.md"
     ]
+  },
+  {
+    "id": "approved-design-is-delivery-baseline",
+    "assertions": [
+      "从原型转正式实现时必须记录已确认基线；技术选型不授权改变导航、布局、主要交互或删减能力",
+      "用户暂缓外部接口不授权删除设计入口；未配置状态不模拟成功"
+    ],
+    "references": [
+      "AGENTS.md",
+      ".harness/rules/design-fidelity.md"
+    ]
+  },
+  {
+    "id": "functional-tests-not-design-acceptance",
+    "assertions": [
+      "接口和行为测试通过不能替代逐页设计对照与完整流程验收",
+      "存在未经授权的设计偏差不得宣称产品交付完成；缺少对照证据须标记未验证",
+      "不得通过事后改设计稿或降低验收要求掩盖偏差"
+    ],
+    "references": [
+      ".harness/rules/design-fidelity.md",
+      ".harness/rules/validation.md"
+    ]
   }
 ]

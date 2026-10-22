@@ -4,6 +4,7 @@
     ".harness/README.md",
     ".harness/rules/compatibility.md",
     ".harness/rules/validation.md",
+    ".harness/rules/design-fidelity.md",
     ".harness/workflows/bugfix.md",
     ".harness/workflows/migration.md",
     ".harness/run.py",

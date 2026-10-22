@@ -40,3 +40,7 @@ Carthage
 # SwiftPM
 .swiftpm
 .build
+
+# Runtime state and secrets for the server-backed workbench
+**/workbench-data/
+**/workbench-auth.json

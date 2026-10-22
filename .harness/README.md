@@ -23,6 +23,7 @@ python3 .harness/run.py verify --profile java
 ## 按任务读取
 
 - 所有代码变更：[验证与证据](rules/validation.md)。
+- 产品页面、交互及原型落地：[设计基线与交付一致性](rules/design-fidelity.md)。
 - API、协议、迁移、任务处理：[兼容规则](rules/compatibility.md)、[迁移流程](workflows/migration.md)。
 - Bug 修复：[修复流程](workflows/bugfix.md)。
 - 修改 Harness：执行 check 和 self-test，维护 [登记表](manifest.json) 与 [预期行为案例](evals/cases.json)。
