@@ -31,6 +31,14 @@ class HarnessTest(unittest.TestCase):
         p = self.root / 'Logan/LoganSite/package.json'
         p.parent.mkdir(parents=True)
         p.write_text('{}')
+        for name in (
+            'docs/product/2026-10-21-logan-workbench/product-design.md',
+            'docs/product/2026-10-21-logan-workbench/aliyun-retrieval-flow.md',
+            'prototypes/logan-investigation/README.md',
+        ):
+            p = self.root / name
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.touch()
 
     def test_valid(self):
         self.assertEqual(harness.check(self.root), [])
@@ -38,6 +46,12 @@ class HarnessTest(unittest.TestCase):
     def test_missing_document(self):
         (self.root / '.harness/rules/compatibility.md').unlink()
         self.assertTrue(harness.check(self.root))
+
+    def test_missing_design_baseline_is_reported(self):
+        (self.root / 'docs/product/2026-10-21-logan-workbench/product-design.md').unlink()
+        errors = harness.check(self.root)
+        self.assertTrue(any('design-fidelity.md' in error and 'product-design.md' in error
+                            for error in errors), errors)
 
     def test_broken_link(self):
         (self.root / 'AGENTS.md').write_text('[missing](missing.md)')
