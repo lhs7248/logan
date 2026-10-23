@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-23",
+  "serviceConfigAndAuthUnchangedAfterRestart": true,
+  "goFull": {
+    "test": "passed",
+    "race": "passed",
+    "vet": "passed",
+    "build": "passed"
+  },
+  "webTests": {
+    "passed": 63,
+    "failed": 0
+  },
+  "prototypeTests": {
+    "passed": 124,
+    "failed": 0
+  },
+  "runtimeTests": {
+    "passed": 17,
+    "failed": 0
+  },
+  "harnessSelfTests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "androidBuild": "assembleDebug and testDebugUnitTest exit 0",
+  "review": "Independent runtime/Android/helper review: no remaining high-confidence findings",
+  "metricsRegression": "Original source count20: 2 failures; ordered health requests fixed source count20: 0 failures"
+}

@@ -46,4 +46,125 @@ test('explicitly linked shared asset is shown as linked and cannot submit again'
 
 test('saved unparsed asset has a parsing action instead of asking for another upload',()=>{const start=source.indexOf('function reader('),end=source.indexOf('\nfunction ',start+1),c=viewContext();c.asset=()=>({id:'saved',name:'现场补充.jsonl'});c.upload=()=>{};vm.runInContext(source.slice(start,end),c);let tree=nodes(c.reader());assert.ok(tree.some(n=>n.children?.includes('原文件已保存，等待解析')));assert.ok(tree.some(n=>n.children?.includes('现场补充.jsonl')));const action=tree.find(n=>n.tag==='button'&&n.children.includes('开始解析'));assert.ok(action);action.attrs.click();assert.equal(c.state.tool,'parse');assert.equal(tree.some(n=>n.children?.includes('导入本地日志')),false);c.asset=()=>null;tree=nodes(c.reader());assert.ok(tree.some(n=>n.children?.includes('先取得问题现场的日志')));});
 
-test('source choice restores the latest stored round after reconnect while a local choice takes priority',async()=>{const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start),c=viewContext();const latest={id:'round',issueId:'i',status:'completed',includeSource:false};c.all=key=>key==='turns'?[latest]:[];c.turnCard=()=>c.el('article');let sent;c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};vm.runInContext(source.slice(start,end),c);let tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,false);await tree.find(n=>n.tag==='form').attrs.submit({question:'继续检查'});assert.equal(sent.includeSource,false);assert.equal(sent.parentTurnId,'round');c.state.aiIncludeSource.i=true;tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,true);await tree.find(n=>n.tag==='form').attrs.submit({question:'显式使用源码'});assert.equal(sent.includeSource,true);delete c.state.aiIncludeSource.i;delete latest.includeSource;tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,true);});
+test('source choice restores the latest stored round after reconnect while a local choice takes priority',async()=>{const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start),c=viewContext();const latest={id:'round',issueId:'i',status:'completed',includeSource:false,snapshot:{evidence:[]}};c.all=key=>key==='turns'?[latest]:[];c.turnCard=()=>c.el('article');let sent;c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};vm.runInContext(source.slice(start,end),c);let tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,false);await tree.find(n=>n.tag==='form').attrs.submit({question:'继续检查'});assert.equal(sent.includeSource,false);assert.equal(sent.parentTurnId,'round');c.state.aiIncludeSource.i=true;tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,true);await tree.find(n=>n.tag==='form').attrs.submit({question:'显式使用源码'});assert.equal(sent.includeSource,true);delete c.state.aiIncludeSource.i;delete latest.includeSource;tree=nodes(c.aiPanel());assert.equal(tree.find(n=>n.tag==='input'&&n.attrs.name==='includeSource').attrs.checked,true);});
+
+test('SDK identity remains a reported device assertion and never borrows issue build',()=>{const start=source.indexOf('function readingIdentity('),end=source.indexOf('\nfunction ',start+1),c={};vm.createContext(c);vm.runInContext(source.slice(start,end),c);const identity=c.readingIdentity({identitySource:'sdk_reported',device:'phone'},{build:'trusted-ci'});assert.equal(identity.build,'构建未知');assert.match(identity.reason,/SDK 上报/);assert.match(identity.reason,/认证/);});
+
+test('SDK library card distinguishes encrypted original, acceptance receipt and automatic parse',()=>{const start=source.indexOf('function assetCard('),end=source.indexOf('\nasync function linkAsset',start),c=viewContext();c.issue=()=>null;c.asset=()=>null;c.all=key=>key==='parseRuns'?[{id:'r',assetId:'sdk',status:'queued',format:'native'}]:[];vm.runInContext(source.slice(start,end),c);const tree=nodes(c.assetCard({id:'sdk',name:'sdk.log',origin:'sdk',identitySource:'sdk_reported',originalEncrypted:true,sdkReceiptId:'receipt',sdkClientId:'client'}));const content=JSON.stringify(tree);assert.match(content,/SDK上报/);assert.match(content,/加密原文件/);assert.match(content,/自动解析/);assert.match(content,/receipt/);assert.match(content,/认证/);});
+
+test('refresh surfaces a newly received SDK asset while retaining current investigation',async()=>{const start=source.indexOf('async function refresh('),end=source.indexOf('\nasync function loadEvents',start),state={project:'p',token:'t',session:{},workspace:{assets:[{id:'existing'}]},issueId:'i',runId:'r',eventId:'',page:'reader'},messages=[],c={state,Promise,Date,Map,lastWorkspaceRefresh:0,all:key=>state.workspace[key]||[],api:async path=>path==='/workspace'?{issues:[{id:'i'}],parseRuns:[{id:'r'}],assets:[{id:'existing'},{id:'sdk-new',origin:'sdk'}]}:{},issue:()=>({id:'i'}),run:()=>({id:'r'}),readable:()=>false,expired:()=>false,draftAutosavers:new Map(),$:()=>({open:false}),render:()=>{},notify:message=>messages.push(message)};vm.createContext(c);vm.runInContext(source.slice(start,end),c);await c.refresh();assert.equal(state.issueId,'i');assert.equal(state.runId,'r');assert.equal(state.newSDKAssets,1);assert.match(messages[0],/SDK/);await c.refresh();assert.equal(state.newSDKAssets,1);assert.equal(messages.length,1);});
+
+test('manual import stays labeled and a native event without severity is not presented as ERROR',()=>{const c=viewContext();c.asset=()=>null;const start=source.indexOf('function assetCard('),end=source.indexOf('\nasync function linkAsset',start);vm.runInContext(source.slice(start,end),c);assert.match(JSON.stringify(c.assetCard({id:'manual',identitySource:'operator_declared',origin:'import'})),/人工导入/);const rowStart=source.indexOf('function eventRow('),rowEnd=source.indexOf('\nfunction ',rowStart+1);c.state.selected=new Set();c.formatClock=()=>'';vm.runInContext(source.slice(rowStart,rowEnd),c);const content=JSON.stringify(c.eventRow({id:'native-event',line:1,content:'native payload'}));assert.match(content,/未知/);assert.doesNotMatch(content,/ERROR/);});
+
+test('fresh evidence can start a round after the latest completed parent becomes unavailable',async()=>{
+ const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start);
+ for(const unavailable of [
+  {availability:'expired'},
+  {availability:'restricted'},
+  {expiresAt:'2000-01-01T00:00:00Z'},
+  {snapshot:{expiresAt:'2000-01-01T00:00:00Z',evidence:[]}},
+  {snapshot:{evidence:[{id:'old',availability:'expired'}]}},
+  {snapshot:{evidence:[{id:'missing'}]}},
+ ]){
+  const c=viewContext(),latest={id:'old-round',issueId:'i',status:'completed',includeSource:false,snapshot:{evidence:[]},...unavailable};
+  const fresh={id:'fresh',availability:'available'};
+  c.all=key=>key==='turns'?[latest]:key==='evidence'?[fresh]:[];
+  c.currentEvidence=()=>[fresh];c.expired=value=>Boolean(value?.expiresAt&&Date.parse(value.expiresAt)<=Date.now());
+  c.turnCard=()=>c.el('article');let sent;c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};
+  vm.runInContext(source.slice(start,end),c);
+  const tree=nodes(c.aiPanel());
+  await tree.find(n=>n.tag==='form').attrs.submit({question:'结合补充日志重新排查'});
+  assert.equal(sent.parentTurnId,undefined,JSON.stringify(unavailable));
+  assert.equal(sent.contextRevision,1);
+  assert.ok(tree.some(n=>n.children?.some(x=>typeof x==='string'&&x.includes('历史轮次')&&x.includes('当前证据'))));
+ }
+});
+
+test('an available completed round retains multiround context with its original evidence',async()=>{
+ const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start),c=viewContext();
+ const prior={id:'prior',availability:'available'},fresh={id:'fresh',availability:'available'};
+ const latest={id:'parent',issueId:'i',status:'completed',includeSource:true,snapshot:{evidence:[prior]}};
+ c.all=key=>key==='turns'?[latest]:key==='evidence'?[prior,fresh]:[];c.currentEvidence=()=>[fresh];
+ c.turnCard=()=>c.el('article');let sent;c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};
+ vm.runInContext(source.slice(start,end),c);await nodes(c.aiPanel()).find(n=>n.tag==='form').attrs.submit({question:'结合新增日志继续排查'});
+ assert.equal(sent.parentTurnId,'parent');assert.equal(sent.includeSource,true);
+});
+
+test('parse creation preserves a newer reading selection in the same issue',async()=>{
+ const start=source.indexOf('function parsePanel('),end=source.indexOf('\nfunction ',start+1);
+ for(const phase of ['request','refresh','unchanged']){
+  const c=viewContext();Object.assign(c.state,{project:'p',token:'t',issueId:'i',runId:'original-run'});
+  let release,message;
+  c.api=()=>new Promise(resolve=>release=resolve);
+  c.refresh=async()=>{if(phase==='refresh')c.state.runId='new-sdk-run';};
+  c.selectRun=async id=>{c.state.runId=id;};c.parseComparisonForm=()=>null;c.parseFormats=()=>['auto'];
+  c.notify=value=>{message=value;};c.$=()=>({close(){}});
+  vm.runInContext(source.slice(start,end),c);
+  const pending=nodes(c.parsePanel({id:'asset'})).find(n=>n.tag==='form').attrs.submit({format:'native'});
+  if(phase==='request')c.state.runId='new-sdk-run';
+  release({id:'created-run'});await pending;
+  assert.equal(c.state.runId,phase==='unchanged'?'created-run':'new-sdk-run',phase);
+  if(phase!=='unchanged')assert.match(message,/解析批次已.*创建/);
+ }
+});
+
+test('a completed round without a readable snapshot cannot be inherited',async()=>{
+ const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start),c=viewContext();
+ c.all=key=>key==='turns'?[{id:'incomplete-record',issueId:'i',status:'completed',includeSource:false}]:[];
+ c.turnCard=()=>c.el('article');let sent;c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};
+ vm.runInContext(source.slice(start,end),c);await nodes(c.aiPanel()).find(n=>n.tag==='form').attrs.submit({question:'按当前证据排查'});
+ assert.equal(sent.parentTurnId,undefined);
+});
+
+test('excluded source metadata does not disqualify a valid log-only parent',async()=>{
+ const start=source.indexOf('function aiPanel('),end=source.indexOf('\nfunction turnCard(',start),c=viewContext();
+ const log={id:'log',availability:'available'},sourceEvidence={id:'source',availability:'expired'};
+ const latest={id:'log-only',issueId:'i',status:'completed',includeSource:false,snapshot:{evidence:[log],excludedEvidence:[{evidenceId:'source',reason:'source_excluded'}],contextEvidenceIds:['log','source']}};
+ c.all=key=>key==='turns'?[latest]:key==='evidence'?[log,sourceEvidence]:[];
+ c.currentEvidence=()=>[log];c.turnCard=()=>c.el('article');let sent;
+ c.api=async(path,options)=>{sent=options.body;};c.refresh=async()=>{};
+ vm.runInContext(source.slice(start,end),c);await nodes(c.aiPanel()).find(n=>n.tag==='form').attrs.submit({question:'继续日志分析'});
+ assert.equal(sent.parentTurnId,'log-only');assert.equal(sent.includeSource,false);
+});
+
+test('current judgment reflects a saved manual investigation when there is no usable AI answer',()=>{
+ const start=source.indexOf('function deskSummary('),end=source.indexOf('\nfunction ',start+1);
+ for(const scenario of ['empty','manual','stale','expired','restricted','time-expired','expired-ai','available-ai']){
+  const c=viewContext(),summary='确认请求超时。界面根因未验证，需补充终态日志和对应构建源码。';
+  c.expired=record=>Boolean(record?.expiresAt&&Date.parse(record.expiresAt)<=Date.now());
+  const update={id:'u',issueId:'i',mode:'manual',summary,expiresAt:scenario==='time-expired'?'2000-01-01T00:00:00Z':undefined,snapshot:{contextRevision:scenario==='stale'?0:1},availability:scenario==='expired'?'expired':scenario==='restricted'?'restricted':'available'};
+  c.all=key=>key==='updates'&&scenario!=='empty'?[update]:[];
+  c.latestAnswer=()=>scenario==='expired-ai'?{availability:'expired',answer:{summary:'隐藏的历史AI正文'},snapshot:{contextRevision:1}}:scenario==='available-ai'?{availability:'available',answer:{summary:'可用AI判断'},snapshot:{contextRevision:1}}:null;
+  c.nextStep=()=> '阅读日志，确认异常范围。';c.judgmentIsStale=(record,issue)=>record?.snapshot?.contextRevision!==issue.contextRevision;
+  vm.runInContext(source.slice(start,end),c);
+  const tree=nodes(c.deskSummary()),content=JSON.stringify(tree);
+  if(['manual','stale','expired-ai'].includes(scenario)){
+   assert.ok(content.includes('已保存的人工调查摘要'),scenario);assert.ok(content.includes(summary),scenario);
+   const action=tree.find(n=>n.tag==='button');action.attrs.click();assert.equal(c.state.tool,'verify');
+  }else if(scenario==='available-ai'){
+   assert.ok(content.includes('可用AI判断'));assert.ok(!content.includes(summary));
+  }else{
+   assert.ok(content.includes('尚未形成判断'));assert.ok(!content.includes(summary));
+  }
+  assert.ok(!content.includes('隐藏的历史AI正文'));
+  if(scenario==='stale')assert.ok(content.includes('新增证据')&&content.includes('人工摘要'));
+ }
+});
+
+test('parse creation preserves a newer unparsed asset selection when both runs are empty',async()=>{
+ const start=source.indexOf('function parsePanel('),end=source.indexOf('\nfunction ',start+1);
+ for(const phase of ['request','refresh','unchanged']){
+  const c=viewContext();Object.assign(c.state,{project:'p',token:'t',issueId:'i',runId:'',parseAssetId:'asset-a'});
+  let release,message;c.api=()=>new Promise(resolve=>release=resolve);
+  c.refresh=async()=>{if(phase==='refresh')c.state.parseAssetId='asset-b';};
+  c.selectRun=async id=>{c.state.runId=id;c.state.parseAssetId='';};
+  c.parseComparisonForm=()=>null;c.parseFormats=()=>['auto'];c.notify=value=>{message=value;};c.$=()=>({close(){}});
+  vm.runInContext(source.slice(start,end),c);
+  const pending=nodes(c.parsePanel({id:'asset-a'})).find(n=>n.tag==='form').attrs.submit({format:'native'});
+  if(phase==='request')c.state.parseAssetId='asset-b';
+  release({id:'created-run-a'});await pending;
+  assert.equal(c.state.runId,phase==='unchanged'?'created-run-a':'',phase);
+  assert.equal(c.state.parseAssetId,phase==='unchanged'?'':'asset-b',phase);
+  if(phase!=='unchanged')assert.match(message,/解析批次已.*创建/);
+ }
+});

@@ -18,7 +18,7 @@ func maskText(s string) string {
 }
 func sensitiveField(key string) bool {
 	normalized := strings.ToLower(strings.NewReplacer("_", "", "-", "").Replace(key))
-	return contains([]string{"password", "passwd", "authorization", "token", "accesstoken", "refreshtoken", "apikey", "secret", "cookie", "setcookie", "email", "phone", "mobile"}, normalized)
+	return contains([]string{"password", "passwd", "authorization", "token", "accesstoken", "refreshtoken", "apikey", "xapikey", "xloganuploadtoken", "secret", "cookie", "setcookie", "email", "phone", "mobile"}, normalized)
 }
 func maskValue(v any) any {
 	switch value := v.(type) {

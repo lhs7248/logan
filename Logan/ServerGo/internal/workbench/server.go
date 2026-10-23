@@ -33,6 +33,8 @@ type Token struct {
 	Permissions []string          `json:"permissions"`
 }
 type Config struct {
+	SDKClients    []SDKClient `json:"sdkClients"`
+	MaxSDKBytes   int64       `json:"maxSDKBytes"`
 	Dir           string
 	Store         Persistence
 	Projects      []Project `json:"projects"`
@@ -68,6 +70,12 @@ type apiError struct {
 
 func fail(status int, code, message string) *apiError { return &apiError{code, message, status} }
 func Open(cfg Config) (*Server, error) {
+	if err := ValidateSDKConfig(cfg); err != nil {
+		return nil, err
+	}
+	if cfg.MaxSDKBytes == 0 {
+		cfg.MaxSDKBytes = 32 << 20
+	}
 	if cfg.MaxFileBytes == 0 {
 		cfg.MaxFileBytes = 8 << 20
 	}
@@ -158,6 +166,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-Trace-ID", trace)
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
+	if r.URL.Path == SDKNativePath {
+		s.serveSDK(w, r, trace)
+		return
+	}
 	var principal *Token
 	supplied := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 	if supplied != "" && supplied != r.Header.Get("Authorization") {
@@ -335,7 +347,11 @@ func (q *request) list(kind string) []Record {
 	out := []Record{}
 	for _, r := range q.s.state.bucket(kind) {
 		if r["projectId"] == q.project {
-			out = append(out, clone(r))
+			if kind == "sdkUploads" {
+				out = append(out, publicSDKReceipt(r))
+			} else {
+				out = append(out, clone(r))
+			}
 		}
 	}
 	sort.Slice(out, func(i, j int) bool {
@@ -369,7 +385,19 @@ func (q *request) notify(target, kind, message string) {
 	q.s.state.add("notifications", q.project, Record{"targetId": target, "kind": kind, "message": message, "read": false, "revision": 1})
 }
 func (q *request) capabilities() Record {
-	return Record{"storage": "durable", "uploads": true, "parsing": true, "protocols": Record{"native": Record{"configured": q.s.cfg.Protocols.NativeReady()}, "web": Record{"configured": q.s.cfg.Protocols.WebReady(), "encryptedConfigured": q.s.cfg.Protocols.WebEncryptedReady()}}, "source": Record{"configured": q.s.cfg.Source.Ready()}, "model": Record{"configured": q.modelReady(), "reason": "Model endpoint and per-project modelEnabled consent must both be configured"}, "collections": Record{"configured": false, "code": "CONNECTOR_UNCONFIGURED", "reason": "Aliyun protocol and credentials are deferred"}, "limits": Record{"fileBytes": q.s.cfg.MaxFileBytes, "batchBytes": q.s.cfg.MaxBatchBytes, "files": 10, "events": q.s.cfg.MaxEvents}, "legacy": Record{"available": q.s.cfg.Legacy != nil && q.s.cfg.Legacy.Ready(q.project), "reason": "Project mapping and read-only legacy adapter are not configured"}}
+	platforms := []string{}
+	for _, client := range q.s.cfg.SDKClients {
+		if client.ProjectID != q.project {
+			continue
+		}
+		for _, platform := range client.Platforms {
+			if !contains(platforms, platform) {
+				platforms = append(platforms, platform)
+			}
+		}
+	}
+	sort.Strings(platforms)
+	return Record{"sdkReceiver": Record{"configured": len(platforms) > 0 && q.s.cfg.Protocols.NativeReady(), "path": SDKNativePath, "maxBytes": q.s.cfg.MaxSDKBytes, "platforms": platforms}, "storage": "durable", "uploads": true, "parsing": true, "protocols": Record{"native": Record{"configured": q.s.cfg.Protocols.NativeReady()}, "web": Record{"configured": q.s.cfg.Protocols.WebReady(), "encryptedConfigured": q.s.cfg.Protocols.WebEncryptedReady()}}, "source": Record{"configured": q.s.cfg.Source.Ready()}, "model": Record{"configured": q.modelReady(), "reason": "Model endpoint and per-project modelEnabled consent must both be configured"}, "collections": Record{"configured": false, "code": "CONNECTOR_UNCONFIGURED", "reason": "Aliyun protocol and credentials are deferred"}, "limits": Record{"fileBytes": q.s.cfg.MaxFileBytes, "batchBytes": q.s.cfg.MaxBatchBytes, "files": 10, "events": q.s.cfg.MaxEvents}, "legacy": Record{"available": q.s.cfg.Legacy != nil && q.s.cfg.Legacy.Ready(q.project), "reason": "Project mapping and read-only legacy adapter are not configured"}}
 }
 func connectorError(err error) *apiError {
 	if errors.Is(err, connectors.ErrUnconfigured) {

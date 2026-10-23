@@ -39,9 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSession;
 
 public class SendLogDefaultRunnable extends SendLogRunnable {
 
@@ -118,16 +115,13 @@ public class SendLogDefaultRunnable extends SendLogRunnable {
         try {
             URL u = new URL(url);
             c = (HttpURLConnection) u.openConnection();
-            if (c instanceof HttpsURLConnection) {
-                ((HttpsURLConnection) c).setHostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                });
-            }
+            // Keep the platform's default TLS certificate and hostname verification.
             Set<Map.Entry<String, String>> entrySet = headerMap.entrySet();
             for (Map.Entry<String, String> tempEntry : entrySet) {
+                if ("X-Logan-Upload-Token".equalsIgnoreCase(tempEntry.getKey())) {
+                    // An ingestion credential is scoped to the configured receiver URL.
+                    c.setInstanceFollowRedirects(false);
+                }
                 c.addRequestProperty(tempEntry.getKey(), tempEntry.getValue());
             }
             c.setReadTimeout(15000);

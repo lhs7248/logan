@@ -1,0 +1,7 @@
+<resources>
+    <item name="workbench_collect" type="id"/>
+    <item name="workbench_upload" type="id"/>
+    <item name="workbench_legacy" type="id"/>
+    <item name="workbench_status" type="id"/>
+    <item name="workbench_capture" type="id"/>
+</resources>

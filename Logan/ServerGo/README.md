@@ -14,6 +14,10 @@ Go三类MySQL并发锁修复、Web上传与有效一小时零错误复验见[锁
 
 默认构建使用 Hertz 官方 `stdjson` 标签，固定使用标准 JSON 编解码，避免本机 Go 1.27 超出 Sonic 当前支持范围后的隐式回退。
 
+## 持久化排查工作台
+
+本地 Go/Web 工作台的固定启动、私有配置及重启保留见 [操作说明](script/workbench-local-README.md)；真实 Android → Go → Web 的验收及边界见 [真机记录](../../docs/product/2026-10-21-logan-workbench/physical-android-acceptance-2026-10-23.md)。
+
 ## 启动与验证
 
 本机验证工具链：Go 1.27.0、hz 0.9.7；Hertz 0.10.6、GORM 1.31.2、GORM MySQL driver 1.6.0。

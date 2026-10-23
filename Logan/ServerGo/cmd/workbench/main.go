@@ -51,6 +51,9 @@ func run() error {
 			}
 		}
 	}
+	if err := workbench.ValidateSDKConfig(cfg); err != nil {
+		return err
+	}
 	cfg.Dir = os.Getenv("WORKBENCH_DATA_DIR")
 	if cfg.Dir == "" {
 		cfg.Dir = "workbench-data"

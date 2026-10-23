@@ -6,13 +6,19 @@ android {
     compileSdk 34
 
     defaultConfig {
+        applicationId "test.logan.dianping.com.logan"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
+        debug { applicationIdSuffix ".workbench" }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -27,6 +33,7 @@ dependencies {
         exclude group: 'androidx.test', module: 'test-annotations'
     })
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.json:json:20240303'
     implementation project(':logan')
 //    compile 'com.dianping.android.sdk:logan:1.1.0'
 //    releaseCompile project(path: ':logan', configuration: 'release')

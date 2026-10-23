@@ -31,6 +31,19 @@
 #import <Cocoa/Cocoa.h>
 #endif
 
+// Only the additive headers API uses this delegate. A receiver redirect must
+// never forward its ingestion credential or encrypted body to another URL.
+@interface LoganUploadRedirectGuard : NSObject <NSURLSessionTaskDelegate>
+@end
+@implementation LoganUploadRedirectGuard
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+    willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+    newRequest:(NSURLRequest *)request
+    completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
+    completionHandler(nil);
+}
+@end
+
 BOOL LOGANUSEASL = NO;
 NSData *__AES_KEY;
 NSData *__AES_IV;
@@ -58,6 +71,7 @@ uint32_t __max_reversed_date;
 - (void)flush;
 - (void)filePathForDate:(NSString *)date block:(LoganFilePathBlock)filePathBlock;
 + (void)uploadFileToServer:(NSString *)urlStr date:(NSString *)date appId:(NSString *)appId unionId:(NSString *)unionId deviceId:(NSString *)deviceId resultBlock:(LoganUploadResultBlock)resultBlock;
++ (void)uploadFileToServer:(NSString *)urlStr date:(NSString *)date appId:(NSString *)appId unionId:(NSString *)unionId deviceId:(NSString *)deviceId headers:(NSDictionary<NSString *, NSString *> *)headers resultBlock:(LoganUploadResultBlock)resultBlock;
 @end
 
 void loganInit(NSData *_Nonnull aes_key16, NSData *_Nonnull aes_iv16, uint64_t max_file) {
@@ -102,6 +116,32 @@ void loganUploadFilePath(NSString *_Nonnull date, LoganFilePathBlock _Nonnull fi
 
 void loganUpload(NSString * _Nonnull url, NSString * _Nonnull date,NSString * _Nullable appId, NSString *_Nullable unionId,NSString *_Nullable deviceId, LoganUploadResultBlock _Nullable resultBlock){
 	[Logan uploadFileToServer:url date:date appId:appId unionId:unionId deviceId:deviceId resultBlock:resultBlock];
+}
+
+void loganUploadWithHeaders(NSString *url, NSString *date, NSString *appId, NSString *unionId, NSString *deviceId, NSDictionary<NSString *, NSString *> *headers, LoganUploadResultBlock resultBlock) {
+    NSMutableDictionary *validated = [NSMutableDictionary dictionary];
+    NSCharacterSet *controls = [NSCharacterSet controlCharacterSet];
+    BOOL valid = !headers || [headers isKindOfClass:[NSDictionary class]];
+    if (valid) {
+        for (id key in headers) {
+            id value = headers[key];
+            if (![key isKindOfClass:[NSString class]] || ![value isKindOfClass:[NSString class]]) { valid = NO; break; }
+            NSString *name = [key lowercaseString];
+            if ((![name isEqualToString:@"x-logan-upload-token"] && ![name isEqualToString:@"x-logan-upload-id"]) ||
+                [value length] == 0 || [value length] > 4096 || [value rangeOfCharacterFromSet:controls].location != NSNotFound || validated[name]) {
+                valid = NO; break;
+            }
+            validated[name] = [value copy];
+        }
+    }
+    if (!valid) {
+        if (resultBlock) dispatch_async(dispatch_get_main_queue(), ^{
+            resultBlock(nil, nil, [NSError errorWithDomain:@"come.meituan.logan.error" code:-101
+                userInfo:@{NSLocalizedDescriptionKey: @"Invalid Logan upload headers"}]);
+        });
+        return;
+    }
+    [Logan uploadFileToServer:url date:date appId:appId unionId:unionId deviceId:deviceId headers:[validated copy] resultBlock:resultBlock];
 }
 
 void loganFlush(void) {
@@ -392,6 +432,10 @@ NSString *_Nonnull loganTodaysDate(void) {
 #pragma mark - file
 
 + (void)uploadFileToServer:(NSString *)urlStr date:(NSString *)date appId:(NSString *)appId unionId:(NSString *)unionId deviceId:(NSString *)deviceId resultBlock:(LoganUploadResultBlock)resultBlock {
+    [self uploadFileToServer:urlStr date:date appId:appId unionId:unionId deviceId:deviceId headers:nil resultBlock:resultBlock];
+}
+
++ (void)uploadFileToServer:(NSString *)urlStr date:(NSString *)date appId:(NSString *)appId unionId:(NSString *)unionId deviceId:(NSString *)deviceId headers:(NSDictionary<NSString *, NSString *> *)headers resultBlock:(LoganUploadResultBlock)resultBlock {
 	loganUploadFilePath(date, ^(NSString *_Nullable filePatch) {
 		if (filePatch == nil) {
 			if(resultBlock){
@@ -424,8 +468,16 @@ NSString *_Nonnull loganTodaysDate(void) {
 		[req addValue:@"2" forHTTPHeaderField:@"platform"];
 		[req addValue:date forHTTPHeaderField:@"fileDate"];
 		
+		for (NSString *name in headers) {
+            [req setValue:headers[name] forHTTPHeaderField:name];
+        }
+
 		NSURL *fileUrl = [NSURL fileURLWithPath:filePatch];
-		NSURLSessionUploadTask *task = [[NSURLSession sharedSession] uploadTaskWithRequest:req fromFile:fileUrl completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+        BOOL guarded = headers != nil;
+        NSURLSession *session = guarded ? [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+            delegate:[LoganUploadRedirectGuard new] delegateQueue:nil] : [NSURLSession sharedSession];
+		NSURLSessionUploadTask *task = [session uploadTaskWithRequest:req fromFile:fileUrl completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+            if (guarded) [session finishTasksAndInvalidate];
 			if(resultBlock){
 				dispatch_async(dispatch_get_main_queue(), ^{
 					resultBlock(data,response,error);

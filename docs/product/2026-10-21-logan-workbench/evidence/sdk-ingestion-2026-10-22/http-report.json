@@ -1,0 +1,54 @@
+{
+  "scope": "Actual CLogan encrypted bytes over local HTTP; synthetic data only",
+  "checks": [
+    {
+      "name": "upload-only authentication and server-bound project scope",
+      "passed": true
+    },
+    {
+      "name": "SDK encrypted original retained, auto parsed and visible without manual import",
+      "passed": true
+    },
+    {
+      "name": "duplicate replays same receipt; changed bytes conflict",
+      "passed": true
+    },
+    {
+      "name": "explicit issue link and immutable log evidence",
+      "passed": true
+    },
+    {
+      "name": "unconfigured AI explicitly fails without fabricated diagnosis",
+      "passed": true
+    },
+    {
+      "name": "hypothesis remains uncertain and manual internal handoff preserves evidence",
+      "passed": true
+    },
+    {
+      "name": "invalid native file retains original and independent failed reparse",
+      "passed": true
+    },
+    {
+      "name": "process restart preserves receipts, assets, runs, issue evidence, verification and handoff; upload replay returns original",
+      "passed": true
+    }
+  ],
+  "objects": {
+    "assetId": "3461fe1089886427b54e7540aaf52268",
+    "runId": "ed9adbb6ce8a1e36876d6825f2bbadae",
+    "receiptId": "576533b700a90615b93d727d8b9fb81c",
+    "issueId": "8d580c24b2e720b734a786092dfeb41e",
+    "verificationId": "80bd35e5fad9eed3b415f01530c2110d",
+    "updateId": "d7ae02c97286176aa600794cb74ed63b"
+  },
+  "passed": true,
+  "restartObjectCounts": {
+    "assets": 5,
+    "parseRuns": 6,
+    "issues": 1,
+    "updates": 1,
+    "verifications": 1,
+    "sdkUploads": 5
+  }
+}

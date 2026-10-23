@@ -1,0 +1,25 @@
+{
+  "scope": "Physical Android actual Java/JNI/CLogan upload; local Go service",
+  "projectId": "local-mobile",
+  "appId": "test.logan.dianping.com.logan.workbench",
+  "marker": "android-workbench-f381805c-898b-4f90-99ed-4ceb42a11a17",
+  "messages": [
+    "android-workbench-f381805c-898b-4f90-99ed-4ceb42a11a17 record=1 installation=abc0a72d-abff-44b0-a7a9-62e4defd0d7e",
+    "android-workbench-f381805c-898b-4f90-99ed-4ceb42a11a17 record=2 installation=abc0a72d-abff-44b0-a7a9-62e4defd0d7e",
+    "android-workbench-f381805c-898b-4f90-99ed-4ceb42a11a17 record=3 installation=abc0a72d-abff-44b0-a7a9-62e4defd0d7e"
+  ],
+  "receiptId": "c0284b583872656e789c0bfa8567de24",
+  "assetId": "9c5fdb6080a443e9b9f7200f25f27c7e",
+  "runId": "340dbd48536879c81eb1bb198f98d09a",
+  "parseStatus": "succeeded",
+  "eventCount": 4,
+  "rawBytes": 482,
+  "sha256": "c2468309f41246cfcb9593ac641eb237a3f5bfbfec8848f7cabcb4fb3ec8f78b",
+  "checks": {
+    "privateProfileMatchesReceiver": true,
+    "exactThreeAppMessages": true,
+    "originalCiphertextMatchesApp": true,
+    "sdkProvenance": true,
+    "baselineRetained": true
+  }
+}

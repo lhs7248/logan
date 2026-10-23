@@ -40,6 +40,8 @@ func (q *request) route() (any, int, *apiError) {
 				}
 			}
 			return nil, 0, fail(404, "NOT_FOUND", "No operation found for this actor/project/key")
+		case "/sdk-uploads":
+			return q.list("sdkUploads"), 200, nil
 		case "/imports":
 			out := []Record{}
 			for _, batch := range q.list("imports") {
@@ -64,7 +66,7 @@ func (q *request) route() (any, int, *apiError) {
 			return q.capabilities(), 200, nil
 		case "/workspace":
 			out := Record{"capabilities": q.capabilities()}
-			for _, kind := range []string{"issues", "assets", "parseRuns", "evidence", "turns", "verifications", "updates", "notifications", "sourceMappings", "hypotheses", "issueHistory"} {
+			for _, kind := range []string{"issues", "assets", "sdkUploads", "parseRuns", "evidence", "turns", "verifications", "updates", "notifications", "sourceMappings", "hypotheses", "issueHistory"} {
 				out[kind] = q.list(kind)
 			}
 			drafts := []Record{}

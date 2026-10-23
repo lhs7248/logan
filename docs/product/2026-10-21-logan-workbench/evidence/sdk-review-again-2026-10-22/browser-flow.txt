@@ -1,0 +1,237 @@
+- complementary:
+  - heading "LOGAN" [level=2]
+  - generic: 问题排查工作台
+  - navigation "主要导航":
+    - button "≋ 日志阅读":
+      - generic: ≋
+      - text: 日志阅读
+    - button "⇣ 日志回捞":
+      - generic: ⇣
+      - text: 日志回捞
+    - button "◎ 问题调查":
+      - generic: ◎
+      - text: 问题调查
+  - paragraph: 调查材料已保存至服务器
+  - combobox "当前项目":
+    - option "集成验收项目"
+    - option "Web 演示空间 · 演示"
+    - option "移动端联调演示 · 演示" [selected]
+  - button "退出"
+- main:
+  - generic: 现场排查 / 问题调查
+  - status: 已连接 · 服务器保存
+  - button "站内提醒 · 9"
+  - button "刷新"
+  - text: INVESTIGATION
+  - heading "SDK 贯通验收：登录超时待调查" [level=1]
+  - button "问题与记录"
+  - button "全部问题"
+  - generic "更多操作"
+  - strong: triad-device
+  - text: android · 1.0-triad / triad-42
+  - generic: 设备、版本与构建为 SDK 上报，未经设备或 CI 认证；应用与环境由上传凭据配置限定
+  - generic: 问题现场时间 · 北京时间
+  - generic: 未知 — 未知
+  - generic: 调查中
+  - button "SDK 贯通验收：登录超时待调查"
+  - generic "问题现场线索"
+  - text: 当前判断
+  - generic: 已保存的人工调查摘要
+  - paragraph: 复核补充的 Android 实际上传：CLogan 原文件、Go 解析和 Web 原文一致。请求超时可确认；界面根因仍无法确定。需补充真实复现、事件文件行号和可信构建源码映射；模型尚未配置，不记录 AI 根因结论。
+  - text: 下一步
+  - paragraph: 结合已保存摘要补充证据、记录验证，再更新调查摘要。
+  - button "检查假设与验证"
+  - button "切换日志"
+  - strong: 2026-10-19.logan
+  - generic: 完成
+  - button "解析与历史"
+  - button "补充采集"
+  - button "导出解密事件（当前筛选）"
+  - region "日志阅读区":
+    - generic: 事件时间线
+    - generic: 4 条事件 · 已选 1 条
+    - generic "筛选后时间分布，共 4 条，时间未知 0 条":
+      - button "定位 17:26:57.341，3 条事件"
+      - button "定位 20:22:33.970，0 条事件" [disabled]
+      - button "定位 23:18:10.599，0 条事件" [disabled]
+      - button "定位 02:13:47.228，0 条事件" [disabled]
+      - button "定位 05:09:23.857，0 条事件" [disabled]
+      - button "定位 08:05:00.486，0 条事件" [disabled]
+      - button "定位 11:00:37.115，0 条事件" [disabled]
+      - button "定位 13:56:13.744，0 条事件" [disabled]
+      - button "定位 16:51:50.373，0 条事件" [disabled]
+      - button "定位 19:47:27.002，0 条事件" [disabled]
+      - button "定位 22:43:03.631，0 条事件" [disabled]
+      - button "定位 01:38:40.260，0 条事件" [disabled]
+      - button "定位 04:34:16.889，0 条事件" [disabled]
+      - button "定位 07:29:53.518，0 条事件" [disabled]
+      - button "定位 10:25:30.147，0 条事件" [disabled]
+      - button "定位 13:21:06.776，0 条事件" [disabled]
+      - button "定位 16:16:43.405，0 条事件" [disabled]
+      - button "定位 19:12:20.034，0 条事件" [disabled]
+      - button "定位 22:07:56.663，0 条事件" [disabled]
+      - button "定位 01:03:33.292，0 条事件" [disabled]
+      - button "定位 03:59:09.921，0 条事件" [disabled]
+      - button "定位 06:54:46.550，0 条事件" [disabled]
+      - button "定位 09:50:23.179，0 条事件" [disabled]
+      - button "定位 12:45:59.808，1 条事件"
+      - generic: 17:26:57.341
+      - generic: 点击刻度定位 · 红色为错误 · 时间未知 0 条
+      - generic: 15:41:36.423
+    - generic: 日志关键词
+    - textbox "日志关键词":
+      - /placeholder: 搜索事件、requestId、错误信息…
+    - generic: 日志级别
+    - combobox "日志级别":
+      - option "全部级别" [selected]
+      - option "TRACE"
+      - option "DEBUG"
+      - option "INFO"
+      - option "WARN"
+      - option "ERROR"
+      - option "FATAL"
+    - generic: 日志模块
+    - textbox "日志模块":
+      - /placeholder: 全部模块 / 输入模块名
+    - generic "时间与更多筛选"
+    - option "全部事件" [selected]
+    - option "仅时间未知"
+    - option "排除时间未知"
+    - button "筛选"
+    - button "清除"
+    - generic: 匹配 4 条 · 已显示 4 条
+    - button "加入筛选结果"
+    - button "用所选日志提问"
+    - checkbox "选择事件 行 2"
+    - 'button "17:26:57.341 L2 未知 未知 TRIAD|001|LoginView: user tapped login; requestId=triad-login-1"':
+      - text: 17:26:57.341
+      - generic: L2
+      - generic: 未知
+      - generic: 未知
+      - text: "TRIAD|001|LoginView: user tapped login; requestId=triad-login-1"
+    - checkbox "选择事件 行 3" [checked]
+    - 'button "17:26:57.342 L3 未知 未知 TRIAD|002|AuthClient: POST /login timed out; requestId=triad-login-1"':
+      - text: 17:26:57.342
+      - generic: L3
+      - generic: 未知
+      - generic: 未知
+      - text: "TRIAD|002|AuthClient: POST /login timed out; requestId=triad-login-1"
+    - checkbox "选择事件 行 4"
+    - 'button "17:26:57.343 L4 未知 未知 TRIAD|003|LoginViewModel: terminal state not observed; root cause unknown"':
+      - text: 17:26:57.343
+      - generic: L4
+      - generic: 未知
+      - generic: 未知
+      - text: "TRIAD|003|LoginViewModel: terminal state not observed; root cause unknown"
+    - checkbox "选择事件 行 1"
+    - button "15:41:36.423 L1 未知 未知 clogan header":
+      - text: 15:41:36.423
+      - generic: L1
+      - generic: 未知
+      - generic: 未知
+      - text: clogan header
+    - generic: L3 · 原始事件
+    - button "关闭详情"
+    - generic: "TRIAD|002|AuthClient: POST /login timed out; requestId=triad-login-1"
+    - button "加入调查证据"
+    - button "查看关联源码"
+    - button "解释此事件"
+    - generic "原始相邻上下文"
+    - generic "原始字段、文件位置与版本"
+    - generic "关联请求候选"
+  - region "调查工具":
+    - tablist "调查工具":
+      - tab "源码"
+      - tab "AI 排查"
+      - tab "证据"
+      - tab "补充采集"
+      - tab "验证"
+      - tab "回写" [selected]
+    - text: TICKET UPDATE
+    - heading "将调查结果交给下一位" [level=2]
+    - paragraph: 保存结论、未知项、证据快照和验证记录。
+    - paragraph: 编辑草稿自动保存到服务器。生成预览后，仍需核对引用并明确确认回写。
+    - paragraph: 草稿已保存至服务器 · v2
+    - generic: 草稿来源
+    - combobox "草稿来源":
+      - option "人工整理" [selected]
+      - option "已完成 AI 轮次"
+    - generic: 完成轮次
+    - combobox "完成轮次":
+      - option "不使用 AI" [selected]
+    - generic: 调查摘要与下一步
+    - textbox "调查摘要与下一步"
+    - generic: 负责人
+    - textbox "负责人": acceptance
+    - generic: 建议状态
+    - combobox "建议状态":
+      - option "调查中" [selected]
+      - option "待修复"
+      - option "待验证"
+      - option "已解决"
+      - option "重新调查"
+    - button "生成 / 更新预览"
+    - button "立即保存草稿"
+    - button "从所选完成轮次整理摘要"
+    - heading "不可变更新历史" [level=2]
+    - article:
+      - generic: 调查中
+      - paragraph: 复核补充的 Android 实际上传：CLogan 原文件、Go 解析和 Web 原文一致。请求超时可确认；界面根因仍无法确定。需补充真实复现、事件文件行号和可信构建源码映射；模型尚未配置，不记录 AI 根因结论。
+      - paragraph: acceptance · manual · 2026-10-22T08:14:46.839356Z
+      - button "读取当前可用快照"
+    - article:
+      - generic: 调查中
+      - paragraph: 确认请求超时。界面根因未验证，需补充终态日志和对应构建源码。
+      - paragraph: acceptance · manual · 2026-10-22T07:44:31.127782Z
+      - button "读取当前可用快照"
+    - heading "问题变更历史" [level=2]
+    - article:
+      - heading "保存调查更新" [level=2]
+      - generic: 调查中
+      - paragraph: 2026-10-22T08:14:46.839371Z · local-acceptance · 版本 5
+      - paragraph: 未改变问题字段。
+      - paragraph: 原因 / 说明：复核补充的 Android 实际上传：CLogan 原文件、Go 解析和 Web 原文一致。请求超时可确认；界面根因仍无法确定。需补充真实复现、事件文件行号和可信构建源码映射；模型…
+      - generic "原始记录详情"
+    - article:
+      - heading "编辑问题" [level=2]
+      - generic: 调查中
+      - paragraph: 2026-10-22T08:10:59.605366Z · local-acceptance · 版本 4
+      - list:
+        - listitem: 关联日志：1 → 2 项
+      - paragraph: 原因 / 说明：关联已有日志：2026-10-19.logan
+      - generic "原始记录详情"
+    - article:
+      - heading "保存调查更新" [level=2]
+      - generic: 调查中
+      - paragraph: 2026-10-22T07:44:31.127802Z · local-acceptance · 版本 3
+      - paragraph: 未改变问题字段。
+      - paragraph: 原因 / 说明：确认请求超时。界面根因未验证，需补充终态日志和对应构建源码。
+      - generic "原始记录详情"
+    - article:
+      - heading "编辑问题" [level=2]
+      - generic: 调查中
+      - paragraph: 2026-10-22T07:44:30.872882Z · local-acceptance · 版本 2
+      - list:
+        - listitem: 关联日志：0 → 1 项
+      - paragraph: 原因 / 说明：关联已有日志：2026-10-19.logan
+      - generic "原始记录详情"
+    - article:
+      - heading "新建问题" [level=2]
+      - generic: 调查中
+      - paragraph: 2026-10-22T07:44:30.825185Z · local-acceptance · 版本 1
+      - list:
+        - listitem: 标题：未填写 → SDK 贯通验收：登录超时待调查
+        - listitem: 问题现象：未填写 → 仅合成日志；超时不能证明 UI 根因
+        - listitem: 负责人：未填写 → acceptance
+        - listitem: 优先级：未填写 → P1
+        - listitem: 状态：未填写 → 调查中
+        - listitem: 应用：未知 → com.hxl.xlb.test
+        - listitem: 平台：未知 → android
+        - listitem: 环境：未知 → isolated
+        - listitem: 设备：未知 → triad-device
+        - listitem: 版本：未知 → 1.0-triad
+        - listitem: 构建：未知 → triad-42
+      - paragraph: 原因 / 说明：记录初始问题范围
+      - generic "原始记录详情"
+  - generic: Logan · 问题排查工作台 · 时间采用北京时间
+- status: 内部工单已更新，历史快照已保存。

@@ -111,6 +111,14 @@ extern void loganUploadFilePath(NSString *_Nonnull date, LoganFilePathBlock _Non
 extern void loganUpload(NSString * _Nonnull url, NSString * _Nonnull date,NSString * _Nullable appId, NSString *_Nullable unionId,NSString *_Nullable deviceId, LoganUploadResultBlock _Nullable resultBlock);
 
 /**
+ Upload with application ingestion headers. Only X-Logan-Upload-Token and
+ X-Logan-Upload-ID (case insensitive) are accepted. Invalid headers fail through
+ resultBlock on the main queue without starting an upload. Identity and content
+ headers are always supplied by the SDK. Never pass workspace/admin credentials.
+ */
+extern void loganUploadWithHeaders(NSString * _Nonnull url, NSString * _Nonnull date, NSString * _Nullable appId, NSString * _Nullable unionId, NSString * _Nullable deviceId, NSDictionary<NSString *, NSString *> * _Nullable headers, LoganUploadResultBlock _Nullable resultBlock);
+
+/**
  返回今天日期
  
  @return @"2018-11-21"

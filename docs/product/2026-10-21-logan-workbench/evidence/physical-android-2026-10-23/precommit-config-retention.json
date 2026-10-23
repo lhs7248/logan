@@ -1,0 +1,11 @@
+{
+  "after": "service restart and App force-stop/relaunch",
+  "files": {
+    "settings.json": "byte-identical",
+    "auth.json": "byte-identical",
+    "app/workbench-profile.json": "byte-identical",
+    "app/workbench-last-capture.json": "byte-identical",
+    "app/workbench-last-upload.json": "byte-identical"
+  },
+  "credentialsIncluded": false
+}

@@ -2,7 +2,8 @@
 
 buildscript {
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -11,8 +12,10 @@ buildscript {
     dependencies {
         //https://mvnrepository.com/artifact/com.android.tools.build/gradle?p=12
         classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        if (!project.hasProperty('workbenchBuild')) {
+            classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        }
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,7 +24,8 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
         maven {
             url 'https://maven.google.com/'
             name 'Google'

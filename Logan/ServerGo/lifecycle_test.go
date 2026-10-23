@@ -238,12 +238,23 @@ func TestMetricsOptionalAndHealthCompatibility(t *testing.T) {
 		}
 		cancel, done := startRuntime(t, a, c)
 		client := &http.Client{Timeout: time.Second}
-		for path, status := range map[string]int{"/ping": 200, "/livez": 200, "/readyz": 503, "/logan-web/logan/latest.json": 501, "/metrics": func() int {
-			if enabled {
-				return 200
-			}
-			return 404
-		}()} {
+		metricsStatus := http.StatusNotFound
+		if enabled {
+			metricsStatus = http.StatusOK
+		}
+		// CounterVec series are created by completed requests. Scrape after /ping,
+		// rather than relying on randomized map iteration to prime the counter.
+		for _, request := range []struct {
+			path   string
+			status int
+		}{
+			{"/ping", 200},
+			{"/livez", 200},
+			{"/readyz", 503},
+			{"/logan-web/logan/latest.json", 501},
+			{"/metrics", metricsStatus},
+		} {
+			path, status := request.path, request.status
 			r, e := client.Get("http://" + c.Address + path)
 			if e != nil {
 				t.Fatal(e)
@@ -253,8 +264,8 @@ func TestMetricsOptionalAndHealthCompatibility(t *testing.T) {
 			if r.StatusCode != status {
 				t.Fatalf("%s %d: %s", path, r.StatusCode, b)
 			}
-			if path == "/metrics" && enabled && !strings.Contains(string(b), "logan_http_requests_total") {
-				t.Fatal("metrics missing")
+			if path == "/metrics" && enabled && !strings.Contains(string(b), `logan_http_requests_total{method="GET",route="/ping",status="200"} 1`) {
+				t.Fatalf("completed /ping request counter missing: %s", b)
 			}
 		}
 		cancel()

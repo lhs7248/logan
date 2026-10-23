@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
-apply from: rootProject.file("bintrayUpload.gradle")
+if (!project.hasProperty("workbenchBuild")) {
+    apply from: rootProject.file("bintrayUpload.gradle")
+}
 
 android {
 //    publishNonDefault true
@@ -7,7 +9,7 @@ android {
     compileSdk 34
 
     //https://github.com/Meituan-Dianping/Logan/tree/master/Example/Logan-Android#prerequisites
-    ndkVersion "23.2.8568313"
+    ndkVersion project.findProperty("workbenchNdkVersion") ?: "23.2.8568313"
 
     defaultConfig {
         minSdkVersion 21

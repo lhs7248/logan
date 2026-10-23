@@ -1,0 +1,34 @@
+{
+  "scope": "actual Android HTTP sender on host; scheduling double; actual CLogan fixture; running local Go receiver",
+  "assetId": "fe1f3fb92894b465dacf5dafe9d38f48",
+  "runId": "48b62c495a800f986eeb21105b835411",
+  "receiptId": "59eec5534fc71afbac8ca0d7674ee897",
+  "status": "succeeded",
+  "eventCount": 4,
+  "exactContents": true,
+  "physicalDevice": false,
+  "issueId": "8d580c24b2e720b734a786092dfeb41e",
+  "evidenceId": "5a51c83bdffa29758f277827abccdb64",
+  "failedTurnId": "1a486b451e577d7518bd327bbcc50b30",
+  "verificationId": "912a47d3e1163235d54f0f9fa5ba6791",
+  "updateId": "6cfc1709e67a883dceb218d169de8848",
+  "businessStages": {
+    "explicitIssueLink": true,
+    "exactLogEvidence": true,
+    "unconfiguredModelExplicitFailure": true,
+    "uncertainVerificationWithExactEvidence": true,
+    "manualHandoffWithEvidenceAndVerification": true,
+    "oldUpdatePreserved": true
+  },
+  "restartPreservedAllBusinessObjects": true,
+  "objectCounts": {
+    "assets": 6,
+    "parseRuns": 7,
+    "evidence": 4,
+    "issues": 1,
+    "verifications": 2,
+    "turns": 2,
+    "updates": 2,
+    "sdkUploads": 6
+  }
+}

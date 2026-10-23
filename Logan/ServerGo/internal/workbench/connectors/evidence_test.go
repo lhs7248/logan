@@ -19,7 +19,7 @@ func TestModelPreservesEvidenceUncertaintyAndProvenance(t *testing.T) {
 		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 			t.Error(err)
 		}
-		if len(request.Messages) != 2 || !strings.Contains(request.Messages[0].Content, "unverified, candidate, or manual") || !strings.Contains(request.Messages[0].Content, "historical answers are not new facts") || !strings.Contains(request.Messages[0].Content, "operator_declared") {
+		if len(request.Messages) != 2 || !strings.Contains(request.Messages[0].Content, "unverified, candidate, or manual") || !strings.Contains(request.Messages[0].Content, "historical answers are not new facts") || !strings.Contains(request.Messages[0].Content, "operator_declared") || !strings.Contains(request.Messages[0].Content, "IdentitySource=sdk_reported") {
 			t.Error("missing uncertainty policy")
 		}
 		var snapshot Investigation

@@ -12,6 +12,8 @@
 
 The independent Go workbench implements persistent log import, parsing, reading, source evidence, investigation and internal ticket updates. See the [implementation status](docs/product/2026-10-21-logan-workbench/implementation-status.md) and [operator runbook](Logan/ServerGo/docs/workbench.md). Aliyun push remains deferred; source, model and legacy services require explicit configuration.
 
+For persistent local startup and the actual Android device workflow, see the [local service runbook](Logan/ServerGo/script/workbench-local-README.md) and [physical Android acceptance](docs/product/2026-10-21-logan-workbench/physical-android-acceptance-2026-10-23.md).
+
 ## Investigation workbench prototype
 
 [Interactive prototype and tests](prototypes/logan-investigation/README.md) · [Product design and development specification](docs/product/2026-10-21-logan-workbench/README.md)
