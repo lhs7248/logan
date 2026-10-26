@@ -10,7 +10,14 @@
     ".harness/run.py",
     ".harness/manifest.json",
     ".harness/evals/cases.json",
-    ".harness/tests/test_harness.py"
+    ".harness/tests/test_harness.py",
+    ".harness/runtime.py",
+    ".harness/acceptance.py",
+    ".harness/registry.json",
+    ".harness/tests/test_extensions.py",
+    ".harness/acceptance-template.json",
+    ".harness/closure.py",
+    ".harness/tests/test_closure.py"
   ],
   "profiles": {
     "quick": [
@@ -25,6 +32,20 @@
     ],
     "java": [
       "java-baseline"
+    ],
+    "workbench": [
+      "workbench-node",
+      "workbench-go",
+      "workbench-build"
+    ],
+    "workbench-http": [
+      "workbench-build",
+      "manual-http",
+      "reading-http",
+      "push-http"
+    ],
+    "self-test": [
+      "harness-self-test"
     ]
   }
 }

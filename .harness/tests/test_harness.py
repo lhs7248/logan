@@ -22,6 +22,10 @@ class HarnessTest(unittest.TestCase):
         tool_lookup = patch.object(harness.shutil, "which", return_value="available-tool")
         tool_lookup.start()
         self.addCleanup(tool_lookup.stop)
+        for name, value in (('identity', {'commit': 'fixture'}), ('versions', {})):
+            mock = patch.object(harness.runtime, name, return_value=value)
+            mock.start()
+            self.addCleanup(mock.stop)
         shutil.copytree(SCRIPT.parent, self.root / '.harness')
         (self.root / 'AGENTS.md').write_text('See [.harness](.harness/README.md)')
         for name in ('README.md', 'Makefile', 'docs/progress.md'):
@@ -39,6 +43,25 @@ class HarnessTest(unittest.TestCase):
             p = self.root / name
             p.parent.mkdir(parents=True, exist_ok=True)
             p.touch()
+
+        for item in harness.read_registry(self.root):
+            p = self.root / item['script']
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.touch()
+
+    def test_required_registry_route_cannot_disappear(self):
+        p = self.root / '.harness/registry.json'
+        doc = json.loads(p.read_text())
+        doc['integrations'] = [x for x in doc['integrations'] if x['id'] != 'manual-http']
+        p.write_text(json.dumps(doc))
+        self.assertTrue(harness.check(self.root))
+
+    def test_registry_route_cannot_change_profile(self):
+        p = self.root / '.harness/registry.json'
+        doc = json.loads(p.read_text())
+        doc['integrations'][0]['profile'] = 'full'
+        p.write_text(json.dumps(doc))
+        self.assertTrue(harness.check(self.root))
 
     def test_valid(self):
         self.assertEqual(harness.check(self.root), [])

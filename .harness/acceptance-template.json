@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task": "",
+  "code_revision": "",
+  "reviewer": "",
+  "scope": [
+    "reader/normal",
+    "reader/empty",
+    "reader/error"
+  ],
+  "records": [
+    {
+      "id": "reader/normal",
+      "baseline": "",
+      "baseline_revision": "",
+      "implementation": "",
+      "design_screenshot": "",
+      "implementation_screenshot": "",
+      "comparison_conditions": "",
+      "interaction_evidence": "",
+      "interaction_result": "",
+      "functional_result": "not_verified",
+      "design_result": "not_verified",
+      "differences": [],
+      "authorization_evidence": ""
+    }
+  ],
+  "code_workspace_sha256": ""
+}

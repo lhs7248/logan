@@ -1,0 +1,89 @@
+{
+  "integrations": [
+    {
+      "id": "manual-http",
+      "script": "Logan/ServerGo/script/verify-workbench-manual-v1.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/workbench/",
+        "Logan/ServerGo/cmd/workbench/"
+      ],
+      "requirements": [
+        "Go",
+        "Python 3",
+        "本机临时监听端口；合成隔离数据"
+      ],
+      "profile": "workbench-http"
+    },
+    {
+      "id": "reading-http",
+      "script": "Logan/ServerGo/script/verify-workbench-reading.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/workbenchui/",
+        "Logan/ServerGo/internal/workbench/"
+      ],
+      "requirements": [
+        "Go",
+        "Python 3",
+        "本机临时监听端口；合成隔离数据"
+      ],
+      "profile": "workbench-http"
+    },
+    {
+      "id": "push-http",
+      "script": "Logan/ServerGo/script/verify-workbench-push-v1.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/workbench/",
+        "Logan/ServerGo/internal/workbenchui/"
+      ],
+      "requirements": [
+        "Go",
+        "Python 3",
+        "本机临时监听端口；合成回调服务"
+      ],
+      "profile": "workbench-http"
+    },
+    {
+      "id": "sdk",
+      "script": "Logan/ServerGo/script/verify-sdk-workbench.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/protocol/",
+        "Logan/ServerGo/internal/workbench/",
+        "Logan/iOS/",
+        "Logan/Clogan/",
+        "Logan/WebSDK/",
+        "Example/Logan-Android/"
+      ],
+      "requirements": [
+        "隔离工作台 URL、项目和凭据",
+        "真实 SDK native 样本",
+        "此脚本会上传数据，仅在明确的隔离目标执行"
+      ],
+      "profile": null
+    },
+    {
+      "id": "database-recovery",
+      "script": "Logan/ServerGo/script/verify-reparse-database-recovery.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/repository/",
+        "Logan/ServerGo/internal/workbench/"
+      ],
+      "requirements": [
+        "隔离 Docker runtime/host、Go 镜像、binary、work-dir、out",
+        "会启动与清理隔离容器，不能指向生产"
+      ],
+      "profile": null
+    },
+    {
+      "id": "capacity",
+      "script": "Logan/ServerGo/script/verify-capacity-soak.py",
+      "prefixes": [
+        "Logan/ServerGo/internal/"
+      ],
+      "requirements": [
+        "隔离 Docker runtime/host、SDK 夹具、镜像、binary、work-dir、out",
+        "长时压测，单独安排资源和授权"
+      ],
+      "profile": null
+    }
+  ]
+}
