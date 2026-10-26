@@ -1,0 +1,18 @@
+{
+  "scope": "Physical Android actual Java/JNI/CLogan upload; local Go service",
+  "projectId": "local-mobile",
+  "appId": "test.logan.dianping.com.logan.workbench",
+  "receiptId": "c0284b583872656e789c0bfa8567de24",
+  "assetId": "9c5fdb6080a443e9b9f7200f25f27c7e",
+  "runId": "340dbd48536879c81eb1bb198f98d09a",
+  "parseStatus": "succeeded",
+  "eventCount": 4,
+  "rawBytes": 482,
+  "sha256": "c2468309f41246cfcb9593ac641eb237a3f5bfbfec8848f7cabcb4fb3ec8f78b",
+  "checks": {
+    "privateProfileMatchesReceiver": true,
+    "exactThreeAppMessages": true,
+    "originalCiphertextMatchesApp": true,
+    "sdkProvenance": true
+  }
+}

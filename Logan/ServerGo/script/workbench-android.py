@@ -42,7 +42,8 @@ def main():
     profile = runtime.profile()
     if a.command == 'provision':
         # Refuse to change an existing installation's keys/config without inspection.
-        exists = subprocess.run(['adb', '-s', a.serial, 'exec-out', 'run-as', APP,
+        # shell propagates remote test's exit status; exec-out may return 0 on absence.
+        exists = subprocess.run(['adb', '-s', a.serial, 'shell', 'run-as', APP,
                                  'test', '-e', 'files/workbench-profile.json'], capture_output=True)
         if exists.returncode == 0:
             if json.loads(private('workbench-profile.json')) != profile:

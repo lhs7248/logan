@@ -1,0 +1,8 @@
+{
+  "package": "com.hxl.xlb.test",
+  "apkSHA256": "dbf14d25218ef1ce19d73949b605bc233fb3c08c00c6cac4e4479125c5198b78",
+  "apkBytes": 443737018,
+  "certificateSHA256": "b3616ef6116ba7d19411d7df5ba129baec726c8eb85ab34f34cb46f804edb083",
+  "upstreamNoticePackaged": true,
+  "recovery": "fresh generation + exact committed journal replay"
+}

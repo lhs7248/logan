@@ -1,0 +1,17 @@
+{
+  "goFull": {
+    "test": "passed",
+    "race": "passed",
+    "vet": "passed",
+    "build": "passed"
+  },
+  "runtimeTestsPassed": 27,
+  "businessAndroidFocusedTestsPassed": 7,
+  "webTestsPassed": 63,
+  "prototypeTestsPassed": 124,
+  "aarLinkedDebugBuild": "passed",
+  "normalNoAarDebugCompile": "passed",
+  "independentReview": "no_remaining_high_confidence_P1_P2",
+  "businessActualUploadAndWeb": "pending_device_unlock",
+  "stage": "historical pre-unlock checkpoint; superseded by verification-final.json"
+}

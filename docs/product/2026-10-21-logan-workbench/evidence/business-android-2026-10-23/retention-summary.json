@@ -1,0 +1,31 @@
+{
+  "originalObjects": [
+    {
+      "type": "assets",
+      "id": "9c5fdb6080a443e9b9f7200f25f27c7e",
+      "originalDigestRetained": true,
+      "encoding": "sorted-compact"
+    },
+    {
+      "type": "notifications",
+      "id": "b7143c536a5f70c9d76bf8e0f853ffec",
+      "originalDigestRetained": true,
+      "encoding": "sorted-compact"
+    },
+    {
+      "type": "parseRuns",
+      "id": "340dbd48536879c81eb1bb198f98d09a",
+      "originalDigestRetained": true,
+      "encoding": "sorted-compact"
+    },
+    {
+      "type": "sdkUploads",
+      "id": "c0284b583872656e789c0bfa8567de24",
+      "originalDigestRetained": true,
+      "encoding": "sorted-compact"
+    }
+  ],
+  "allOriginalWorkspaceObjectsRetained": true,
+  "duplicateUploadDeduplicated": true,
+  "failedOriginalAssetRetained": true
+}

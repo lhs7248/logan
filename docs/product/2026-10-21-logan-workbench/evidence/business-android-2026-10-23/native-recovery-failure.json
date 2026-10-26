@@ -1,0 +1,39 @@
+{
+  "status": "confirmed_native_mmap_recovery_failure",
+  "assetId": "d50f90ab3be9ede483834ad0c750aebb",
+  "runId": "406030a358d4f8cbdaddc90d2592a25a",
+  "receiptId": "f8c3b6b09340be3efe00c52d1421b11f",
+  "sdkHttpStatus": 200,
+  "parseStatus": "failed",
+  "parseError": "PROTOCOL_DECODE_FAILED",
+  "rawBytes": 1047,
+  "sha256": "cfd9701bcd6e9f58847c8798b0ec429a2a7ccc0a15d5dbe9efa3e46eee1e383f",
+  "actualSnapshotEvents": 11,
+  "frameBoundaries": [
+    {
+      "offset": 0,
+      "cipherBytes": 96,
+      "trailer": 0
+    },
+    {
+      "offset": 102,
+      "cipherBytes": 240,
+      "trailer": 0
+    },
+    {
+      "offset": 348,
+      "cipherBytes": 272,
+      "missingTrailerAt": 625
+    },
+    {
+      "offset": 625,
+      "cipherBytes": 416,
+      "trailer": 0
+    }
+  ],
+  "independentDecode": "AES decode succeeded; strict gzip rejected damaged member; only 5 records complete",
+  "rootCause": "CLogan mmap restoration appends unfinished gzip/AES member after process termination before flush",
+  "resolution": "Fresh native generation per process, replay actual durable allowlisted journal through SDK, preserve originals; strict parser unchanged",
+  "originalsAndFailedAssetRetained": true,
+  "credentialsIncluded": false
+}

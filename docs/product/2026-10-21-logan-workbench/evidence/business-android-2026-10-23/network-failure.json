@@ -1,0 +1,12 @@
+{
+  "attemptId": "5fb4d2a8-67be-46d6-ada4-56444a30f9b6",
+  "date": "2026-10-23",
+  "state": "http_failure",
+  "appId": "com.hxl.xlb.test",
+  "appVersion": "6.0.1",
+  "buildVersion": "6001",
+  "sourceSha256": "cfd9701bcd6e9f58847c8798b0ec429a2a7ccc0a15d5dbe9efa3e46eee1e383f",
+  "sourceBytes": 1047,
+  "httpStatus": -1,
+  "receivedAsset": false
+}

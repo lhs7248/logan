@@ -1,0 +1,43 @@
+{
+  "profile": "full",
+  "exit_code": 0,
+  "steps": [
+    {
+      "command": [
+        "make",
+        "test"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "race"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "vet"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "build"
+      ],
+      "cwd": "Logan/ServerGo",
+      "status": "passed",
+      "exit_code": 0
+    }
+  ],
+  "scope": "Selected commands only; not integration or release acceptance"
+}

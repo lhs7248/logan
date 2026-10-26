@@ -1,0 +1,28 @@
+{
+  "goFull": {
+    "test": "passed",
+    "race": "passed",
+    "vet": "passed",
+    "build": "passed"
+  },
+  "runtimeTestsPassed": 27,
+  "businessAndroidFocusedTestsPassed": 13,
+  "webTestsPassed": 63,
+  "prototypeTestsPassed": 124,
+  "aarLinkedDebugBuild": "passed",
+  "normalNoAarDebugCompile": "passed",
+  "independentReview": "no_remaining_high_confidence_P1_P2",
+  "businessActualUploadAndWeb": "passed",
+  "stage": "final actual business Android Debug acceptance",
+  "restartAndReupload": "passed",
+  "originalDataRetention": "passed",
+  "harnessCheck": "passed",
+  "harnessSelfTestsPassed": 18,
+  "scopeLimits": [
+    "Android Debug allowlisted lifecycle events only",
+    "No physical device/host reboot acceptance",
+    "Replay envelope uses native enqueue time; content preserves capture time",
+    "Aliyun push and source mapping deferred",
+    "No production Release build/acceptance"
+  ]
+}

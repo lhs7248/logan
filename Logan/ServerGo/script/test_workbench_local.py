@@ -74,6 +74,74 @@ class RuntimeTests(unittest.TestCase):
         with self.assertRaises(self.m.RuntimeError):
             self.r.export_profile(target)
 
+    def test_business_profile_retains_example_and_persists_independent_identity(self):
+        self.r.init()
+        settings = self.r.settings.read_bytes()
+        original = json.loads(self.r.auth.read_text())
+        marker = self.r.root / 'data' / 'keep'
+        marker.write_bytes(b'original')
+        first = self.r.business_profile()
+        self.assertEqual(first, self.r.business_profile())
+        self.assertEqual(set(first), set(self.r.profile()))
+        self.assertEqual(first['appId'], 'com.hxl.xlb.test')
+        self.assertNotEqual(first['uploadToken'], self.r.profile()['uploadToken'])
+        self.assertNotEqual(first['deviceId'], self.r.profile()['deviceId'])
+        self.assertEqual(first['nativeKeyBase64'], self.r.profile()['nativeKeyBase64'])
+        self.assertEqual(first['nativeIVBase64'], self.r.profile()['nativeIVBase64'])
+        auth = json.loads(self.r.auth.read_text())
+        self.assertEqual(auth['sdkClients'][0], original['sdkClients'][0])
+        self.assertEqual(auth['tokens'], original['tokens'])
+        self.assertEqual(auth['projects'], original['projects'])
+        self.assertEqual(auth['sdkClients'][1]['environment'], 'test-local')
+        self.assertEqual(auth['sdkClients'][1]['platforms'], ['android'])
+        self.assertEqual(self.r.auth.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(settings, self.r.settings.read_bytes())
+        self.assertEqual(marker.read_bytes(), b'original')
+        self.r.init()
+        self.assertEqual(first, self.r.business_profile())
+
+    def test_business_profile_rejects_partial_state_and_collisions_without_changes(self):
+        self.r.init()
+        self.r.business_profile()
+        valid = json.loads(self.r.auth.read_text())
+        mutations = [lambda a: a['sdkClients'][1].update(environment='prod'),
+                     lambda a: a['sdkClients'][1].update(token=a['tokens'][0]['token']),
+                     lambda a: a['sdkClients'].append(dict(a['sdkClients'][1])),
+                     lambda a: a.pop('businessProfiles'),
+                     lambda a: a.update(businessProfiles=[])]
+        for mutate in mutations:
+            auth = json.loads(json.dumps(valid))
+            mutate(auth)
+            self.m.private_json(self.r.auth, auth, exclusive=False)
+            before = self.r.auth.read_bytes()
+            with self.assertRaises(self.m.RuntimeError):
+                self.r.business_profile()
+            self.assertEqual(before, self.r.auth.read_bytes())
+
+    def test_business_profile_atomic_failure_preserves_auth(self):
+        self.r.init()
+        before = self.r.auth.read_bytes()
+        with patch.object(self.m.os, 'replace', side_effect=OSError('write failure')):
+            with self.assertRaises(OSError):
+                self.r.business_profile()
+        self.assertEqual(before, self.r.auth.read_bytes())
+
+    def test_business_export_never_prints_secrets_or_overwrites(self):
+        self.r.init()
+        target = Path(self.tmp.name) / 'business.json'
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.m.main(['--root', str(self.r.root), 'business-app-profile', '--output', str(target)])
+        profile = json.loads(target.read_text())
+        self.assertNotIn(profile['uploadToken'], out.getvalue())
+        self.assertNotIn(profile['nativeKeyBase64'], out.getvalue())
+        self.assertEqual(target.stat().st_mode & 0o777, 0o600)
+        before = self.r.auth.read_bytes()
+        with self.assertRaises(self.m.RuntimeError):
+            self.m.main(['--root', str(self.r.root), 'business-app-profile', '--output', str(target)])
+        self.assertEqual(before, self.r.auth.read_bytes())
+        self.assertEqual(profile, json.loads(target.read_text()))
+
     def test_runtime_environment_defers_external_connectors(self):
         self.r.init()
         with patch.dict(os.environ, {'WORKBENCH_MYSQL_DSN':'secret', 'WORKBENCH_SOURCE_REPOS':'bad', 'WORKBENCH_MODEL_ENDPOINT':'bad', 'HTTP_PROXY':'bad'}):
@@ -191,6 +259,109 @@ class RuntimeTests(unittest.TestCase):
         with patch.object(self.r, 'request', return_value={'data':{'projectId':'other','actor':self.r.config()['actor'], 'role':'admin','projects':[{'id':'local-mobile'}]}}):
             with self.assertRaises(self.m.RuntimeError):
                 self.r.ready()
+
+class AndroidProvisionTests(unittest.TestCase):
+    def test_missing_example_profile_uses_shell_exit_status_then_private_stdin(self):
+        spec = importlib.util.spec_from_file_location('example_android', SCRIPT.with_name('workbench-android.py'))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            runtime_spec = importlib.util.spec_from_file_location('local_for_provision', SCRIPT)
+            local = importlib.util.module_from_spec(runtime_spec)
+            runtime_spec.loader.exec_module(local)
+            runtime = local.Runtime(Path(tmp) / 'runtime')
+            runtime.init()
+            profile = runtime.profile()
+            calls = []
+
+            def adb_run(command, **kwargs):
+                calls.append((command, kwargs))
+                if 'test' in command:
+                    # Real adb exec-out can report success despite a missing remote file.
+                    return module.subprocess.CompletedProcess(command, 1 if 'shell' in command else 0, stdout=b'')
+                if 'cat' in command:
+                    return module.subprocess.CompletedProcess(command, 0, stdout=json.dumps(profile).encode())
+                return module.subprocess.CompletedProcess(command, 0, stdout=b'')
+
+            argv = ['workbench-android.py', '--serial', 'test-device', '--root', str(runtime.root), 'provision']
+            with patch.object(module.subprocess, 'run', side_effect=adb_run), patch('sys.argv', argv), contextlib.redirect_stdout(io.StringIO()):
+                module.main()
+            probes = [command for command, kwargs in calls if 'test' in command]
+            self.assertEqual(probes, [['adb', '-s', 'test-device', 'shell', 'run-as', module.APP, 'test', '-e', 'files/workbench-profile.json']])
+            writes = [(command, kwargs) for command, kwargs in calls if kwargs.get('input')]
+            self.assertEqual(len(writes), 1)
+            self.assertEqual(json.loads(writes[0][1]['input']), profile)
+            self.assertNotIn(profile['uploadToken'], ' '.join(writes[0][0]))
+
+class BusinessVerifierTests(unittest.TestCase):
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location('business_android', SCRIPT.with_name('workbench-business-android.py'))
+        self.m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.m)
+        self.event = {'eventName':'app_start', 'activityCategory':'application', 'sessionId':'session', 'installationId':'installation', 'timestamp':1}
+        self.profile = {'appId':'com.hxl.xlb.test', 'projectId':'local-mobile', 'deviceId':'installation'}
+        self.journal = {'schemaVersion':1, 'installationId':'installation', 'events':[self.event]}
+        self.receipt = {'schemaVersion':1, 'state':'http_success', 'attemptId':'attempt', 'httpStatus':200,
+                        'appId':'com.hxl.xlb.test', 'appVersion':'6.0.1', 'buildVersion':'6001',
+                        'deviceId':'installation', 'projectId':'local-mobile', 'date':'2026-10-23',
+                        'events':[self.event], 'sourceSha256':self.m.hashlib.sha256(b'ciphertext').hexdigest(), 'sourceBytes':10,
+                        'response':{'assetId':'asset', 'runId':'run', 'receiptId':'receipt'}}
+        self.asset = {'id':'asset', 'sdkReceiptId':'receipt', 'sdkClientId':'business-android-test',
+                      'origin':'sdk', 'originalEncrypted':True, 'identitySource':'sdk_reported',
+                      'app':'com.hxl.xlb.test', 'device':'installation', 'platform':'android', 'environment':'test-local',
+                      'version':'6.0.1', 'build':'6001', 'fileDate':'2026-10-23', 'rawHash':self.receipt['sourceSha256'], 'size':10}
+        self.run = {'id':'run','assetId':'asset','status':'succeeded','mode':'strict','format':'native','errorCount':0,'eventCount':1}
+        self.data = {'/parse-runs/run':self.run, '/workspace':{'assets':[self.asset]},
+                     '/parse-runs/run/events?limit=1000':{'events':[{'content':json.dumps(self.event)}], 'total':1, 'nextCursor':''},
+                     '/assets/asset/raw':b'ciphertext'}
+
+    def verify(self, baseline=None):
+        return self.m.verify_snapshot(self.profile, self.journal, self.receipt, lambda path, raw=False:self.data[path], baseline, source_bytes=b'ciphertext')
+
+    def test_exact_snapshot_survives_new_lifecycle_events_and_restart(self):
+        result = self.verify()
+        self.journal['events'].append(dict(self.event, eventName='activity_resumed', timestamp=2))
+        again = self.verify(result)
+        self.assertTrue(again['checks']['baselineRetained'])
+        self.assertEqual(result['sha256'], again['sha256'])
+        self.assertNotIn('session', json.dumps(result))
+
+    def test_exact_native_header_is_accounted_without_masking_business_events(self):
+        page = self.data['/parse-runs/run/events?limit=1000']
+        page['events'].insert(0, {'content':'clogan header', 'logType':1})
+        page['total'] = self.run['eventCount'] = 2
+        result = self.verify()
+        self.assertEqual(result['eventCount'], 2)
+        self.assertEqual(result['businessEventCount'], 1)
+        self.assertEqual(result['nativeHeaderCount'], 1)
+        page['events'][0]['content'] = 'clogan header with arbitrary data'
+        with self.assertRaises(ValueError): self.verify()
+
+    def test_actual_retained_app_ciphertext_must_match_send_snapshot(self):
+        with self.assertRaises(ValueError):
+            self.m.verify_snapshot(self.profile, self.journal, self.receipt,
+                                   lambda path, raw=False:self.data[path], source_bytes=b'changed')
+
+    def test_rejects_extra_or_modified_events_and_non_strict_or_wrong_origin(self):
+        for key, value in [('mode','recovery'), ('errorCount',1)]:
+            before = dict(self.run)
+            self.run[key] = value
+            with self.assertRaises(ValueError): self.verify()
+            self.run.update(before)
+        self.asset['origin'] = 'import'
+        with self.assertRaises(ValueError): self.verify()
+        self.asset['origin'] = 'sdk'
+        self.data['/parse-runs/run/events?limit=1000']['events'][0]['content'] = '{}'
+        with self.assertRaises(ValueError): self.verify()
+
+    def test_bounded_paging_rejects_truncated_or_repeated_cursor_and_hash_mismatch(self):
+        page = self.data['/parse-runs/run/events?limit=1000']
+        page['nextCursor'] = 'same'
+        self.data['/parse-runs/run/events?limit=1000&cursor=same'] = page
+        with self.assertRaises(ValueError): self.verify()
+        page['nextCursor'] = ''
+        self.receipt['sourceSha256'] = '0' * 64
+        with self.assertRaises(ValueError): self.verify()
 
 if __name__ == '__main__':
     unittest.main()

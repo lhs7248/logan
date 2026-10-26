@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "appId": "com.hxl.xlb.test",
+  "apkSHA256": "5b8590c7dcdf45919bb0c11c03633aa69385b8bb51d1f7ce310511186f610612",
+  "certificateSHA256": "b3616ef6116ba7d19411d7df5ba129baec726c8eb85ab34f34cb46f804edb083",
+  "installedCertificateMatches": true,
+  "focusedTests": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+}

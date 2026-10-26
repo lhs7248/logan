@@ -1,0 +1,40 @@
+# Business Android Logan integration implementation plan
+
+> Execute with subagent-driven-development. User confirmed the preflight on 2026-10-23; no additional design approval is pending. Preserve existing business edits and private data. No automatic commit/push in this task.
+
+**Goal:** Actual `com.hxl.xlb.test` activities → private native CLogan file → App-initiated upload → Go strict parser → Web, with server/App process restart retention.
+
+**Architecture:** Add an optional Android Debug integration to the actual `hxl-host-app`. The host initializes a Debug lifecycle logger through a release-safe seam. Runtime private profile contains the upload-only credential and decoder keys. Reuse the existing local Go service/project and add an independently scoped business client without rotating the example credentials/keys or deleting assets. Use USB loopback8091. Produce the native SDK AAR from this repository and record its hash/source revision.
+
+## Shared contract and constraints
+
+- App profile: `files/workbench-profile.json` with `receiverUrl`, `appId`, `uploadToken`, `nativeKeyBase64`, `nativeIVBase64`, `deviceId`, `projectId`. Exact app `com.hxl.xlb.test`; exact receiver `http://127.0.0.1:8091/logan-web/api/workbench/v1/sdk/native`.
+- Package/build metadata comes from installed PackageInfo. Device is a random persistent installation ID, never an account or hardware identifier. No credentials in args/Intent/APK/report; provisioning over adb stdin.
+- Debug capture records only allowlisted eventName/activity category/session/installation/time. No arbitrary logcat/third-party log forwarding, route parameters, login data, business payload or private URL. Existing monitors remain intact.
+- App evidence is private sanitized `workbench-last-upload.json` and a bounded event journal for exact content comparisons. Upload snapshots current date and uses the actual Java SDK `Logan.s`; HTTP callback/timeout and late response are truthful and identity-bound.
+- Server project remains `local-mobile`, existing example retained; append SDK client for business package. Auth/keys persist. Configuration changes are explicit idempotent commands, not edits that replace unrelated records.
+- Cover-install only after installed/rebuilt signing certificate matches. Never uninstall/clear data. Main Activity unchanged. Release has no operative logger or SDK dependency.
+
+## Tasks
+
+- [x] **Business host integration** (agent owns `hxl-host-app/android` scoped files): read host rules. Add tests first for profile allowlist, minimal event generation, restart identity and submission callback correlation. Add Debug logger/profile/upload controller and simple status/manual-upload Activity with stable IDs, existing debugger entry, main-process bootstrap seam and Release no-op. Optional local AAR build input must not break normal builds when absent. Write dependency/rollback/spec notes. Build real native debug APK with same package/signing; do not install or alter device. Keep unrelated user edits untouched.
+- [x] **Local runtime client and verification** (agent owns Logan `script/workbench-local.py`, runtime tests, business companion script): tests first. Add idempotent `business-app-profile` or equivalent explicit command retaining existing settings/auth/example while adding independent upload client. Validate collisions/mismatched config without overwriting. Emit profile only to private file/stdin pipeline. Build non-synthetic verifier reading actual App event journal+receipt, confirming exact events, SDK origin/package/version, strict parse, original ciphertext match and baseline retention. No hardwareserial/credential report. Agent does not modify live runtime or device.
+- [x] **Native artifact and integration** (root): build repository release native SDK AAR, record SHA/source revision; provision new business profile privately, preserve old configurations and record safe baselines. Verify APK certificate against installed package; cover-install and relaunch. Use actual safe business-page navigation and App upload button. Compare actual Go asset/events/ciphertext, inspect same asset in Web. Exercise repeat/retry and server/App process restarts without clearing data.
+- [x] **Independent review and evidence**: review host/runtime delta, App auth/minimization/lifecycle/state correlation, metadata and retention. Run focused host build/tests, runtime tests, Go regression and Web tests as affected. Write actual scope and exact asset/run/hash evidence in both repositories without secrets or real business content. Keep service running and actual business log selected in browser. Do not claim physical iOS, full-device reboot, cloud push or source mapping.
+
+## Verification commands
+
+From Logan root: `python3 -m unittest discover -s Logan/ServerGo/script -p 'test_workbench_local.py'`; `GOCACHE=/tmp/logan-workbench-go-cache python3 .harness/run.py verify --profile full`; `node --test Logan/ServerGo/internal/workbenchui/*.test.mjs`.
+
+Native artifact from `Example/Logan-Android`: `ANDROID_HOME="$HOME/Library/Android/sdk" ./gradlew -PworkbenchBuild -PworkbenchNdkVersion=27.0.12077973 :logan:assembleRelease`.
+
+Business host from its Android directory: use existing test environment and signing; `ENVFILE=.env.test ./gradlew :app:assembleDebug :app:testDebugUnitTest -PreactNativeArchitectures=arm64-v8a` plus explicit optional AAR property agreed with implementer. Redirect build output to a private temporary log and inspect failure excerpts only.
+
+Final checkpoint (2026-10-23): actual final business APK certificate matched and cover-installed; original account preferences were byte-identical after installation. Native SDK AAR SHA/source and final APK/certificate evidence retained. Actual App upload passed exact-event and original-ciphertext checks: first 115 lifecycle events + 1 header; duplicate reused asset/run/receipt. Service restart and App force-stop/relaunch retained private configuration, installation identity and all prior events. A fresh native generation replayed 115 durable events; subsequent actual upload passed with 119 lifecycle events + 1 header. The latest asset also survived a second service restart and was selected/read in the actual Web UI. Original four workspace objects retained matching digests and example upload still verifies. See [final acceptance](../../product/2026-10-21-logan-workbench/business-android-acceptance-2026-10-23.md).
+
+Device-found correction: preserve the original malformed CLogan mmap-recovery file/failed asset; do not relax strict Go decoding. Use a fresh native generation per process with atomic journal commit-before-enqueue and actual durable-event replay. Cap replay/capture at 240 current-day events, reject storage admission without deletion, require App restart on day rollover. SDK envelope timestamps reflect replay; original capture timestamps remain in the event JSON. Final 13 focused tests and independent review cover WAL failure, queue bound and date guard. This is Debug adapter recovery, not a general upstream SDK repair.
+
+No source mapping, Aliyun push, production Release, physical iOS or full device/host reboot acceptance is claimed. No automatic commit/push. Preserve the original business repo dirty work and private profiles. Final UI evidence and sanitized IDs/counts/hashes are linked in the report; no credentials or account/business payloads are included.
+
+
+2026-10-26 follow-up: user explicitly requested review, fix-before-submit and local code commits with reports. Independent review found damaged private JSON being treated as missing and uncontained upload persistence exceptions. Fixed strict non-mutating base/backup reads plus a latched upload failure guard; 17 focused tests pass after observed regression failures. Actual same-certificate cover-install preserved original account preferences/profile/journal. Today's App upload, service/App restart and subsequent re-upload passed exact-event/ciphertext checks; original 119 events remain. See [review](../../product/2026-10-21-logan-workbench/business-android-review-2026-10-26.md). No remote push authorized by this follow-up.

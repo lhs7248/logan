@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "serviceConfigRetained": true,
+    "settingsUnchangedFromBeforeIntegration": true,
+    "appProfileRetained": true,
+    "installationRetained": true,
+    "allPriorEventsRetained": true,
+    "freshNativeGeneration": true
+  },
+  "beforeEventCount": 115,
+  "afterEventCount": 119,
+  "replayedEventCount": 115,
+  "recoverySource": "private-event-journal",
+  "sdkEnvelopeClock": "native-enqueue-time",
+  "scope": "Service restart and business App force-stop/relaunch; no device/host reboot"
+}

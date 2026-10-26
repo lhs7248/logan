@@ -1,0 +1,19 @@
+{
+  "status": "pending_screen_unlock_and_actual_upload",
+  "package": "com.hxl.xlb.test",
+  "appVersion": "6.0.1",
+  "buildVersion": "6001",
+  "serviceConfigurationRetained": true,
+  "appPrivateProfileByteIdentical": true,
+  "installationIdentityRetained": true,
+  "priorEventsRetained": 4,
+  "currentEvents": 5,
+  "newProcessAppStartRecorded": true,
+  "existingWorkspaceObjectsUnchanged": 4,
+  "existingExampleFullByteEventCheck": "passed",
+  "businessActualUpload": "not_yet_verified",
+  "businessWebDisplay": "not_yet_verified",
+  "rawUploadAssetRestart": "not_yet_verified",
+  "deviceSerialIncluded": false,
+  "credentialsIncluded": false
+}

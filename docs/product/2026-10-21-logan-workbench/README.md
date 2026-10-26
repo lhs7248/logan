@@ -1,6 +1,10 @@
 # Logan 排查工作台：开发定稿包
 
-> 最新真机验收：[Android 真实采集、Go 解析、Web 展示与重启保留](physical-android-acceptance-2026-10-23.md) 记录实际上传及固定启动方式。
+> 提交前复审：[2026-10-26 接入与持久化复审](business-android-review-2026-10-26.md) 记录存储异常修正、重新构建及保留数据复验。
+
+> 最新业务 App 验收：[com.hxl.xlb.test 真实采集、Go 解析、Web 与重启保留](business-android-acceptance-2026-10-23.md) 记录 119 条真实生命周期事件、原生缓存恢复修正、逐条及密文核对与范围限制。
+
+> 独立示例真机验收：[Android 真实采集、Go 解析、Web 展示与重启保留](physical-android-acceptance-2026-10-23.md) 记录此前实际上传及固定启动方式。
 
 > 上轮复审：[再次复审与真实链路边界](sdk-chain-review-2026-10-22.md) 记录本次发现修复、双端实际发送器贯通、补证后调查及仍未验证范围。
 

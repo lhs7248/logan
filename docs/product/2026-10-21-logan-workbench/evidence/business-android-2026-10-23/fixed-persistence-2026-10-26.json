@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-26",
+  "checks": {
+    "profileRetained": true,
+    "serviceConfigRetained": true,
+    "installationRetained": true,
+    "allPreReview119EventsRetained": true,
+    "allBeforeRestartEventsRetained": true,
+    "freshNativeGeneration": true
+  },
+  "beforeRestartJournalEvents": 137,
+  "afterRestartJournalEvents": 138,
+  "replayedTodayEvents": 18,
+  "scope": "Actual business App force-stop/relaunch and local Go service restart; no device/host reboot"
+}

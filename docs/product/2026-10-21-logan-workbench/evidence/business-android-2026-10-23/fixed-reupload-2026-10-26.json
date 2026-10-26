@@ -1,0 +1,25 @@
+{
+  "scope": "Actual business Android App upload; local Go strict parser",
+  "projectId": "local-mobile",
+  "appId": "com.hxl.xlb.test",
+  "appVersion": "6.0.1",
+  "buildVersion": "6001",
+  "attemptId": "f33be2c7-9522-42f5-ab73-da589de860e6",
+  "assetId": "bde523c742f6192a0d5740d44e58fdda",
+  "runId": "c5a3c9fc3ffd87356b2b440d8afc284b",
+  "receiptId": "e13a62eeca0d576372fba429bbeb7f7d",
+  "fileDate": "2026-10-26",
+  "parseStatus": "succeeded",
+  "eventCount": 20,
+  "businessEventCount": 19,
+  "nativeHeaderCount": 1,
+  "rawBytes": 4776,
+  "sha256": "100a524a244d2e68acd1480d7166753b89cec1e355426ec657a156ed1e7c8890",
+  "snapshotEventsSHA256": "f4c29fbdfa315645635f8ffaafc257f0b7bd072f537bcf4f08a83293dcc12923",
+  "checks": {
+    "exactAppSnapshotEvents": true,
+    "originalCiphertextMatchesSendSnapshot": true,
+    "sdkProvenance": true,
+    "strictParse": true
+  }
+}

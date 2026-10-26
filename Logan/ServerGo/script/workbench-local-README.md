@@ -61,3 +61,26 @@ python3 Logan/ServerGo/script/workbench-android.py --serial YOUR_DEVICE_SERIAL v
 ```
 
 Provisioning preserves an identical private App profile and refuses to overwrite a different one. It restores the USB loopback forwarding, which can be lost when reconnecting the phone. Relaunch the App after first provisioning, create and upload logs using its buttons, then run `verify`. Verification reads the actual App capture/receipt, compares all three messages with the parsed run, and compares the App retained encrypted daily file with the server asset and raw download. It does not synthesize or upload logs. Use `--baseline /tmp/android-check.json` after a service/App restart to compare the same capture. The profile is not printed or included in reports.
+
+## Actual business Android App
+
+The independent `com.hxl.xlb.test` client is explicit opt-in. From the repository root:
+
+```sh
+python3 Logan/ServerGo/script/workbench-local.py business-app-profile --output /absolute/private/path/business-profile.json
+```
+
+This command creates a new mode0600 profile file and never prints its credentials. It refuses existing output files, including symlinks. The configured client is `business-android-test`, project `local-mobile`, environment `test-local`, Android only. Its upload token and random installation identity are independent of the example. Its decoder key/IV reuse the existing receiver keys without rotation. The command atomically adds the client and its persistent profile to the private `auth.json`; it preserves settings, administrators, example client, unrelated authorization entries and assets. Existing partial, mismatched or colliding business entries fail without replacement. The Go auth loader ignores the operator-only `businessProfiles` field.
+
+For private provisioning code, `Runtime(root).business_profile()` performs the same explicit opt-in and returns the seven-field profile. `business_profile(create=False)` only validates/reads an already configured client. The service must be restarted through the existing owned runtime command to load a newly added client. Neither profile creation nor the verifier restarts or provisions anything automatically. Keep credentials out of process arguments and pass profile bytes through adb stdin into the actual App's private `files/workbench-profile.json`. Preserve the existing package and data.
+
+After the actual business App has generated events and completed its own upload:
+
+```sh
+python3 Logan/ServerGo/script/workbench-business-android.py --serial YOUR_DEVICE_SERIAL --report /tmp/business-check.json
+python3 Logan/ServerGo/script/workbench-business-android.py --serial YOUR_DEVICE_SERIAL --baseline /tmp/business-check.json --report /tmp/business-restart-check.json
+```
+
+Both commands accept `--root PRIVATE_RUNTIME_ROOT`. Reports must be new files. The verifier reads the business App private profile, bounded event journal and immutable last-upload receipt. It checks the installed package version, successful HTTP callback, independent SDK client scope, native strict parsing, complete bounded event pagination, exact allowlisted JSON events and downloaded ciphertext. The only excluded native record is the exact SDK `clogan header` with log type1; total/native-header/business counts remain explicit. It also reads `files/workbench-uploads/<attemptId>.logan`, the actual SDK send snapshot retained by the App, and compares those bytes with the receipt hash/size and authorized raw download. It never manufactures events or uploads a log file.
+
+The restart baseline compares the same completed upload and retained original ciphertext before another upload. New lifecycle events may extend the journal and the current daily file after reopening the App; these do not change the retained upload snapshot. All snapshot events must still exist in the bounded journal. A later upload, journal pruning, missing snapshot or changed receipt fails this comparison instead of claiming retention. Reports contain only scope, package/version, upload/asset/run IDs, counts and digests, without profile credentials, physical serial or event bodies. Actual App/server restarts, duplicate submission and network recovery still require separate integration actions and evidence.
