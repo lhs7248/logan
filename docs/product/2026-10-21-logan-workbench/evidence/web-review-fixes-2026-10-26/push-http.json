@@ -1,0 +1,60 @@
+{
+  "scope": "isolated real HTTP provisional push adapter and signed callback protocol",
+  "passed": true,
+  "checks": [
+    {
+      "name": "connector is explicitly configured per project",
+      "passed": true
+    },
+    {
+      "name": "minimal device draft sends once with bearer, attempt identity and unchanged optional context",
+      "passed": true
+    },
+    {
+      "name": "viewer writes and authorized alternate-project object access are rejected",
+      "passed": true
+    },
+    {
+      "name": "forged and stale signatures do not update progress",
+      "passed": true
+    },
+    {
+      "name": "signed callback commits once, changed duplicate rejects, push success waits for logs without fake asset",
+      "passed": true
+    },
+    {
+      "name": "contradictory terminal push observation is retained without state regression",
+      "passed": true
+    },
+    {
+      "name": "callback can arrive before HTTP acknowledgement without lock deadlock or regression",
+      "passed": true
+    },
+    {
+      "name": "uncertain send needs explicit retry, duplicate new request is blocked, old callback cannot activate new attempt",
+      "passed": true
+    },
+    {
+      "name": "cancellation persists and late callback cannot revive it",
+      "passed": true
+    },
+    {
+      "name": "definitive internal HTTP rejection remains distinct from unknown outcome",
+      "passed": true
+    },
+    {
+      "name": "restart retains collection/attempt/history and callback idempotency without resending",
+      "passed": true
+    },
+    {
+      "name": "interrupted in-flight send restarts as unknown and can accept a later genuine signed observation",
+      "passed": true
+    }
+  ],
+  "outgoingAttempts": 6,
+  "limitations": [
+    "Loopback protocol double only; no actual internal service/Aliyun/device delivery.",
+    "This increment does not automatically correlate SDK uploads with collection attempts.",
+    "Deadline, concurrency and storage-failure bounds additionally covered by focused Go tests."
+  ]
+}

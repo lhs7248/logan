@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-26",
+  "baselineCommit": "19ce77fc0d44d69c071353bf180374e7dc40c92a",
+  "scope": "provisional platform-owned internal push protocol; no real provider/client delivery",
+  "pushHTTP": {
+    "scope": "isolated real HTTP provisional push adapter and signed callback protocol",
+    "passed": true,
+    "checks": [
+      {
+        "name": "connector is explicitly configured per project",
+        "passed": true
+      },
+      {
+        "name": "minimal device draft sends once with bearer, attempt identity and unchanged optional context",
+        "passed": true
+      },
+      {
+        "name": "viewer writes and authorized alternate-project object access are rejected",
+        "passed": true
+      },
+      {
+        "name": "forged and stale signatures do not update progress",
+        "passed": true
+      },
+      {
+        "name": "signed callback commits once, changed duplicate rejects, push success waits for logs without fake asset",
+        "passed": true
+      },
+      {
+        "name": "contradictory terminal push observation is retained without state regression",
+        "passed": true
+      },
+      {
+        "name": "callback can arrive before HTTP acknowledgement without lock deadlock or regression",
+        "passed": true
+      },
+      {
+        "name": "uncertain send needs explicit retry, duplicate new request is blocked, old callback cannot activate new attempt",
+        "passed": true
+      },
+      {
+        "name": "cancellation persists and late callback cannot revive it",
+        "passed": true
+      },
+      {
+        "name": "definitive internal HTTP rejection remains distinct from unknown outcome",
+        "passed": true
+      },
+      {
+        "name": "restart retains collection/attempt/history and callback idempotency without resending",
+        "passed": true
+      },
+      {
+        "name": "interrupted in-flight send restarts as unknown and can accept a later genuine signed observation",
+        "passed": true
+      }
+    ],
+    "outgoingAttempts": 6,
+    "limitations": [
+      "Loopback protocol double only; no actual internal service/Aliyun/device delivery.",
+      "This increment does not automatically correlate SDK uploads with collection attempts.",
+      "Deadline, concurrency and storage-failure bounds additionally covered by focused Go tests."
+    ]
+  },
+  "manualRegression": {
+    "scope": "isolated synthetic enterprise-intranet single-instance candidate",
+    "passed": true,
+    "checks": [
+      {
+        "name": "manual-v1 private configuration starts and readiness responds",
+        "passed": true
+      },
+      {
+        "name": "viewer cannot write or download raw data and cross-project access is rejected",
+        "passed": true
+      },
+      {
+        "name": "manual hypothesis preserves uncertainty and cannot substitute for fix verification",
+        "passed": true
+      },
+      {
+        "name": "fix verification and explicitly confirmed manual handoff persist a resolved internal issue",
+        "passed": true
+      },
+      {
+        "name": "2000-event strict import, complete pagination and combined histogram filters agree",
+        "passed": true
+      },
+      {
+        "name": "graceful process restart retains original bytes, parsed events and complete manual investigation history",
+        "passed": true
+      },
+      {
+        "name": "abrupt idle process termination retains all acknowledged business records",
+        "passed": true
+      },
+      {
+        "name": "offline checksum-verified backup restores authentication, originals and complete business state into a new directory",
+        "passed": true
+      }
+    ],
+    "businessChecks": [
+      {
+        "name": "unauthenticated API access rejected",
+        "passed": true
+      },
+      {
+        "name": "authenticated project session",
+        "passed": true
+      },
+      {
+        "name": "durable issue creation and idempotency content conflict",
+        "passed": true
+      },
+      {
+        "name": "stale issue revision rejected",
+        "passed": true
+      },
+      {
+        "name": "original upload bytes/hash persisted and unknown identity preserved",
+        "passed": true
+      },
+      {
+        "name": "strict parsing fails and skip-mode reparse publishes only valid records",
+        "passed": true
+      },
+      {
+        "name": "parse comparison preserves failed version and independent readable publication",
+        "passed": true
+      },
+      {
+        "name": "event publication, zero-match and level filtering",
+        "passed": true
+      },
+      {
+        "name": "log evidence is tied to immutable run/event identity",
+        "passed": true
+      },
+      {
+        "name": "capabilities expose configuration state",
+        "passed": true
+      },
+      {
+        "name": "pre-preview manual draft is durable and recoverable",
+        "passed": true
+      },
+      {
+        "name": "different log identity requires confirmation and appends relationship history",
+        "passed": true
+      },
+      {
+        "name": "manual investigation handoff works without model and replays once",
+        "passed": true
+      },
+      {
+        "name": "workspace reflects durable linked business objects",
+        "passed": true
+      }
+    ],
+    "measurement": {
+      "syntheticEvents": 2000,
+      "sequentialFilteredReads": 30,
+      "p95Milliseconds": 16.284,
+      "limitation": "loopback bounded fixture; not capacity or soak certification"
+    },
+    "rawDigest": "fa4ba0c93e41587ac0a80764d1ec3f32df78ce765db9b3cb6326269f797023b5",
+    "elapsedSeconds": 2.662
+  },
+  "goFull": [
+    {
+      "command": [
+        "make",
+        "test"
+      ],
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "race"
+      ],
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "vet"
+      ],
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "build"
+      ],
+      "status": "passed",
+      "exit_code": 0
+    }
+  ],
+  "web": {
+    "passed": 85,
+    "failed": 0
+  },
+  "pythonExisting": {
+    "passed": 47,
+    "failed": 0
+  },
+  "newGoTests": 11,
+  "review": {
+    "spec": "pass",
+    "quality": "approved",
+    "fixed": [
+      "Uncertain wizard submission freezes original confirmed payload and identity",
+      "History expansion survives polling per project/request",
+      "Retry follows the same request into push tracking view",
+      "Beijing time presentation matches footer"
+    ]
+  },
+  "browser": {
+    "threeStepSend": "passed",
+    "signedCallbackAutomaticRefresh": "passed",
+    "separateClientAndFileEvidence": "passed",
+    "layout": "existing navigation/master-detail/tabs and unchanged baseline CSS",
+    "note": "Browser main-flow evidence plus final component regression for wizard uncertainty/history/retry-selection; no real Aliyun/device acceptance."
+  },
+  "preservation": {
+    "existingDirtyFilesCompared": 19,
+    "changed": 0,
+    "original8091Restarted": false,
+    "isolatedFixtureSameURLCredentialsAndState": true,
+    "isolatedFixtureFilesByteCompared": 3
+  },
+  "notVerified": [
+    "Actual internal push service and downstream Aliyun",
+    "Client receipt and automatic request/attempt-to-upload correlation",
+    "Deployment gateway/TLS/access and production capacity"
+  ],
+  "committed": false
+}

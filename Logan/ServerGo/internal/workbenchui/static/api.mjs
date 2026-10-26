@@ -23,7 +23,7 @@ export function createAPI({fetcher=globalThis.fetch, token=()=>'', project=()=>'
   const result=await response.json(); return result.data;
  };
 }
-export function filtersQuery(filters) { const q=new URLSearchParams(); for(const key of ['query','level','module','type','unknownTime','start','end']) if(filters[key]) q.set(key,filters[key]); return q.toString(); }
+export function filtersQuery(filters) { const q=new URLSearchParams(); for(const key of ['query','level','module','type','unknownTime','start','end','pageAttemptId']) if(filters[key]) q.set(key,filters[key]); return q.toString(); }
 export function evidenceDelta(previous=[],current=[]) { return {added:current.filter(id=>!previous.includes(id)),removed:previous.filter(id=>!current.includes(id))}; }
 export const readable = run => ['succeeded','partial'].includes(run?.status);
 export const active = object => ['queued','running'].includes(object?.status);

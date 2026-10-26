@@ -39,6 +39,7 @@ type Config struct {
 	Store         Persistence
 	Projects      []Project `json:"projects"`
 	Tokens        []Token   `json:"tokens"`
+	Push          *connectors.Push
 	Source        *connectors.Source
 	Model         *connectors.Model
 	Protocols     *connectors.Protocols
@@ -59,6 +60,7 @@ type Server struct {
 	jobs        sync.WaitGroup
 	cancels     map[string]context.CancelFunc
 	uploadSlots chan struct{}
+	pushSlots   chan struct{}
 	closed      bool
 	unhealthy   error
 	epoch       uint64
@@ -122,7 +124,7 @@ func Open(cfg Config) (*Server, error) {
 		}
 	}
 	ctx, cancel := context.WithCancel(context.Background())
-	s := &Server{cfg: cfg, state: state, store: cfg.Store, ctx: ctx, cancel: cancel, cancels: map[string]context.CancelFunc{}, uploadSlots: make(chan struct{}, 2)}
+	s := &Server{cfg: cfg, state: state, store: cfg.Store, ctx: ctx, cancel: cancel, cancels: map[string]context.CancelFunc{}, uploadSlots: make(chan struct{}, 2), pushSlots: make(chan struct{}, 2)}
 	// An exclusive storage lease fences all workers. On restart unfinished work is
 	// terminally interrupted; users may explicitly start a fresh attempt.
 	changed := false
@@ -138,6 +140,7 @@ func Open(cfg Config) (*Server, error) {
 			}
 		}
 	}
+	s.recoverPush()
 	s.purgeExpired()
 	if changed || len(state.Objects) > 0 {
 		if err = s.store.Save(s.state); err != nil {
@@ -147,6 +150,7 @@ func Open(cfg Config) (*Server, error) {
 		}
 	}
 	s.startReaper()
+	s.startPushSweeper()
 	return s, nil
 }
 func (s *Server) Close() error {
@@ -166,6 +170,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-Trace-ID", trace)
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
+	if r.URL.Path == connectors.PushCallbackPath {
+		s.servePushEvent(w, r, trace)
+		return
+	}
 	if r.URL.Path == SDKNativePath {
 		s.serveSDK(w, r, trace)
 		return
@@ -350,7 +358,11 @@ func (q *request) list(kind string) []Record {
 			if kind == "sdkUploads" {
 				out = append(out, publicSDKReceipt(r))
 			} else {
-				out = append(out, clone(r))
+				copy := clone(r)
+				if kind == "pushEvents" {
+					delete(copy, "bodyHash")
+				}
+				out = append(out, copy)
 			}
 		}
 	}
@@ -397,7 +409,7 @@ func (q *request) capabilities() Record {
 		}
 	}
 	sort.Strings(platforms)
-	return Record{"sdkReceiver": Record{"configured": len(platforms) > 0 && q.s.cfg.Protocols.NativeReady(), "path": SDKNativePath, "maxBytes": q.s.cfg.MaxSDKBytes, "platforms": platforms}, "storage": "durable", "uploads": true, "parsing": true, "protocols": Record{"native": Record{"configured": q.s.cfg.Protocols.NativeReady()}, "web": Record{"configured": q.s.cfg.Protocols.WebReady(), "encryptedConfigured": q.s.cfg.Protocols.WebEncryptedReady()}}, "source": Record{"configured": q.s.cfg.Source.Ready()}, "model": Record{"configured": q.modelReady(), "reason": "Model endpoint and per-project modelEnabled consent must both be configured"}, "collections": Record{"configured": false, "code": "CONNECTOR_UNCONFIGURED", "reason": "Aliyun protocol and credentials are deferred"}, "limits": Record{"fileBytes": q.s.cfg.MaxFileBytes, "batchBytes": q.s.cfg.MaxBatchBytes, "files": 10, "events": q.s.cfg.MaxEvents}, "legacy": Record{"available": q.s.cfg.Legacy != nil && q.s.cfg.Legacy.Ready(q.project), "reason": "Project mapping and read-only legacy adapter are not configured"}}
+	return Record{"sdkReceiver": Record{"configured": len(platforms) > 0 && q.s.cfg.Protocols.NativeReady(), "path": SDKNativePath, "maxBytes": q.s.cfg.MaxSDKBytes, "platforms": platforms}, "storage": "durable", "uploads": true, "parsing": true, "protocols": Record{"native": Record{"configured": q.s.cfg.Protocols.NativeReady()}, "web": Record{"configured": q.s.cfg.Protocols.WebReady(), "encryptedConfigured": q.s.cfg.Protocols.WebEncryptedReady()}}, "source": Record{"configured": q.s.cfg.Source.Ready()}, "model": Record{"configured": q.modelReady(), "reason": "Model endpoint and per-project modelEnabled consent must both be configured"}, "collections": Record{"configured": q.s.cfg.Push.Ready(q.project), "code": "INTERNAL_PUSH_V1", "reason": "Push confirmation does not prove device delivery or log receipt"}, "limits": Record{"fileBytes": q.s.cfg.MaxFileBytes, "batchBytes": q.s.cfg.MaxBatchBytes, "files": 10, "events": q.s.cfg.MaxEvents}, "legacy": Record{"available": q.s.cfg.Legacy != nil && q.s.cfg.Legacy.Ready(q.project), "reason": "Project mapping and read-only legacy adapter are not configured"}}
 }
 func connectorError(err error) *apiError {
 	if errors.Is(err, connectors.ErrUnconfigured) {

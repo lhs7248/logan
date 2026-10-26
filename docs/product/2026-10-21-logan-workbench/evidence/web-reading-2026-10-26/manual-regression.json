@@ -1,0 +1,104 @@
+{
+  "scope": "isolated synthetic enterprise-intranet single-instance candidate",
+  "passed": true,
+  "checks": [
+    {
+      "name": "manual-v1 private configuration starts and readiness responds",
+      "passed": true
+    },
+    {
+      "name": "viewer cannot write or download raw data and cross-project access is rejected",
+      "passed": true
+    },
+    {
+      "name": "manual hypothesis preserves uncertainty and cannot substitute for fix verification",
+      "passed": true
+    },
+    {
+      "name": "fix verification and explicitly confirmed manual handoff persist a resolved internal issue",
+      "passed": true
+    },
+    {
+      "name": "2000-event strict import, complete pagination and combined histogram filters agree",
+      "passed": true
+    },
+    {
+      "name": "graceful process restart retains original bytes, parsed events and complete manual investigation history",
+      "passed": true
+    },
+    {
+      "name": "abrupt idle process termination retains all acknowledged business records",
+      "passed": true
+    },
+    {
+      "name": "offline checksum-verified backup restores authentication, originals and complete business state into a new directory",
+      "passed": true
+    }
+  ],
+  "businessChecks": [
+    {
+      "name": "unauthenticated API access rejected",
+      "passed": true
+    },
+    {
+      "name": "authenticated project session",
+      "passed": true
+    },
+    {
+      "name": "durable issue creation and idempotency content conflict",
+      "passed": true
+    },
+    {
+      "name": "stale issue revision rejected",
+      "passed": true
+    },
+    {
+      "name": "original upload bytes/hash persisted and unknown identity preserved",
+      "passed": true
+    },
+    {
+      "name": "strict parsing fails and skip-mode reparse publishes only valid records",
+      "passed": true
+    },
+    {
+      "name": "parse comparison preserves failed version and independent readable publication",
+      "passed": true
+    },
+    {
+      "name": "event publication, zero-match and level filtering",
+      "passed": true
+    },
+    {
+      "name": "log evidence is tied to immutable run/event identity",
+      "passed": true
+    },
+    {
+      "name": "capabilities expose configuration state",
+      "passed": true
+    },
+    {
+      "name": "pre-preview manual draft is durable and recoverable",
+      "passed": true
+    },
+    {
+      "name": "different log identity requires confirmation and appends relationship history",
+      "passed": true
+    },
+    {
+      "name": "manual investigation handoff works without model and replays once",
+      "passed": true
+    },
+    {
+      "name": "workspace reflects durable linked business objects",
+      "passed": true
+    }
+  ],
+  "measurement": {
+    "syntheticEvents": 2000,
+    "sequentialFilteredReads": 30,
+    "p95Milliseconds": 11.885,
+    "limitation": "loopback bounded fixture; not capacity or soak certification"
+  },
+  "rawDigest": "fa4ba0c93e41587ac0a80764d1ec3f32df78ce765db9b3cb6326269f797023b5",
+  "elapsedSeconds": 1.63
+}

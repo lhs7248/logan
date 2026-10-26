@@ -7,7 +7,7 @@ import {preflightFiles,uploadRequest} from './static/upload.mjs';
 import {createDraftAutosaver} from './static/drafts.mjs';
 
 test('browser ES module parser accepts all embedded modules',()=>{
- for(const path of ['app.js','api.mjs','upload.mjs','drafts.mjs','collection.mjs']){
+ for(const path of ['app.js','api.mjs','upload.mjs','drafts.mjs','collection.mjs','collection-state.mjs','reader-state.mjs','page-diagnostics.mjs']){
   const input=readFileSync(new URL('./static/'+path,import.meta.url),'utf8');
   const result=spawnSync(process.execPath,['--input-type=module','--check'],{input,encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);

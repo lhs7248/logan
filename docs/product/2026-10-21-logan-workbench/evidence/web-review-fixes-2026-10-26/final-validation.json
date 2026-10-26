@@ -1,0 +1,155 @@
+{
+  "task": "web-review-fixes-20261026",
+  "overall": "automated_functional_checks_passed_final_design_review_incomplete",
+  "frontend": {
+    "passed": 109,
+    "failed": 0
+  },
+  "profiles": {
+    "full": {
+      "status": "passed",
+      "exitCode": 0,
+      "commit": "4f7623333fa977cc9ea24ded3fac233b4d5fd006",
+      "workspaceSha256": "e4459c7970dca05f297208788c355c4ed9a56e4795730973775882339a37eb11",
+      "sourceChangedDuringRun": false,
+      "steps": [
+        {
+          "id": "test",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "race",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "vet",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "build",
+          "status": "passed",
+          "exitCode": 0
+        }
+      ],
+      "originalReportSha256": "0d360997844c2cc9dbfb39db3bc22b73a98b99a0febb6b8141073a45938fe766"
+    },
+    "workbench": {
+      "status": "passed",
+      "exitCode": 0,
+      "commit": "4f7623333fa977cc9ea24ded3fac233b4d5fd006",
+      "workspaceSha256": "e4459c7970dca05f297208788c355c4ed9a56e4795730973775882339a37eb11",
+      "sourceChangedDuringRun": false,
+      "steps": [
+        {
+          "id": "workbench-node",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "workbench-go",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "workbench-build",
+          "status": "passed",
+          "exitCode": 0
+        }
+      ],
+      "originalReportSha256": "c981162e4d351a2e07712a7335fb01e68d03b98a1d703ee34607b2af089a7d4a"
+    },
+    "workbench-http": {
+      "status": "passed",
+      "exitCode": 0,
+      "commit": "4f7623333fa977cc9ea24ded3fac233b4d5fd006",
+      "workspaceSha256": "e4459c7970dca05f297208788c355c4ed9a56e4795730973775882339a37eb11",
+      "sourceChangedDuringRun": false,
+      "steps": [
+        {
+          "id": "workbench-build",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "manual-http",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "reading-http",
+          "status": "passed",
+          "exitCode": 0
+        },
+        {
+          "id": "push-http",
+          "status": "passed",
+          "exitCode": 0
+        }
+      ],
+      "originalReportSha256": "c2a2f9bfb79cb376895e923d1d05e522afc46dcdf45d737371ef430d6af4e0ea"
+    }
+  },
+  "boundProductSource": "product-source.json",
+  "bindingNote": "Profile source fingerprint represents the frozen workspace before packaging these result artifacts; product-source.json hashes remain unchanged.",
+  "browserFinal": {
+    "status": "blocked",
+    "reason": "Saved site permission repeatedly denied automation after explicit user consent; no workaround or alternate browser used.",
+    "designAcceptance": "not_verified",
+    "wholeProductAcceptance": "incomplete"
+  },
+  "notRun": [
+    "real model/source/Aliyun integration",
+    "actual push-to-client-to-upload correlation",
+    "real SDK new run",
+    "database disaster recovery",
+    "capacity soak"
+  ],
+  "preexistingServicesAndDataTouched": false,
+  "previewRestart": {
+    "passed": true,
+    "scope": "own isolated synthetic preview only; offline persistence comparison, not browser acceptance",
+    "processRunning": true,
+    "authUnchanged": true,
+    "stateByteIdentical": true,
+    "originalServicesTouched": false,
+    "baselineComparisonServiceStopped": true,
+    "binarySha256": "75b95c39733d5f9ec5a9251bebfec48faf6015e619d61d9136332bc600ca3e12"
+  },
+  "scopeReconciliation": {
+    "status": "incomplete",
+    "checks": [
+      {
+        "check": "full",
+        "status": "passed"
+      },
+      {
+        "check": "workbench",
+        "status": "passed"
+      },
+      {
+        "check": "workbench-http",
+        "status": "passed"
+      },
+      {
+        "check": "integration:sdk",
+        "status": "missing"
+      },
+      {
+        "check": "integration:database-recovery",
+        "status": "missing"
+      },
+      {
+        "check": "integration:capacity",
+        "status": "missing"
+      },
+      {
+        "check": "design",
+        "status": "failed"
+      }
+    ],
+    "note": "Automatic profiles passed; final design evidence is incomplete and external integrations were not executed within this task."
+  }
+}

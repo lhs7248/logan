@@ -60,13 +60,15 @@ func (q *request) route() (any, int, *apiError) {
 				}
 			}
 			return Record{"actor": q.actor.Actor, "role": q.role, "projects": projects, "projectId": q.project, "permissions": q.actor.Permissions}, 200, nil
+		case "/collections":
+			return q.list("collections"), 200, nil
 		case "/collection-drafts":
 			return q.collectionDraftList(), 200, nil
 		case "/capabilities":
 			return q.capabilities(), 200, nil
 		case "/workspace":
 			out := Record{"capabilities": q.capabilities()}
-			for _, kind := range []string{"issues", "assets", "sdkUploads", "parseRuns", "evidence", "turns", "verifications", "updates", "notifications", "sourceMappings", "hypotheses", "issueHistory"} {
+			for _, kind := range []string{"collections", "pushAttempts", "pushEvents", "issues", "assets", "sdkUploads", "parseRuns", "evidence", "turns", "verifications", "updates", "notifications", "sourceMappings", "hypotheses", "issueHistory"} {
 				out[kind] = q.list(kind)
 			}
 			drafts := []Record{}
@@ -107,7 +109,7 @@ func (q *request) route() (any, int, *apiError) {
 		case "/collection-drafts":
 			return q.collectionDraft(nil, b)
 		case "/collections":
-			return nil, 0, fail(503, "CONNECTOR_UNCONFIGURED", "Aliyun push is deferred until server and client protocol configuration is provided")
+			return q.createCollection(b)
 		case "/source-mappings":
 			return q.createMapping(b)
 		case "/source-resolutions":
@@ -119,6 +121,8 @@ func (q *request) route() (any, int, *apiError) {
 	if len(parts) >= 2 {
 		kind, id := parts[0], parts[1]
 		switch kind {
+		case "collections":
+			return q.collectionRoute(parts, b)
 		case "collection-drafts":
 			draft, e := q.get("collectionDrafts", id)
 			if e != nil {
@@ -363,7 +367,7 @@ func (q *request) route() (any, int, *apiError) {
 					if method == "GET" {
 						return q.compareRuns(run)
 					}
-				case "events", "histogram":
+				case "events", "histogram", "page-attempts":
 					if method == "GET" {
 						return q.readEvents(run, parts[2])
 					}

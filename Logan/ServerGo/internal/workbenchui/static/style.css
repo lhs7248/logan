@@ -6,3 +6,8 @@
 .scope-main .identity-note{display:block;font-size:10px;max-width:290px;line-height:1.5;color:var(--muted)}
 
 .page-diagnostics{margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:5px;background:#f7fafb;font-size:11px}.page-diagnostics-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.page-diagnostics-head label{display:flex;gap:7px;align-items:center;min-width:0}.page-diagnostics-head select{max-width:min(360px,60vw);font-size:11px}.page-diagnostics .muted{margin:6px 0;font-size:10px;line-height:1.6}.page-diagnostic-stages{display:flex;flex-wrap:wrap;gap:5px 12px;max-height:160px;overflow:auto}.page-diagnostic-stages>div{display:flex;align-items:center;gap:4px}.page-diagnostic-stages small{color:var(--muted)}.page-diagnostic-stages button{font-size:10px;padding:3px}
+
+.event-summary{display:flex;flex-direction:column;gap:4px}.event-summary>strong{font-size:12px;font-weight:600}.event-summary>small{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+
+/* Review fixes: keep baseline layout while making supporting text readable. */
+.desk-app #global-status{max-width:270px;font-size:12px;line-height:1.5}.desk-app form label>span,.desk-app .identity-note,.desk-app .page-diagnostics .muted,.desk-app .page-diagnostics-head select,.desk-app .event-summary>small{font-size:12px}.desk-app .page-diagnostic-stages button{font-size:12px}.desk-app .desk-selection button[aria-current=page]{color:#087f8c;background:#eaf5f4;border-color:#087f8c}.import-metadata[open]{padding:10px;border:1px solid var(--line);border-radius:5px}.desk-app .issue-next{overflow-wrap:anywhere}.desk-app button:disabled{cursor:not-allowed;opacity:.55}

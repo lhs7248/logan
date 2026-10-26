@@ -415,7 +415,7 @@ func (q *request) filtered(run Record, values url.Values) ([]Record, string, *ap
 		return nil, "", fail(410, "SOURCE_EXPIRED", "Parsed events expired")
 	}
 	normalized := url.Values{}
-	for _, key := range []string{"query", "level", "module", "type", "unknownTime", "start", "end"} {
+	for _, key := range []string{"query", "level", "module", "type", "unknownTime", "start", "end", "pageAttemptId"} {
 		if v := values.Get(key); v != "" {
 			normalized.Set(key, v)
 		}
@@ -438,6 +438,9 @@ func (q *request) filtered(run Record, values url.Values) ([]Record, string, *ap
 	out := []Record{}
 	for _, ev := range q.s.state.bucket("events") {
 		if ev["projectId"] != q.project || ev["runId"] != run["id"] {
+			continue
+		}
+		if v := values.Get("pageAttemptId"); v != "" && (str(ev["pageAttemptId"]) != v || str(ev["schema"]) != "xlb.page-diagnostic") {
 			continue
 		}
 		if v := values.Get("query"); v != "" && !strings.Contains(strings.ToLower(str(ev["content"])), strings.ToLower(v)) {
@@ -488,9 +491,29 @@ func (q *request) filtered(run Record, values url.Values) ([]Record, string, *ap
 	return out, filterHash, nil
 }
 func (q *request) readEvents(run Record, mode string) (any, int, *apiError) {
-	events, hash, e := q.filtered(run, q.r.URL.Query())
+	values := q.r.URL.Query()
+	if mode == "page-attempts" {
+		values.Del("pageAttemptId")
+	}
+	events, hash, e := q.filtered(run, values)
 	if e != nil {
 		return nil, 0, e
+	}
+	if mode == "page-attempts" {
+		// Filters affect matches, never the complete attempt outcome.
+		complete, _, err := q.filtered(run, url.Values{})
+		if err != nil {
+			return nil, 0, err
+		}
+		matches := map[string]int{}
+		for _, event := range events {
+			matches[str(event["pageAttemptId"])]++
+		}
+		attempts := attemptSummaries(complete)
+		for _, attempt := range attempts {
+			attempt["matchingEventCount"] = matches[str(attempt["pageAttemptId"])]
+		}
+		return Record{"attempts": attempts, "summaryScope": "entire_run", "filterHash": hash, "runId": run["id"], "total": len(events)}, 200, nil
 	}
 	if mode == "histogram" {
 		if q.r.URL.Query().Get("bins") == "24" {
@@ -610,7 +633,7 @@ func (q *request) export(b Record) (any, int, *apiError) {
 			return nil, 0, e
 		}
 		v := url.Values{}
-		for _, k := range []string{"query", "level", "module", "type", "unknownTime", "start", "end"} {
+		for _, k := range []string{"query", "level", "module", "type", "unknownTime", "start", "end", "pageAttemptId"} {
 			v.Set(k, str(b[k]))
 		}
 		events, hash, e := q.filtered(run, v)

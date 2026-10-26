@@ -40,7 +40,7 @@ test('manual import from a retrieval draft opens the linked investigation before
  const source=readFileSync(new URL('./static/collection.mjs',import.meta.url),'utf8'),start=source.indexOf(' function detail('),end=source.indexOf('\n function chain(',start);
  const state={issueId:'old',runId:'old-run',source:{id:'old-fragment'}};let uploaded;
  const el=(tag,attrs={},...children)=>({tag,attrs,children:children.flat(Infinity)});
- const c={state:()=>state,app:'test',collectionTargetLabels,el,button:(title,click)=>({title,click}),note:value=>el('p',{},value),pill:value=>value,chain:()=>null,openIssue:async id=>{state.issueId=id;state.runId='';state.source=null;},upload:()=>{uploaded={...state};}};
+ const c={configured:()=>false,state:()=>state,app:'test',collectionTargetLabels,el,button:(title,click)=>({title,click}),note:value=>el('p',{},value),pill:value=>value,chain:()=>null,openIssue:async id=>{state.issueId=id;state.runId='';state.source=null;},upload:()=>{uploaded={...state};}};
  vm.createContext(c);vm.runInContext(source.slice(start,end),c);
  const nodes=n=>n&&typeof n==='object'?[n,...(n.children||[]).flatMap(nodes)]:[];
  await nodes(c.detail({id:'d',issueId:'linked',targetType:'device'})).find(n=>n.title==='手动导入补充日志').click();

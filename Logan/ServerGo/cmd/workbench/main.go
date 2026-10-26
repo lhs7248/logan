@@ -67,6 +67,14 @@ func run() error {
 			return errors.New("WORKBENCH_SOURCE_REPOS must be a JSON repository ID to local canonical directory map")
 		}
 	}
+	pushProjects := []string{}
+	for _, project := range cfg.Projects {
+		pushProjects = append(pushProjects, project.ID)
+	}
+	cfg.Push, err = connectors.LoadPushConfig(os.Getenv("WORKBENCH_PUSH_CONFIG_FILE"), pushProjects)
+	if err != nil {
+		return errors.New("invalid internal push configuration")
+	}
 	cfg.Source, err = connectors.NewSource(connectors.SourceConfig{Repositories: repos})
 	if err != nil {
 		return errors.New("invalid source connector configuration")
@@ -143,7 +151,7 @@ func run() error {
 		defer cancel()
 		_ = httpServer.Shutdown(ctx)
 	}()
-	log.Printf("workbench listening on %s; Aliyun push deferred", addr)
+	log.Printf("workbench listening on %s", addr)
 	if err = httpServer.ListenAndServe(); err != http.ErrServerClosed {
 		return err
 	}

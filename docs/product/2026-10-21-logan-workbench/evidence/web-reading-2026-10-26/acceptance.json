@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-26",
+  "scope": "Web reading continuity and manual investigation, synthetic isolated runtime only",
+  "passed": true,
+  "webTests": {
+    "passed": 91,
+    "failed": 0
+  },
+  "goProfile": "full: test/race/vet/build passed",
+  "newGoTests": [
+    "TestPageAttemptScopeMatchesEventsHistogramAndExport",
+    "TestAttemptSummaryKeepsTerminalFactsAndPreciseReportedDuration"
+  ],
+  "httpReadingChecks": 4,
+  "manualIntegrationChecks": 8,
+  "pushIntegrationChecks": 12,
+  "browserChecks": [
+    {
+      "name": "200 to 400 events, explicit refresh preserves 400",
+      "passed": true
+    },
+    {
+      "name": "complete attempt_a readiness visible before loading event 259",
+      "passed": true
+    },
+    {
+      "name": "issue query and result survive refresh",
+      "passed": true
+    },
+    {
+      "name": "browser Back restores searched issue list from retrieval page",
+      "passed": true
+    },
+    {
+      "name": "attempt_b has 190 rows, histogram total 190 and downloaded export contains exactly attempt_b",
+      "passed": true
+    },
+    {
+      "name": "ERROR filter shows readable Bundle failure summary and unchanged original JSON",
+      "passed": true
+    },
+    {
+      "name": "save exact failure event as issue evidence",
+      "passed": true
+    },
+    {
+      "name": "manual hypothesis, explicit observation and linked verification",
+      "passed": true
+    },
+    {
+      "name": "manual preview, confirm and persisted internal issue update",
+      "passed": true
+    },
+    {
+      "name": "isolated service restart preserves state bytes and private configuration; reconnect reads log and saved update",
+      "passed": true
+    }
+  ],
+  "preservation": {
+    "beforeDirtyFiles": 39,
+    "unchangedDirtyFiles": 36,
+    "incrementalEditsToExistingDirtyFiles": [
+      "Logan/ServerGo/internal/workbench/routes.go",
+      "Logan/ServerGo/internal/workbenchui/static/app.js",
+      "Logan/ServerGo/internal/workbenchui/workflow.test.mjs"
+    ],
+    "original8091And64011Restarted": false,
+    "businessDataChanged": false,
+    "commitOrPush": false
+  },
+  "design": {
+    "baseline": "approved product navigation and byte-identical design CSS plus user-approved optimization scope",
+    "comparison": "before-change binary vs final binary on copies of the same synthetic persisted state",
+    "screenshots": {
+      "reader-evidence.jpg": {
+        "width": 946,
+        "height": 827
+      },
+      "issues-before.jpg": {
+        "width": 1280,
+        "height": 900
+      },
+      "collection-before.jpg": {
+        "width": 1280,
+        "height": 918
+      },
+      "reader-after.jpg": {
+        "width": 1280,
+        "height": 1258
+      },
+      "issues-after.jpg": {
+        "width": 1280,
+        "height": 900
+      },
+      "reader-before.jpg": {
+        "width": 1280,
+        "height": 1311
+      },
+      "collection-after.jpg": {
+        "width": 1280,
+        "height": 918
+      }
+    },
+    "comparisonViewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "baselineBinarySHA256": "73e2b596384391fa6a9f025fd54abdc5becf7bf8d2f7599fa9140dfd62f6e918",
+    "finalBinarySHA256": "d2d5fd0c8f6a0c46c0b98115bb95b1ed527875fb042fd285e10b63f4cb3d9aff"
+  },
+  "notVerified": [
+    "real Aliyun/client delivery",
+    "AI or source connector",
+    "production rollout or enterprise gateway",
+    "large-scale performance benchmark"
+  ],
+  "runtimePreview": "http://127.0.0.1:64854/workbench/"
+}

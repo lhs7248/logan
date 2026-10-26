@@ -1,0 +1,13 @@
+{
+  "task": "web-review-fixes-20261026",
+  "files": {
+    "Logan/ServerGo/internal/workbenchui/static/app.js": "5de5a95098b5647704e49d828725770c5228fc8e15c64752ff1a3cc32620d99b",
+    "Logan/ServerGo/internal/workbenchui/static/reader-state.mjs": "daef94e5f0f8253ee3ee6f30523b4ddeb699057271f50fb3e41ae24fa81e2c9e",
+    "Logan/ServerGo/internal/workbenchui/static/style.css": "57a0fbbee8d5d049c107bcbef39eb98049c529adf65a717b50f5c6aecedb474e",
+    "Logan/ServerGo/internal/workbench/logs.go": "13b2ca367938c8f8514129868a78d328990391458bc5eeb94ba8b43dca198159",
+    "Logan/ServerGo/internal/workbench/attempt_summary.go": "75438aa0ad4986a261a245faf1c4a53b368599cf751a29a11f21612b8fa25e18",
+    "Logan/ServerGo/internal/workbench/reading_scope_test.go": "7b3cf6b605184eb029533130f2b561578842b2c0aa90711db14ba604465d9856",
+    "Logan/ServerGo/internal/workbenchui/review-fixes.test.mjs": "5cb564d38caff44d7aecc205b208d8a8ac6063453cfb57f90117943257cc72e0",
+    "Logan/ServerGo/script/verify-workbench-reading.py": "e4b9660aa81116ca0d531e2a1af20dfd2b36c0242bc3d05de8faed45289c2015"
+  }
+}

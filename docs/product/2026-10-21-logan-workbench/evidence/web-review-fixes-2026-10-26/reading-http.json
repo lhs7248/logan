@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "scope": "synthetic real HTTP only",
+  "checks": [
+    "complete attempt summary includes readiness after event 200",
+    "bounded stage navigation preserves full eventCount",
+    "INFO and ERROR filters retain full attempt conclusions and accurate matching counts",
+    "attempt_a events/histogram/export count and filterHash agree: 260",
+    "attempt_b events/histogram/export count and filterHash agree: 190"
+  ],
+  "totalEvents": 450,
+  "originalServicesTouched": false
+}

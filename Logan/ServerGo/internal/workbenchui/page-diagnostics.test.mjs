@@ -1,3 +1,5 @@
+import {eventSummary} from './static/reader-state.mjs';
+import {filtersQuery} from './static/api.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -44,27 +46,27 @@ test('reader attempt selection resets when switching runs without losing other f
  const c={state,render(){},loadEvents:async()=>{}};vm.createContext(c);vm.runInContext(extract('async function selectRun(', '\nlet '),c);await c.selectRun('new');
  assert.equal(state.pageAttemptId,'');assert.equal(state.filters.level,'ERROR');
 });
-test('attempt selector links stages to existing event details and labels limited coverage',async()=>{
- const events=[event('page_open_started'),event('page_suspected_blank',{testInjected:true})],state={runId:'r',events,pageAttemptId:'a',filters:{level:'WARN'},nextCursor:'next'};
+test('attempt selector links stages to existing event details and uses complete server coverage',async()=>{
+ const events=[event('page_open_started'),event('page_suspected_blank',{testInjected:true})],state={runId:'r',events,pageAttemptId:'a',filters:{level:'WARN'},nextCursor:'next',selected:new Set(),pageAttempts:groupPageAttempts(events,'r')};
  const el=(tag,attrs={},...children)=>({tag,attrs,children:children.flat(Infinity)}),nodes=root=>root&&typeof root==='object'?[root,...(root.children||[]).flatMap(nodes)]:[];
- let opened;const c={state,el,groupPageAttempts,filterPageAttempt,pageDiagnostic,note:s=>el('p',{},s),button:(title,click)=>el('button',{click},title),openEvent:async e=>{opened=e;},render(){}};
+ let opened;const c={eventSummary,task:fn=>fn(),loadEvents:async()=>{},state,el,groupPageAttempts,filterPageAttempt,pageDiagnostic,note:s=>el('p',{},s),button:(title,click)=>el('button',{click},title),openEvent:async e=>{opened=e;},render(){}};
  vm.createContext(c);vm.runInContext(extract('function pageDiagnosticsPanel('),c);
  const tree=c.pageDiagnosticsPanel(),flat=nodes(tree),text=JSON.stringify(tree);
- assert.match(text,/疑似白屏/);assert.match(text,/受控故障/);assert.match(text,/已加载/);assert.match(text,/筛选/);
- await flat.find(n=>n.tag==='button'&&n.children.includes('page_open_started')).attrs.click();assert.equal(opened,events[0]);
- const selector=flat.find(n=>n.tag==='select');selector.attrs.onChange({target:{value:''}});assert.equal(state.pageAttemptId,'');
+ assert.match(text,/疑似白屏/);assert.match(text,/受控故障/);assert.match(text,/完整批次/);assert.match(text,/筛选/);
+ await flat.find(n=>n.tag==='button'&&n.children.includes('MiniApp · 开始打开页面')).attrs.click();assert.equal(opened,events[0]);
+ const selector=flat.find(n=>n.tag==='select');await selector.attrs.onChange({target:{value:''}});assert.equal(state.pageAttemptId,'');
 });
 test('reader filters only the selected attempt and evidence action cannot include hidden attempts',async()=>{
  const first=event('page_open_started'),other=event('page_open_started',{id:'other',pageAttemptId:'b'}),state={runId:'r',events:[first,other],pageAttemptId:'a',selected:new Set(),total:2};
  const el=(tag,attrs={},...children)=>({tag,attrs,children:children.flat(Infinity)}),nodes=root=>root&&typeof root==='object'?[root,...(root.children||[]).flatMap(nodes)]:[];
  let evidence;const c={state,el,run:()=>({status:'succeeded'}),readable:()=>true,histogram:()=>null,filterForm:()=>null,pageDiagnosticsPanel:()=>null,filterPageAttempt,eventRow:e=>el('event',{},e.id),eventDetails:()=>null,button:(title,click)=>el('button',{click},title),empty:s=>el('empty',{},s),addLogEvidence:async()=>{evidence=[...state.selected];}};
  vm.createContext(c);vm.runInContext(extract('function reader('),c);const flat=nodes(c.reader());assert.deepEqual(flat.filter(n=>n.tag==='event').flatMap(n=>n.children),[first.id]);
- await flat.find(n=>n.tag==='button'&&n.children.includes('加入筛选结果')).attrs.click();assert.deepEqual(evidence,[first.id]);
- state.nextCursor='next';await assert.rejects(flat.find(n=>n.tag==='button'&&n.children.includes('加入筛选结果')).attrs.click(),/未加载/);
+ await flat.find(n=>n.tag==='button'&&n.children.includes('保存全部匹配事件为证据')).attrs.click();assert.deepEqual(evidence,[first.id]);
+ state.nextCursor='next';await assert.rejects(flat.find(n=>n.tag==='button'&&n.children.includes('保存全部匹配事件为证据')).attrs.click(),/未加载/);
 });
 test('implicit refresh run replacement resets attempt selection',async()=>{
  const state={project:'p',token:'t',page:'reader',runId:'old',pageAttemptId:'a',workspace:{},issueId:''};
- const workspace={parseRuns:[{id:'new',status:'succeeded'}]},c={state,Promise,Date,Map,lastWorkspaceRefresh:0,all:key=>state.workspace[key]||[],api:async path=>path==='/workspace'?workspace:{},issue:()=>null,run:()=>state.workspace.parseRuns?.find(r=>r.id===state.runId),readable:r=>r?.status==='succeeded',expired:()=>false,draftAutosavers:new Map(),$:()=>({open:false}),loadEvents:async()=>{},render(){}};
+ const workspace={parseRuns:[{id:'new',status:'succeeded'}]},c={state,connectionText:()=>'',Promise,Date,Map,filtersQuery,lastWorkspaceRefresh:0,all:key=>state.workspace[key]||[],api:async path=>path==='/workspace'?workspace:{},issue:()=>null,run:()=>state.workspace.parseRuns?.find(r=>r.id===state.runId),readable:r=>r?.status==='succeeded',expired:()=>false,draftAutosavers:new Map(),$:()=>({open:false}),loadEvents:async()=>{},render(){}};
  vm.createContext(c);vm.runInContext(extract('async function refresh(', '\nasync function loadEvents'),c);await c.refresh();assert.equal(state.runId,'new');assert.equal(state.pageAttemptId,'');
 });
 test('chronological terminal status prevents late completion from reviving abandoned or failed attempts',()=>{
