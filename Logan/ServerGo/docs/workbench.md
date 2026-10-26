@@ -67,3 +67,7 @@ Evidence selection changes only future context revisions. Each turn fixes an imm
 Editable handoff text is saved independently before preview and survives refresh/restart. A preview fixes evidence, issue/context/verification revisions, a hash and version. Confirming it writes one immutable internal update; repeated keys replay it, while a second key cannot reuse the consumed preview. Stale or expired previews preserve their text and reject the write. This is an internal workbench ticket history, not an external issue-tracker integration.
 
 Run `go test -race ./internal/workbench/...`, `go vet ./internal/workbench/... ./cmd/workbench` and `go build ./cmd/workbench`. Connector/model tests use only loopback HTTP servers and temporary Git repositories; they need local socket permission. The API persistence tests use actual temporary durable stores and restart them. SQL lease tests use sqlmock and do not substitute for real database acceptance. Existing repository full checks and browser acceptance remain separate evidence.
+
+## Manual investigation V1 deployment candidate
+
+For enterprise-intranet, single-instance operation, see [startup profile and offline recovery](manual-v1-operations.md) and the [readiness gap matrix and acceptance](../../../docs/product/2026-10-21-logan-workbench/manual-v1-readiness-2026-10-26.md). This adds no production deployment or external connector configuration.

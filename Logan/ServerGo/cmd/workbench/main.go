@@ -41,15 +41,15 @@ func run() error {
 	if json.Unmarshal(auth, &cfg) != nil || len(cfg.Tokens) == 0 || len(cfg.Projects) == 0 {
 		return errors.New("invalid auth configuration: projects and tokens required")
 	}
-	for _, token := range cfg.Tokens {
-		if len(token.Token) < 16 || token.Actor == "" || len(token.Projects) == 0 {
-			return errors.New("tokens need at least 16 characters, actor and project grants")
-		}
-		for _, role := range token.Projects {
-			if role != "viewer" && role != "investigator" && role != "reviewer" && role != "admin" {
-				return errors.New("unknown project role")
-			}
-		}
+	if err := validateAuth(cfg); err != nil {
+		return err
+	}
+	addr := os.Getenv("WORKBENCH_ADDR")
+	if addr == "" {
+		addr = "127.0.0.1:8091"
+	}
+	if err := validateProfile(os.Getenv("WORKBENCH_PROFILE"), authPath, addr, os.Getenv("WORKBENCH_INTRANET_GATEWAY_ACK")); err != nil {
+		return err
 	}
 	if err := workbench.ValidateSDKConfig(cfg); err != nil {
 		return err
@@ -57,6 +57,9 @@ func run() error {
 	cfg.Dir = os.Getenv("WORKBENCH_DATA_DIR")
 	if cfg.Dir == "" {
 		cfg.Dir = "workbench-data"
+	}
+	if err := validateDataDir(os.Getenv("WORKBENCH_PROFILE"), cfg.Dir); err != nil {
+		return err
 	}
 	repos := map[string]string{}
 	if value := os.Getenv("WORKBENCH_SOURCE_REPOS"); value != "" {
@@ -126,12 +129,10 @@ func run() error {
 	}
 	defer s.Close()
 	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", s.HealthHTTP)
+	mux.HandleFunc("/readyz", s.HealthHTTP)
 	mux.Handle(workbench.Base+"/", s)
 	mux.Handle("/", workbenchui.Handler())
-	addr := os.Getenv("WORKBENCH_ADDR")
-	if addr == "" {
-		addr = "127.0.0.1:8091"
-	}
 	httpServer := &http.Server{Addr: addr, Handler: mux, ReadHeaderTimeout: 5 * time.Second, ReadTimeout: 45 * time.Second, WriteTimeout: 45 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 64 << 10}
 	stopped := make(chan os.Signal, 1)
 	signal.Notify(stopped, syscall.SIGINT, syscall.SIGTERM)

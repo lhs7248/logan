@@ -1,0 +1,361 @@
+{
+  "date": "2026-10-26",
+  "baselineCommit": "a5754a38bd9711780dbb92b7d0c4801867b80490",
+  "target": "enterprise intranet, single instance, local POSIX disk, small scale",
+  "httpAcceptance": {
+    "scope": "isolated synthetic enterprise-intranet single-instance candidate",
+    "passed": true,
+    "checks": [
+      {
+        "name": "manual-v1 private configuration starts and readiness responds",
+        "passed": true
+      },
+      {
+        "name": "viewer cannot write or download raw data and cross-project access is rejected",
+        "passed": true
+      },
+      {
+        "name": "manual hypothesis preserves uncertainty and cannot substitute for fix verification",
+        "passed": true
+      },
+      {
+        "name": "fix verification and explicitly confirmed manual handoff persist a resolved internal issue",
+        "passed": true
+      },
+      {
+        "name": "2000-event strict import, complete pagination and combined histogram filters agree",
+        "passed": true
+      },
+      {
+        "name": "graceful process restart retains original bytes, parsed events and complete manual investigation history",
+        "passed": true
+      },
+      {
+        "name": "abrupt idle process termination retains all acknowledged business records",
+        "passed": true
+      },
+      {
+        "name": "offline checksum-verified backup restores authentication, originals and complete business state into a new directory",
+        "passed": true
+      }
+    ],
+    "businessChecks": [
+      {
+        "name": "unauthenticated API access rejected",
+        "passed": true
+      },
+      {
+        "name": "authenticated project session",
+        "passed": true
+      },
+      {
+        "name": "durable issue creation and idempotency content conflict",
+        "passed": true
+      },
+      {
+        "name": "stale issue revision rejected",
+        "passed": true
+      },
+      {
+        "name": "original upload bytes/hash persisted and unknown identity preserved",
+        "passed": true
+      },
+      {
+        "name": "strict parsing fails and skip-mode reparse publishes only valid records",
+        "passed": true
+      },
+      {
+        "name": "parse comparison preserves failed version and independent readable publication",
+        "passed": true
+      },
+      {
+        "name": "event publication, zero-match and level filtering",
+        "passed": true
+      },
+      {
+        "name": "log evidence is tied to immutable run/event identity",
+        "passed": true
+      },
+      {
+        "name": "capabilities expose configuration state",
+        "passed": true
+      },
+      {
+        "name": "pre-preview manual draft is durable and recoverable",
+        "passed": true
+      },
+      {
+        "name": "different log identity requires confirmation and appends relationship history",
+        "passed": true
+      },
+      {
+        "name": "manual investigation handoff works without model and replays once",
+        "passed": true
+      },
+      {
+        "name": "workspace reflects durable linked business objects",
+        "passed": true
+      }
+    ],
+    "measurement": {
+      "syntheticEvents": 2000,
+      "sequentialFilteredReads": 30,
+      "p95Milliseconds": 10.927,
+      "limitation": "loopback bounded fixture; not capacity or soak certification"
+    },
+    "rawDigest": "fa4ba0c93e41587ac0a80764d1ec3f32df78ce765db9b3cb6326269f797023b5",
+    "elapsedSeconds": 1.552
+  },
+  "existingRuntimeRetention": {
+    "scope": "existing local runtime restart and private backup rehearsal",
+    "passed": true,
+    "health": {
+      "/healthz": 200,
+      "/readyz": 200
+    },
+    "unchangedRuntimeFiles": 5,
+    "restoredPrivateFilesCompared": 5,
+    "workspaceCounts": {
+      "issues": 1,
+      "assets": 9,
+      "parseRuns": 9,
+      "evidence": 4,
+      "verifications": 1,
+      "updates": 2
+    },
+    "productionProfileEnabled": false,
+    "notes": "Existing local launcher explicit environment retained; strict manual-v1 profile separately tested in isolated HTTP acceptance. No log or token bodies included."
+  },
+  "regression": {
+    "goFull": [
+      {
+        "command": [
+          "make",
+          "test"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "race"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "vet"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "build"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      }
+    ],
+    "ui": {
+      "tests": 75,
+      "passed": 75
+    },
+    "pythonWorkbench": {
+      "tests": 47,
+      "passed": 47
+    }
+  },
+  "review": {
+    "compliance": "pass",
+    "quality": "approved",
+    "resolvedFinding": "Authorized alternate-project principal now receives 404 for foreign issue/raw asset/events and sees an empty workspace."
+  },
+  "preservation": {
+    "unrelatedBaselineFilesCompared": 10,
+    "changed": 0,
+    "uiSourceChanged": false,
+    "sdkSourceChanged": false
+  },
+  "notExecuted": [
+    "Actual enterprise TLS/gateway/ACL deployment and alert delivery",
+    "Protected independent backup storage and recovery on target deployment host",
+    "Real business volume, sustained load, physical disk exhaustion and power-loss acceptance",
+    "Physical/Release iOS app validation; existing Hermes evidence remains simulator Debug only"
+  ],
+  "deferred": [
+    "AI",
+    "Aliyun push",
+    "source mapping"
+  ],
+  "precommitVerification": {
+    "date": "2026-10-26",
+    "httpAcceptance": {
+      "scope": "isolated synthetic enterprise-intranet single-instance candidate",
+      "passed": true,
+      "checks": [
+        {
+          "name": "manual-v1 private configuration starts and readiness responds",
+          "passed": true
+        },
+        {
+          "name": "viewer cannot write or download raw data and cross-project access is rejected",
+          "passed": true
+        },
+        {
+          "name": "manual hypothesis preserves uncertainty and cannot substitute for fix verification",
+          "passed": true
+        },
+        {
+          "name": "fix verification and explicitly confirmed manual handoff persist a resolved internal issue",
+          "passed": true
+        },
+        {
+          "name": "2000-event strict import, complete pagination and combined histogram filters agree",
+          "passed": true
+        },
+        {
+          "name": "graceful process restart retains original bytes, parsed events and complete manual investigation history",
+          "passed": true
+        },
+        {
+          "name": "abrupt idle process termination retains all acknowledged business records",
+          "passed": true
+        },
+        {
+          "name": "offline checksum-verified backup restores authentication, originals and complete business state into a new directory",
+          "passed": true
+        }
+      ],
+      "businessChecks": [
+        {
+          "name": "unauthenticated API access rejected",
+          "passed": true
+        },
+        {
+          "name": "authenticated project session",
+          "passed": true
+        },
+        {
+          "name": "durable issue creation and idempotency content conflict",
+          "passed": true
+        },
+        {
+          "name": "stale issue revision rejected",
+          "passed": true
+        },
+        {
+          "name": "original upload bytes/hash persisted and unknown identity preserved",
+          "passed": true
+        },
+        {
+          "name": "strict parsing fails and skip-mode reparse publishes only valid records",
+          "passed": true
+        },
+        {
+          "name": "parse comparison preserves failed version and independent readable publication",
+          "passed": true
+        },
+        {
+          "name": "event publication, zero-match and level filtering",
+          "passed": true
+        },
+        {
+          "name": "log evidence is tied to immutable run/event identity",
+          "passed": true
+        },
+        {
+          "name": "capabilities expose configuration state",
+          "passed": true
+        },
+        {
+          "name": "pre-preview manual draft is durable and recoverable",
+          "passed": true
+        },
+        {
+          "name": "different log identity requires confirmation and appends relationship history",
+          "passed": true
+        },
+        {
+          "name": "manual investigation handoff works without model and replays once",
+          "passed": true
+        },
+        {
+          "name": "workspace reflects durable linked business objects",
+          "passed": true
+        }
+      ],
+      "measurement": {
+        "syntheticEvents": 2000,
+        "sequentialFilteredReads": 30,
+        "p95Milliseconds": 10.94,
+        "limitation": "loopback bounded fixture; not capacity or soak certification"
+      },
+      "rawDigest": "fa4ba0c93e41587ac0a80764d1ec3f32df78ce765db9b3cb6326269f797023b5",
+      "elapsedSeconds": 2.489
+    },
+    "goFull": [
+      {
+        "command": [
+          "make",
+          "test"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "race"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "vet"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "build"
+        ],
+        "status": "passed",
+        "exit_code": 0
+      }
+    ],
+    "webTests": {
+      "passed": 75,
+      "failed": 0
+    },
+    "pythonTests": {
+      "passed": 47,
+      "failed": 0
+    },
+    "sourceSHA256": {
+      "Logan/ServerGo/cmd/workbench/main.go": "19394a4053066f4b46a192ece391de1567b303a115c81560a4f0a358128112f9",
+      "Logan/ServerGo/cmd/workbench/runtime.go": "a5733d0debfcd53951f5901d968ee9ca782523a18c39e34a447dbbe55bff2a2b",
+      "Logan/ServerGo/cmd/workbench/runtime_test.go": "9ae55b852a22b419ae3271d1b04aaeb2d0d3f5ef70dda1aca8c39f2f701bc0b9",
+      "Logan/ServerGo/internal/workbench/health.go": "d76fe54448a202220dc65cdcc060bde3e794652496754594f28c1d966a5d6755",
+      "Logan/ServerGo/internal/workbench/health_test.go": "001539ce2d8441278d2fed8eb3eeba9f20f418aa555953d0e00e5135d12e1f5a",
+      "Logan/ServerGo/script/test_workbench_ops.py": "33625275e5b621f4d7f1d247a1f7308f2837917d9d1e6edfc8c40cda70da8742",
+      "Logan/ServerGo/script/verify-workbench.py": "43475f1693a07f9894eb1923ded2b925bd6f4b176ed1fd50fc5f2169fdacfdd4",
+      "Logan/ServerGo/script/verify-workbench-manual-v1.py": "006c6ec983b1540274d6ea75da0073f8b748fa73f49c7e99a451242fde8436bf",
+      "Logan/ServerGo/script/workbench-ops.py": "8ab2fbb20e7424f6db92cdbf3fac37b8ffb3ab1a9aa7a6875b9d294807035872"
+    },
+    "excludedUncommittedFiles": 13,
+    "outOfScopeChangesObservedDuringChecks": [
+      "docs/product/contracts/mobile-log-wire-v2.md",
+      "docs/product/mobile-log-model-v2.md"
+    ],
+    "scopeIsolation": "Explicit 15-file staging allowlist; no writes or staging to out-of-scope files."
+  }
+}

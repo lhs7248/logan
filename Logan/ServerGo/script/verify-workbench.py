@@ -27,6 +27,8 @@ def main():
     parser.add_argument('--project', required=True)
     parser.add_argument('--token-env', default='WORKBENCH_ACCEPTANCE_TOKEN')
     parser.add_argument('--report', required=True)
+    parser.add_argument('--manual-only', action='store_true',
+                        help='Skip deferred push/model regression checks; use only manual-investigation permissions')
     args = parser.parse_args()
     token = os.environ.get(args.token_env)
     if not token:
@@ -136,28 +138,29 @@ def main():
             request('PATCH', '/issues/' + issue_id + '/context',
                     {'add': [evidence['id']], 'remove': []}, revision=issue['contextRevision'])
         checked('log evidence is tied to immutable run/event identity')
-        request('POST', '/collections', {}, (503,))
-        checked('deferred Aliyun connector cannot fabricate push success')
-        capture = request('POST', '/collection-drafts',
-                          {'app': 'com.hxl.xlb.test', 'targetType': 'alias',
-                           'targetValue': '13800000000', 'bindingConfirmed': True,
-                           'issueId': issue_id, 'title': 'Synthetic unsent draft',
-                           'begin': '2026-10-21T10:00:00+08:00'}, (201,))
-        assert capture['status'] == 'draft' and capture['targetValue'] != '13800000000'
-        capture_id = capture['id']
-        request('PATCH', '/collection-drafts/' + capture_id,
-                {'targetValue': capture['targetValue'], 'title': 'must not corrupt target'},
-                (422,), revision=capture['revision'])
-        capture = request('PATCH', '/collection-drafts/' + capture_id,
-                          {'title': 'Purpose edited without replacing masked target'}, revision=capture['revision'])
-        assert capture['title'] == 'Purpose edited without replacing masked target'
-        assert capture['bindingConfirmed'] is True
-        assert request('GET', '/collection-drafts/' + capture_id)['id'] == capture_id
-        checked('unfinished collection draft persists without masked target overwrite or fake push')
+        if not args.manual_only:
+            request('POST', '/collections', {}, (503,))
+            checked('deferred Aliyun connector cannot fabricate push success')
+            capture = request('POST', '/collection-drafts',
+                              {'app': 'com.hxl.xlb.test', 'targetType': 'alias',
+                               'targetValue': '13800000000', 'bindingConfirmed': True,
+                               'issueId': issue_id, 'title': 'Synthetic unsent draft',
+                               'begin': '2026-10-21T10:00:00+08:00'}, (201,))
+            assert capture['status'] == 'draft' and capture['targetValue'] != '13800000000'
+            capture_id = capture['id']
+            request('PATCH', '/collection-drafts/' + capture_id,
+                    {'targetValue': capture['targetValue'], 'title': 'must not corrupt target'},
+                    (422,), revision=capture['revision'])
+            capture = request('PATCH', '/collection-drafts/' + capture_id,
+                              {'title': 'Purpose edited without replacing masked target'}, revision=capture['revision'])
+            assert capture['title'] == 'Purpose edited without replacing masked target'
+            assert capture['bindingConfirmed'] is True
+            assert request('GET', '/collection-drafts/' + capture_id)['id'] == capture_id
+            checked('unfinished collection draft persists without masked target overwrite or fake push')
         capability = request('GET', '/capabilities')
         report['capabilities'] = capability
         checked('capabilities expose configuration state')
-        if not capability.get('model', {}).get('configured'):
+        if not args.manual_only and not capability.get('model', {}).get('configured'):
             issue = request('GET', '/issues/' + issue_id)
             turn = request('POST', '/issues/' + issue_id + '/turns',
                            {'question': 'Can timeout alone establish a UI state defect?',
