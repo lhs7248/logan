@@ -1,0 +1,152 @@
+{
+  "platform": "ios",
+  "scope": "Actual HermesDemo iOS simulator RN → repository iOS/Clogan SDK → strict Go parse; explicit injected cases",
+  "appId": "com.hermesdemo",
+  "projectId": "local-mobile",
+  "appVersion": "1.0",
+  "buildVersion": "1",
+  "assetId": "4a7facc0e178f99202c9037491d0c35c",
+  "runId": "f7f826c5c5901d504efd619abd6efb5d",
+  "fileDate": "2026-10-26",
+  "eventCount": 50,
+  "diagnosticEventCount": 49,
+  "rawBytes": 16700,
+  "sha256": "3cce9200d298f0d61e13a3ae1c9b8d668bdc11792553d748cb07bd4d3c98aaf1",
+  "checks": {
+    "exactEvents": true,
+    "normalizedFieldsMatch": true,
+    "originalCiphertext": true
+  },
+  "parse": {
+    "status": "succeeded",
+    "mode": "strict",
+    "format": "native",
+    "errorCount": 0
+  },
+  "attempts": [
+    {
+      "status": "succeeded",
+      "slow": false,
+      "testInjected": false,
+      "scenarios": [
+        "normal"
+      ],
+      "eventCount": 6,
+      "gaps": []
+    },
+    {
+      "status": "failed",
+      "slow": false,
+      "testInjected": true,
+      "scenarios": [
+        "load_failure"
+      ],
+      "eventCount": 3,
+      "gaps": [
+        "缺少 content_ready 业务内容就绪证据",
+        "缺少 page_interactive 可交互证据"
+      ]
+    },
+    {
+      "status": "failed",
+      "slow": false,
+      "testInjected": true,
+      "scenarios": [
+        "render_failure"
+      ],
+      "eventCount": 4,
+      "gaps": [
+        "缺少 content_ready 业务内容就绪证据",
+        "缺少 page_interactive 可交互证据"
+      ]
+    },
+    {
+      "status": "abandoned",
+      "slow": true,
+      "testInjected": true,
+      "scenarios": [
+        "blank"
+      ],
+      "eventCount": 7,
+      "gaps": [
+        "缺少 content_ready 业务内容就绪证据",
+        "缺少 page_interactive 可交互证据"
+      ]
+    },
+    {
+      "status": "succeeded",
+      "slow": true,
+      "testInjected": true,
+      "scenarios": [
+        "slow"
+      ],
+      "eventCount": 8,
+      "gaps": []
+    },
+    {
+      "status": "succeeded",
+      "slow": false,
+      "testInjected": false,
+      "scenarios": [
+        "normal"
+      ],
+      "eventCount": 6,
+      "gaps": []
+    },
+    {
+      "status": "failed",
+      "slow": false,
+      "testInjected": false,
+      "scenarios": [
+        "normal"
+      ],
+      "eventCount": 3,
+      "gaps": [
+        "缺少 content_ready 业务内容就绪证据",
+        "缺少 page_interactive 可交互证据"
+      ]
+    },
+    {
+      "status": "succeeded",
+      "slow": false,
+      "testInjected": false,
+      "scenarios": [
+        "normal"
+      ],
+      "eventCount": 6,
+      "gaps": []
+    },
+    {
+      "status": "succeeded",
+      "slow": false,
+      "testInjected": false,
+      "scenarios": [
+        "normal"
+      ],
+      "eventCount": 6,
+      "gaps": []
+    }
+  ],
+  "retention": {
+    "serviceWorkspaceRecordsUnchanged": 53,
+    "oldWorkspaceRecordsUnchanged": 24,
+    "settingsAndAuthStableAcrossRestart": true,
+    "unrelatedBusinessRepositoriesAndDocxUnchanged": true,
+    "issueEvidence": 4,
+    "verifications": 1,
+    "immutableUpdates": 2
+  },
+  "appRestart": {
+    "originalEventsRetained": 43,
+    "priorEvidenceFilesByteStable": 14,
+    "profileByteStable": true,
+    "continuedUploadDiagnosticEvents": 49
+  },
+  "coverage": {
+    "model": "not configured; manual investigation verified",
+    "aliyunPush": "deferred",
+    "sourceMapping": "deferred",
+    "businessApp": "not part of HermesDemo iOS simulator acceptance",
+    "androidRuntime": "not executed in this acceptance"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "scope": "HermesDemo iOS simulator precommit review, 2026-10-26",
+  "review": {
+    "actionableP1P2": 0,
+    "sourceFixesInThisReview": 0,
+    "independentReview": "read-only source review; runtime checks executed separately"
+  },
+  "retention": {
+    "originalAppEventsRetained": 49,
+    "appEventsAfterRestart": 54,
+    "priorAppFilesByteStable": 18,
+    "serverRecordsRetained": 53,
+    "privateConfigByteStable": true,
+    "excludedFilesByteStable": 9,
+    "nativeGenerationChanged": true,
+    "replayedEventCount": 49,
+    "unrelatedFilePolicy": "Unowned changes excluded; concurrent edits left intact."
+  },
+  "previousUpload": {
+    "eventCount": 50,
+    "diagnosticEventCount": 49,
+    "strictErrors": 0,
+    "rawBytes": 16700,
+    "baselineRetainedAfterRestart": true
+  },
+  "checks": {
+    "goFull": true,
+    "webTests": 75,
+    "pythonRuntimeTests": 30,
+    "pythonEvidenceTests": 5,
+    "rnTests": 11,
+    "typeCheck": true,
+    "nativeStorageHarness": true,
+    "nativeLifecycleAndHeadersHarness": true,
+    "swiftDebugAndReleaseSelection": true,
+    "iosFullBuild": true
+  },
+  "hermesDemoCommit": "2179d34ab0b1c398769449b6b671ada7c431f021"
+}

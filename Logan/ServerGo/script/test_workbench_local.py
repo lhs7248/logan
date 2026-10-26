@@ -13,6 +13,61 @@ from unittest.mock import patch
 SCRIPT = Path(__file__).with_name('workbench-local.py')
 
 class RuntimeTests(unittest.TestCase):
+    def test_hermes_profile_is_independent_and_preserves_business_and_existing_assets(self):
+        self.r.init()
+        business = self.r.business_profile()
+        settings = self.r.settings.read_bytes()
+        original = json.loads(self.r.auth.read_text())
+        hermes = self.r.hermes_profile()
+        self.assertEqual(hermes, self.r.hermes_profile(create=False))
+        self.assertEqual(hermes['appId'], 'com.hermesdemo')
+        self.assertEqual(hermes['projectId'], 'local-mobile')
+        self.assertNotEqual(hermes['uploadToken'], business['uploadToken'])
+        self.assertNotEqual(hermes['uploadToken'], self.r.profile()['uploadToken'])
+        after = json.loads(self.r.auth.read_text())
+        self.assertEqual(after['sdkClients'][:2], original['sdkClients'])
+        self.assertEqual(after['businessProfiles'], original['businessProfiles'])
+        self.assertEqual(after['sdkClients'][-1]['environment'], 'emulator-local')
+        self.assertEqual(settings, self.r.settings.read_bytes())
+        self.assertEqual(business, self.r.business_profile(create=False))
+        after['pilotProfiles']['hermes-rn-demo']['deviceId'] = 'wrong'
+        self.m.private_json(self.r.auth, after, exclusive=False)
+        before = self.r.auth.read_bytes()
+        with self.assertRaises(self.m.RuntimeError):
+            self.r.hermes_profile()
+        self.assertEqual(before, self.r.auth.read_bytes())
+
+    def test_hermes_export_is_private_and_never_overwrites_or_prints_credentials(self):
+        self.r.init()
+        target = Path(self.tmp.name) / 'hermes.json'
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            self.m.main(['--root',str(self.r.root),'hermes-app-profile','--output',str(target)])
+        profile = json.loads(target.read_text())
+        self.assertEqual(target.stat().st_mode & 0o777, 0o600)
+        self.assertNotIn(profile['uploadToken'], out.getvalue())
+        before = self.r.auth.read_bytes()
+        with self.assertRaises(self.m.RuntimeError):
+            self.r.export_hermes_profile(target)
+        self.assertEqual(before, self.r.auth.read_bytes())
+
+    def test_hermes_ios_opt_in_preserves_credentials_and_read_only_does_not_upgrade(self):
+        self.r.init()
+        profile = self.r.hermes_profile()
+        auth = json.loads(self.r.auth.read_text())
+        self.assertEqual(auth['sdkClients'][-1]['platforms'], ['android', 'ios'])
+        auth['sdkClients'][-1]['platforms'] = ['android']
+        self.m.private_json(self.r.auth, auth, exclusive=False)
+        before = self.r.auth.read_bytes()
+        self.assertEqual(profile, self.r.hermes_profile(create=False))
+        self.assertEqual(before, self.r.auth.read_bytes())
+        self.assertEqual(profile, self.r.hermes_profile())
+        upgraded = json.loads(self.r.auth.read_text())
+        auth['sdkClients'][-1]['platforms'] = ['android', 'ios']
+        self.assertEqual(auth, upgraded)
+        stable = self.r.auth.read_bytes()
+        self.assertEqual(profile, self.r.hermes_profile())
+        self.assertEqual(stable, self.r.auth.read_bytes())
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

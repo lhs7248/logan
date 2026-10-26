@@ -271,7 +271,7 @@ func (s *Server) launchParse(rid string, raw []byte) {
 						}
 						timestamp = t.UTC().Format(time.RFC3339Nano)
 					}
-					rows = append(rows, Record{"content": v.Content, "logType": v.LogType, "type": v.LogType, "time": timestamp, "originalLine": v.Line})
+					rows = append(rows, Record{"content": v.Content, "logType": v.LogType, "type": v.LogType, "time": timestamp, "envelopeTime": v.LogTime, "originalLine": v.Line})
 				}
 				b, _ := json.Marshal(rows)
 				events, diagnostics, fatal = parseRecords(ctx, b, "json", rid, project, s.cfg.MaxEvents)
@@ -360,6 +360,7 @@ func parseRecords(ctx context.Context, raw []byte, format, rid, project string, 
 			normalized = parsed.UTC().Format(time.RFC3339Nano)
 		}
 		ev := Record{"id": rid + "-" + strconv.Itoa(line), "projectId": project, "runId": rid, "line": line, "time": normalized, "rawTime": timestamp, "level": strings.ToLower(str(m["level"])), "module": str(m["module"]), "content": content, "fields": m, "requestId": str(m["requestId"]), "file": str(m["file"]), "sourceLine": num(m["sourceLine"]), "type": m["type"], "logType": m["logType"]}
+		normalizePageDiagnostic(ev)
 		events = append(events, ev)
 	}
 	if format == "json" {

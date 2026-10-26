@@ -133,26 +133,33 @@ class Runtime:
 
     def business_profile(self, create=True):
         """Explicit opt-in; atomically retain the business identity alongside its client."""
+        return self._application_profile(BUSINESS_APP_ID, BUSINESS_CLIENT_ID, 'test-local', 'business-android-', 'businessProfiles', create)
+
+    def hermes_profile(self, create=True):
+        return self._application_profile('com.hermesdemo', 'hermes-rn-demo', 'emulator-local', 'hermes-emulator-', 'pilotProfiles', create, platforms=['android', 'ios'])
+
+    def _application_profile(self, app_id, client_id, environment, device_prefix, storage, create, platforms=None):
+        platforms = platforms or ['android']
         self.config()
         fd = os.open(str(self.root / 'operator.lock'), os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
         with os.fdopen(fd, 'w') as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
-            cfg = self.config()
+            self.config()
             auth = read_private(self.auth)
             clients = auth.get('sdkClients', [])
-            matches = [c for c in clients if c.get('id') == BUSINESS_CLIENT_ID or c.get('appId') == BUSINESS_APP_ID]
-            if not isinstance(auth.get('businessProfiles', {}), dict):
+            matches = [c for c in clients if c.get('id') == client_id or c.get('appId') == app_id]
+            if not isinstance(auth.get(storage, {}), dict):
                 raise RuntimeError('Business profile storage is inconsistent; retained unchanged')
-            stored = auth.get('businessProfiles', {}).get(BUSINESS_CLIENT_ID)
+            stored = auth.get(storage, {}).get(client_id)
             if matches or stored is not None:
                 try:
-                    expected = {'id':BUSINESS_CLIENT_ID, 'token':stored['uploadToken'],
-                                'projectId':PROJECT, 'appId':BUSINESS_APP_ID,
-                                'environment':'test-local', 'platforms':['android']}
+                    expected = {'id':client_id, 'token':stored['uploadToken'],
+                                'projectId':PROJECT, 'appId':app_id,
+                                'environment':environment, 'platforms':matches[0].get('platforms') if matches else None}
                     template = self.profile()
-                    template.update(appId=BUSINESS_APP_ID, uploadToken=stored['uploadToken'], deviceId=stored['deviceId'])
-                    valid = (matches == [expected] and stored == template
-                             and isinstance(stored['deviceId'], str) and stored['deviceId'].startswith('business-android-')
+                    template.update(appId=app_id, uploadToken=stored['uploadToken'], deviceId=stored['deviceId'])
+                    valid = (expected['platforms'] in (['android'], platforms) and matches == [expected] and stored == template
+                             and isinstance(stored['deviceId'], str) and stored['deviceId'].startswith(device_prefix)
                              and len(stored['uploadToken']) >= 32
                              and sum(c.get('token') == stored['uploadToken'] for c in clients) == 1
                              and all(c.get('token') != stored['uploadToken'] for c in auth.get('tokens', [])))
@@ -160,39 +167,51 @@ class Runtime:
                     valid = False
                 if not valid:
                     raise RuntimeError('Business client configuration is inconsistent or collides; retained unchanged')
+                if create and expected['platforms'] != platforms:
+                    matches[0]['platforms'] = platforms
+                    self._replace_auth(auth)
                 return stored
             if not create:
                 raise RuntimeError('Business client is not configured; explicitly export business-app-profile first')
-            if 'businessProfiles' in auth and not isinstance(auth['businessProfiles'], dict):
+            if storage in auth and not isinstance(auth[storage], dict):
                 raise RuntimeError('Business profile storage is inconsistent; retained unchanged')
             occupied = {c.get('token') for c in clients + auth.get('tokens', [])}
             token = secrets.token_urlsafe(32)
             if token in occupied:
                 raise RuntimeError('Business upload credential collision; retained unchanged')
             profile = self.profile()
-            profile.update(appId=BUSINESS_APP_ID, uploadToken=token, deviceId='business-android-' + secrets.token_hex(16))
-            auth['sdkClients'].append({'id':BUSINESS_CLIENT_ID, 'token':token, 'projectId':PROJECT,
-                                      'appId':BUSINESS_APP_ID, 'environment':'test-local', 'platforms':['android']})
-            auth.setdefault('businessProfiles', {})[BUSINESS_CLIENT_ID] = profile
-            staged_fd, staged_name = tempfile.mkstemp(prefix='.auth-', dir=str(self.root))
-            try:
-                with os.fdopen(staged_fd, 'w') as staged:
-                    os.fchmod(staged.fileno(), 0o600)
-                    json.dump(auth, staged, indent=2)
-                    staged.write('\n')
-                    staged.flush()
-                    os.fsync(staged.fileno())
-                os.replace(staged_name, self.auth)
-            finally:
-                if os.path.exists(staged_name):
-                    os.unlink(staged_name)
+            profile.update(appId=app_id, uploadToken=token, deviceId=device_prefix + secrets.token_hex(16))
+            auth['sdkClients'].append({'id':client_id, 'token':token, 'projectId':PROJECT,
+                                      'appId':app_id, 'environment':environment, 'platforms':platforms})
+            auth.setdefault(storage, {})[client_id] = profile
+            self._replace_auth(auth)
             return profile
+
+    def _replace_auth(self, auth):
+        staged_fd, staged_name = tempfile.mkstemp(prefix='.auth-', dir=str(self.root))
+        try:
+            with os.fdopen(staged_fd, 'w') as staged:
+                os.fchmod(staged.fileno(), 0o600)
+                json.dump(auth, staged, indent=2)
+                staged.write('\n')
+                staged.flush()
+                os.fsync(staged.fileno())
+            os.replace(staged_name, self.auth)
+        finally:
+            if os.path.exists(staged_name):
+                os.unlink(staged_name)
 
     def export_business_profile(self, path):
         path = Path(path).absolute()
         if path.exists() or path.is_symlink():
             raise RuntimeError('File already exists; refusing to overwrite: ' + str(path))
         private_json(path, self.business_profile())
+
+    def export_hermes_profile(self, path):
+        path = Path(path).absolute()
+        if path.exists() or path.is_symlink():
+            raise RuntimeError('File already exists; refusing to overwrite: ' + str(path))
+        private_json(path, self.hermes_profile())
 
     def environment(self):
         cfg = self.config()
@@ -397,6 +416,8 @@ def main(argv=None):
             group.add_argument('--output', type=Path, help='Create a new 0600 private profile file; never overwrite')
     business = sub.add_parser('business-app-profile', help='Explicitly add/retain independent business SDK client; restart service to load a new client')
     business.add_argument('--output', type=Path, required=True, help='New private 0600 file; secrets are never printed')
+    hermes = sub.add_parser('hermes-app-profile', help='Explicit independent Hermes emulator/simulator pilot client; no key rotation')
+    hermes.add_argument('--output', type=Path, required=True, help='New private 0600 file; secrets are never printed')
     args = parser.parse_args(argv)
     runtime = Runtime(args.root)
     if args.command == 'run':
@@ -407,6 +428,10 @@ def main(argv=None):
         print('Private runtime initialized (existing configuration retained): ' + str(runtime.root))
         return 0
     runtime.config()
+    if args.command == 'hermes-app-profile':
+        runtime.export_hermes_profile(args.output)
+        print('Private Hermes App profile created; existing configuration retained. Restart to load a newly added client.')
+        return 0
     if args.command == 'business-app-profile':
         runtime.export_business_profile(args.output)
         print('Private business App profile created; existing configuration retained. Restart service to load a newly added client.')
