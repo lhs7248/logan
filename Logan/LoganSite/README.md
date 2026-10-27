@@ -1,6 +1,6 @@
 # Logan Website
 
-[中文版](./README_CN.md)
+[中文版（含完整服务启动、开发配置及排错说明）](./README_CN.md)
 
 Logan Website provide a convenient way for developers to scan and search logs uploaded from App and Web.
 

@@ -54,7 +54,7 @@
     </update>
 
     <select id="maxId" resultType="java.lang.Long">
-        select max(id) from web_task
+        select coalesce(max(id), 0) from web_task
     </select>
 
     <select id="queryByRange" parameterType="map" resultMap="resultMap">

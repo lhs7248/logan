@@ -8,6 +8,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -27,6 +29,23 @@ public class WebLogDetailServiceImpl extends AbstractBatchInsertService<WebLogDe
 
     @Resource
     private WebLogDetailMapper detailMapper;
+
+    @Resource
+    private PlatformTransactionManager transactionManager;
+
+    /** The caller immediately queries these details, so return only after commit. */
+    @Override
+    public void saveLogDetails(List<WebLogDetailDTO> details) {
+        if (CollectionUtils.isEmpty(details)) {
+            return;
+        }
+        new TransactionTemplate(transactionManager).execute(status -> {
+            for (int start = 0; start < details.size(); start += 200) {
+                detailMapper.batchInsert(details.subList(start, Math.min(start + 200, details.size())));
+            }
+            return null;
+        });
+    }
 
     @Override
     public WebLogDetailDTO queryById(long detailId) {

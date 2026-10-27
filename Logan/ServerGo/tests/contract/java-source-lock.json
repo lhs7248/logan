@@ -199,7 +199,7 @@
     },
     {
       "path": "src/main/java/com/meituan/logan/web/service/impl/WebLogDetailServiceImpl.java",
-      "sha256": "8fea2dfde7734210ccf7f6d403d0575e1b85386e039f827e7be615abe48df02c"
+      "sha256": "7840372189d1f8f6a6f4184c3e848a25ea0654dc94601e5a60b66c292bb22e69"
     },
     {
       "path": "src/main/java/com/meituan/logan/web/service/impl/WebTaskServiceImpl.java",
@@ -275,7 +275,7 @@
     },
     {
       "path": "src/main/resources/sqlmap/WebLogTaskMapper.xml",
-      "sha256": "68fe8dea5c2dc4f044588a10b39ee57f90420b16cb2e7258b4d1da192f77d612"
+      "sha256": "44e61159d59d47b39a424e92801d899cc511bdc36a6584a060924ac4868c2f1b"
     },
     {
       "path": "src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml",
