@@ -19,6 +19,14 @@ import {
 import {convertBriefsToLoglistInfiniteScrollBriefs} from "../../../common/adapter"
 import {getPageOfLogIdsBySingleLogId} from "../../../common/util";
 
+const sortBriefs = (briefs, ascending) => {
+  const ordered = sortBy(flattenDeep(briefs), item => item.detailId);
+  return ascending ? ordered : reverse(ordered);
+};
+
+const fetchDetails = detailIds => detailIds.length > 0
+  ? fetchWebTaskDetailsByDetailIdsApi(detailIds.join(','))
+  : Promise.resolve([]);
 
 export function fetchPageInitData(taskId, focusLogId) {
   return (dispatch, getState) => {
@@ -47,13 +55,14 @@ export function fetchPageInitData(taskId, focusLogId) {
         return Promise.all([infoData, briefData, detailIds]);
       })
       .then(([infoData, briefData, detailIds]) => {
-        return Promise.all([infoData, briefData, fetchWebTaskDetailsByDetailIdsApi(detailIds.join(','))]);
+        return Promise.all([infoData, briefData, fetchDetails(detailIds)]);
       })
       .then(([infoData, briefData, detailData]) => {
         const logTypeInTask = [...new Set(briefData.map(brief => brief.logType))];
         dispatch({
           type: WEB_UPDATE_LOG_INFO,
-          logInfo: infoData
+          // taskDetail describes one task; the URL owns the full query scope.
+          logInfo: {...infoData, tasks: taskId}
         });
         dispatch({
           type: WEB_UPDATE_BRIEFS,
@@ -146,18 +155,18 @@ export function updateFilterConditions(filterConditions) {
       type: WEB_UPDATE_LOGDETAIL_FILTER_CONDITIONS,
       filterConditions: filterConditions
     });
-    const { logInfo } = getState().webLogDetail;
+    const { logInfo, sorted } = getState().webLogDetail;
     if (logInfo) {
-      return fetchWebBriefsApi(logInfo.taskId, filterConditions.logTypes.join(","), filterConditions.keyword)
+      return fetchWebBriefsApi(logInfo.tasks, filterConditions.logTypes.join(","), filterConditions.keyword)
         .then(data => {
-          let newBriefs = flattenDeep(data);
+          const newBriefs = sortBriefs(data, sorted);
           dispatch({
             type: WEB_UPDATE_BRIEFS,
             briefs: newBriefs
           });
           return newBriefs;
         }).then(newBriefs => {
-          return fetchWebTaskDetailsByDetailIdsApi(newBriefs.map(item => item.detailId).join(","))
+          return fetchDetails(newBriefs.map(item => item.detailId))
         }).then(data => {
           dispatch({
             type: WEB_UPDATE_TASK_DETAIL,
@@ -208,20 +217,15 @@ export function updateSorted(sorted) {
 
     const { logInfo, filterConditions } = getState().webLogDetail;
     if (logInfo) {
-      return fetchWebBriefsApi(logInfo.taskId, filterConditions.logTypes.join(","), filterConditions.keyword)
+      return fetchWebBriefsApi(logInfo.tasks, filterConditions.logTypes.join(","), filterConditions.keyword)
         .then(briefs => {
-          const newBriefs = flattenDeep(briefs);
-          let sortedBriefs = [];
-          if (sorted) {
-            sortedBriefs = sortBy(newBriefs, item => item.detailId);
-          } else {
-            sortedBriefs = sortBy(newBriefs, item => item.detailId);
-            sortedBriefs = reverse(sortedBriefs);
-          }
-          const detailIds = getPageOfLogIdsBySingleLogId(convertBriefsToLoglistInfiniteScrollBriefs(sortedBriefs, "web"), sortedBriefs[0].detailId);
+          const sortedBriefs = sortBriefs(briefs, sorted);
+          const detailIds = sortedBriefs.length > 0
+            ? getPageOfLogIdsBySingleLogId(convertBriefsToLoglistInfiniteScrollBriefs(sortedBriefs, "web"), sortedBriefs[0].detailId)
+            : [];
           return Promise.all([detailIds, sortedBriefs]);
         }).then(([detailIds, sortedBriefs]) => {
-          return Promise.all([sortedBriefs, fetchWebTaskDetailsByDetailIdsApi(detailIds.join(","))])
+          return Promise.all([sortedBriefs, fetchDetails(detailIds)])
         }).then(([sortedBriefs, data]) => {
           dispatch({
             type: WEB_UPDATE_BRIEFS,

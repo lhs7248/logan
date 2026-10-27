@@ -106,7 +106,7 @@ class FilterBar extends Component {
         >
           <Button className="filter-log-type">
             <Icon type="check-circle" />
-            {filterConditions.sorted === false ? "排序方式：降序" : "排序方式：升序"}
+            {sorted === false ? "排序方式：降序" : "排序方式：升序"}
           </Button>
         </Dropdown>
 
